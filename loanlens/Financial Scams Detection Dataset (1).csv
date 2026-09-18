@@ -1,0 +1,524 @@
+﻿label,message
+scam,Claim your loan approved by sending OTP immediately.
+scam,"Fraudulent transaction detected, provide your OTP."
+scam,"Your account has been suspended, verify OTP now!"
+ham,Your account balance is adequate.
+ham,Please ignore unknown SMS.
+scam,Click here to reset your banking password.
+ham,Payment received successfully.
+scam,Send your OTP to claim your prize!
+scam,Your debit card has been blocked.
+ham,"New offers available, accept today!"
+scam,"Your account is at risk, immediate action required."
+ham,"Your mobile recharge was successful, thank you."
+scam,"Your loan application is approved, send OTP now!"
+ham,Do not share your bank details with anyone.
+scam,Account hacked! Open the app now to secure it.
+ham,"Your OTP code expires in 5 minutes, do not share"
+scam,"Loan approved, confirm by sending OTP code."
+scam,Update your account details to avoid suspension.
+ham,Thank you for using our service.
+ham,"নতুন অফার এসেছে, আজই অ্যাকসেপ্ট করুন।"
+scam,Claim your loan approved by sending OTP.
+scam,"Fraudulent transaction detected, provide OTP."
+scam,"জরুরি! আপনার ব্যাংক একাউন্ট বন্ধ হওয়ার ঝুঁকি, OTP: 3798"
+ham,আপনার একাউন্টে ৫০০ টাকা জমা হয়েছে।
+ham,"Your OTP is 8741, do not share it with anyone."
+scam,Click here to reset your banking password.
+scam,"আপনার নাম্বারে লোন পেয়েছে, ফর্ম জমা দিন দ্রুত!"
+scam,"Your account suspended, verify OTP now!"
+scam,সাবধান! আপনার একাউন্ট থেকে অস্বীকৃত টাকা উত্তোলন হয়েছে। জরুরি যাচাই করুন।
+ham,"আপনার OTP কোড 834729, কেউ যাতে জানতে না পারে সতর্ক থাকুন।"
+scam,"আপনার মোবাইল ব্যাংকিং একাউন্ট বন্ধ হতে যাচ্ছে, এখনি লগইন করুন।"
+ham,"আপনার একাউন্ট চালু রয়েছে, সর্বশেষ ব্যালেন্স ১০,০০০ টাকা।"
+scam,"ডেবিট কার্ড ব্যবহার সীমিত করতে OTP দিন, অন্যথায় একাউন্ট ব্লক হবে।"
+scam,আপনার অ্যাকাউন্ট ভেরিফিকেশন করতে নিচের লিঙ্কে ক্লিক করুন।
+scam,"ওয়ালেট রিচার্জ সফল হয়েছে, পরবর্তী লেনদেনের জন্য প্রস্তুত থাকুন।"
+ham,নতুন অফার! আপনার একাউন্টে নগদ টাকা রিফান্ড করা হয়েছে
+scam,অবিলম্বে OTP দিন অন্যথায় অ্যাকাউন্ট থেকে টাকা উঠে যেতে পারে।
+ham,"আপনার ট্রান্সপোর্ট ফি জমা হয়েছে, ধন্যবাদ।"
+scam,ব্যাংকের তরফ থেকে জরুরি বার্তা: আপনার একাউন্ট আপডেট করুন আজই।
+ham,"আপনার মোবাইল ব্যাংকিং PIN পরিবর্তন করা হয়েছে, যদি না করেন তবে রিপোর্ট করুন।"
+scam,একাউন্ট সিকিউরিটি হুমকি! নিম্নলিখিত OTP দিয়ে যাচাই সম্পন্ন করুন।
+scam,"আপনার লোন আবেদন প্রক্রিয়াধীন, সম্পূর্ণ করতে OTP দিন।"
+ham,আপনার ব্যালেন্স ৫০০০ টাকার নিচে এসে গেছে।
+scam,"আপনার ডেবিট কার্ডের নিরাপত্তা লঙ্ঘিত হয়েছে, অবিলম্বে যাচাই করতে OTP দিন।"
+scam,"আপনার ডেবিট কার্ড থেকে ৫০০০ টাকা কাটা হয়েছে, অবিলম্বে TRX কোড পাঠান।"
+scam,Congratulations! You won a prize. Please send OTP to claim.
+ham,আপনার মোবাইল অ্যাপ্লিকেশন আপডেট সফল হয়েছে।
+ham,"Your OTP is 789654, keep it confidential to secure your account."
+scam,Claim your cashback by entering OTP received in next 5 minutes.
+scam,নিরাপত্তার জন্য আপনার ফোন থেকে আমাদের কনফার্মেশন চান।
+scam,Important: Your account verification is pending. Please provide OTP.
+scam,Your debit card transaction of 5000 taka was declined. Contact support.
+scam,Congratulations! Claim your reward by submitting OTP within 10 minutes.
+scam,"Your recent login was from a new device. If not you, verify with OTP."
+scam,Update your payment information immediately to avoid suspension.
+ham,Your mobile recharge of 20 taka is successful. Thank you for your payment.
+ham,Refund of 100 taka has been processed to your account.
+scam,"Warning: Suspicious activity detected, confirm via OTP now."
+scam,Your loan application was approved. Verify details using OTP.
+ham,Please ignore any unknown messages pretending to be your bank.
+scam,Your online banking password expired. Reset it via the provided link.
+ham,Your account balance is low. Add funds to continue service.
+scam,"To secure your account, provide the OTP sent to your registered phone."
+ham,Payment of 2500 taka received. Thanks for banking with us
+scam,Alert: Unauthorized transaction attempt detected. Change password now.
+ham,Your credit card limit has been increased. Check details in app.
+scam,Verify your identity to avoid account suspension. OTP required.
+ham,Your request to withdraw 5000 taka was successful.
+scam,Last chance: Provide OTP to claim your prize money now.
+ham,Your scheduled payment will be processed tomorrow.
+scam,Alert! Unauthorized login attempt detected. Confirm with OTP immediately.
+ham,"Your BDT 10,000 wallet transfer was successful. Thank you for using our service."
+scam,"Suspicious withdrawal of BDT 25,000 detected. Please verify with OTP now."
+scam,"Your internet banking password expired, reset it today to avoid service disruption."
+ham,BDT 100 recharge completed successfully.
+scam,"Congratulations! You won BDT 5,000 cashback. Submit OTP to receive."
+scam,Verify your identity by entering the OTP sent to your mobile to continue transactions.
+scam,Your debit card ending 1234 has been temporarily blocked for suspicious activity.
+scam,"BDT 35,000 loan approved. Confirm by sending OTP within 10 minutes."
+ham,"Your account balance is BDT 8,200."
+scam,"Immediate action needed! Unrecognized device logged in, confirm with OTP now."
+ham,"Reminder: Your scheduled BDT 12,000 bill payment will process tomorrow."
+ham,"Your BDT 2,000 refund has been processed successfully."
+scam,"OTP validation required to complete your BDT 20,000 transfer."
+scam,Update your mobile number in banking records today for uninterrupted service.
+ham,"Your recent transaction of BDT 7,500 has been verified"
+scam,Secure your account now! OTP sent to your registered contact.
+ham,"BDT 15,000 payment received from your account."
+scam,Warning: Suspicious activity in your account. Verify using your OTP immediately.
+scam,"Your loan payment of BDT 10,000 is overdue. Please pay immediately to avoid penalties."
+scam,Congratulations! You won a free investment plan. Call now to claim your prize.
+scam,New job opportunity with high salary. Send your CV to apply immediately.
+scam,"You have been selected for a government grant of BDT 50,000. Contact us now."
+scam,Exclusive offer: Double your money in 30 days with our secret scheme.
+scam,"Your lottery ticket won BDT 1,00,000. Send your details for prize delivery."
+scam,Join our online trading platform for guaranteed profits.
+ham,Beware of strangers asking for your financial details over chat or SMS.
+ham,Your KYC verification is complete. Thank you for your cooperation.
+scam,"Earn BDT 2,000 daily working from home. Register now!"
+scam,"Immediate payment required for customs clearance. Pay BDT 5,000 now."
+scam,Congratulations! You are shortlisted for a luxury car giveaway.
+scam,Investment opportunity with zero risk and high returns. Contact us.
+ham,Monthly subscription paid successfully.
+ham,Avoid fake schemes promising overnight wealth. Stay cautious.
+scam,Free smartphone giveaway for lucky winners. Reply to participate.
+scam,"Urgent: Pay BDT 10,000 to avoid legal action related to tax dues."
+ham,Your online order has been shipped successfully.
+ham,Your health insurance claim has been approved. Contact for details.
+scam,Secure your future with our pension plan. Enroll today!
+ham,"Reminder: Electricity bill payment of BDT 3,500 is due tomorrow."
+scam,বিশাল বিনিয়োগের সুযোগ! দ্রুত আজই ফোন করুন।
+scam,বিনামূল্যে ক্যাশব্যাক জন্য আজই বেছে নিন।
+ham,আধার কার্ড হারিয়ে গেলে কি করবেন? আজই যোগাযোগ করুন।
+scam,জাল ব্যবসায়িক সুযোগ! দ্রুত বিনিয়োগ করুন এবং বড় লাভ করুন।
+scam,আপনার লাইভ লটারি জেতা হয়েছে! এখনই প্রমাণ পাঠান।
+scam,মোবাইল ট্রেডিং প্ল্যাটফর্মে যোগ দিন। নিশ্চিত লাভের গ্যারান্টি।
+ham,অবৈধ আর্থিক লেনদেন এড়ানোর জন্য সতর্ক থাকুন।
+ham,আপনার বৈধতা নিশ্চিত করতে আমাদের নিকট যোগাযোগ করুন।
+scam,"বাসা ভাড়া, চাকরি এবং ব্যবসার জন্য দ্রুত ঋণ পেতে যোগাযোগ করুন।"
+scam,দ্রুত বিনিয়োগ করুন এবং মাসে কোটি টাকা উপার্জন করুন।
+scam,নির্ভরযোগ্য ব্যাংক অ্যাকাউন্ট থেকে টাকা সরাসরি পাঠান।
+scam,আপনার একটি চূড়ান্ত সুযোগ! আজই অংশ নিন এবং বড় লাভ করুন।
+ham,বিনামূল্যে ব্যাংক সাবসক্রিপশন পেতে আজই যোগাযোগ করুন।
+scam,বনধের পরিসীমা থেকে প্রাইভেট জেনারেশন শুরু হয়েছে। বিনিয়োগ করুন।
+ham,হারানো পণ্য পুনরুদ্ধার করতে আমাদের সাথে যোগাযোগ করুন।
+scam,দ্রুত উপার্জনের জন্য আজই যোগ দিন। প্রতিদিন BDT 2000 থেকে BDT 5000 পর্যন্ত উপার্জন।
+ham,আপনার পেমেন্ট পরবর্তী সপ্তাহে কাটা হবে না! দ্রুত কার্যক্রম নিন।
+ham,আপনার প্রিয়জনের জন্য গোপন নোটিশ: সাধারণ ফিচার ডাউনলোড করুন।
+scam,বিনিয়োগের জন্য দুর্দান্ত সুযোগ! ব্যাঙ্কের পার্টনারশিপে বড় লাভ।
+ham,পেমেন্টের জন্য ধন্যবাদ। আপনার ট্রানজেকশন সফল হয়েছে।
+scam,"আপনার একাউন্ট থেকে অজানা লেনদেন হয়েছে, দ্রুত যাচাই করুন।"
+ham,"আপনার মোবাইল রিচার্জ সফল হয়েছে, ধন্যবাদ।"
+scam,জরুরি! OTP দিয়ে একাউন্ট যাচাই করুন না হলে ব্লক হবে।
+scam,"আজকের বিশেষ অফার থেকে সুযোগ নিন, আজই কল করুন।"
+scam,"আপনার লোন আবেদন সফল হয়েছে, ফর্ম পূরণের জন্য OTP প্রদান করুন।"
+scam,আপনার অ্যাকাউন্টে নতুন অ্যাক্টিভিটি শনাক্ত করা হয়েছে।
+ham,"নম্বর থেকে টাকা সফলভাবে উত্তোলন হয়েছে, ধন্যবাদ।"
+scam,আপনার একাউন্টের বিস্তারিত তথ্য যাচাই করতে লিঙ্কে ক্লিক করুন।
+scam,অনলাইন কেনাকাটায় ক্যাশব্যাক পেতে OTP পাঠান।
+ham,"নতুন সিম কার্ড চালু হয়েছে, ধন্যবাদ ব্যবহারের জন্য।"
+scam,আপনার জয়েন্ট অ্যাকাউন্টে সন্দেহজনক লেনদেন হয়েছে।
+ham,সতর্কতা: অজানা নম্বর থেকে কল আসলে অবহেলা করুন।
+ham,"আজকের ডেলিভারি সফল হয়েছে, পণ্য গ্রহণের জন্য ধন্যবাদ।"
+scam,আপনার ওটিপি কোড দিন অন্যথায় একাউন্ট বন্ধ হবে।
+ham,Your package has been shipped. Track your delivery at this link.
+scam,Congratulations! You've won a free gift card. Click now to claim.
+scam,Our records show suspicious activity in your account. Contact support.
+scam,Your subscription is about to expire. Renew now for uninterrupted service.
+scam,You have an overdue bill of BDT 3000. Pay immediately to avoid disconnect.
+scam,Limited-time offer! Double your money in 7 days. Invest now.
+scam,Loan approved! Send your details to receive funds today.
+ham,Your online order is ready. View details here.
+scam,Fake invoice attached. Please review and click the link to pay.
+scam,Your car insurance claim has been approved. Contact us to finalize.
+scam,It’s your last chance to claim your cashback. Act now!
+scam,"You have been selected for a surveys. Complete now and win BDT 10,000."
+scam,Attention! Your mobile data plan will expire tomorrow. Renew now.
+scam,Fake urgent message: You owe BDT 500 for missed payment. Pay now.
+scam,Your bank account is locked. Verify now to regain access.
+scam,Limited-time deal: Buy now and get 50% discount on all products.
+scam,Mystery shopping opportunity! Earn BDT 2000 daily. Sign up now.
+ham,Your recent transaction of BDT 4200 was successfully processed.
+scam,Warning! Suspicious activity detected. Change your credentials now.
+scam,Your gaming account has been hacked. Change your password immediately.
+scam,"অবিলম্বে আপনার একাউন্ট যাচাই করুন, না হলে এটি বন্ধ হয়ে যাবে।"
+scam,"আজকের বিশেষ ছাড়ে অংশ নিন, আজই যোগাযোগ করুন।"
+scam,"আপনার লোন আবেদন সফল, দ্রুত OTP দিন যাচাইয়ের জন্য।"
+scam,"আপনার ডেবিট কার্ডের সীমা শেষ হতে যাচ্ছে, আরও তথ্যের জন্য কল করুন।"
+ham,মোবাইল বিল বাবদ ৫০০ টাকা সফলভাবে পরিশোধ হয়েছে।
+scam,"Hello from BLOrange club. For 1 month's free access to games, news and sport, plus 10 free texts and 20 photo messages, reply YES. Terms apply: www.blorange.club.bd"
+scam,Call FREEPHONE +8800 542 0578 now!
+ham,"7 wonders in My WORLD 7th You 6th Ur style 5th Ur smile 4th Ur Personality 3rd Ur Nature 2nd Ur SMS and 1st \Ur Lovely Friendship\""... good morning dear"""
+scam,"Loan for any purpose 500 tk- 75,000tk. Homeowners + Tenants welcome. Have you been previously refused? We can still help. Call Free +880 1956669 or text back 'help'"
+ham,Sorry i'm not free...
+ham,How. Its a little difficult but its a simple way to enter this place
+scam,BIG BROTHER ALERT! The computer has selected u for 10k cash or #150 voucher. Call +8801906401883. NTT PO Box CRO1327 18+ BT Landline Cost 150ppm mobiles vary
+scam,Your package delivery is delayed. Track now at this fake link.
+scam,"Get rich quick! Invest BDT 10,000 today and double your money fast."
+scam,Your job application was successful! Reply to claim your position
+scam,Verify your phone number now to avoid service interruption.
+scam,Free $1000 gift card! Click here to redeem before it expires.
+ham,Your recent online purchase has been shipped successfully.
+scam,Alert: Classified documents found linked to your account. Contact now!
+scam,Your electricity bill of BDT 3000 is overdue. Pay now to avoid cut-off.
+scam,Congratulations! You’ve won a holiday trip. Reply to claim.
+ham,Payment of BDT 5000 received. Thank you for your timely payment.
+scam,Urgent notice! Verify your social security number immediately.
+scam,Your bank loan has been approved. Send documents to finalize.
+scam,Your subscription payment failed. Update billing info to continue.
+ham,Your ticket to the concert is confirmed. Thank you for your purchase.
+scam,You've been selected for a secret shopper job. Earn BDT 2000 daily.
+scam,"Important: Claim your tax refund of BDT 8,000 today via this link"
+scam,Your online account will be suspended soon. Verify credentials now.
+ham,Your medical insurance claim has been processed successfully.
+scam,New investment opportunity: Guaranteed 30% monthly returns.
+ham,Your parcel has been dispatched. Track with tracking number XYZ123.
+scam,"Claim your free BDT 5,000 reward now by clicking this link before it expires!"
+scam,You have unclaimed cashback waiting. Submit your details to claim it immediately.
+scam,"Final notice: Claim your government grant of BDT 10,000 within 24 hours"
+scam,Congratulations! Claim your exclusive shopping voucher by replying with YES.
+scam,"You are eligible to claim a BDT 3,000 bonus from your telecom operator."
+scam,Claim your prize by verifying your phone number within 2 hours.
+scam,Claim your loan disbursed amount now by confirming your bank details.
+scam,Urgent: Claim compensation for delayed delivery by visiting this link.
+scam,Claim your free ticket for the concert happening near you this weekend.
+scam,"Claim your BDT 7,500 insurance payout by contacting us immediately."
+scam,Claim your cashback by logging into your account with this link.
+scam,"You have been selected to claim a new government subsidy, respond with your ID"
+scam,Claim your refund for the recent transaction now before the offer expires.
+scam,Claim your mystery gift by sending a reply with your full name and address.
+scam,Claim your free mobile upgrade by confirming your account info via SMS.
+scam,You have a new message from the lottery office. Claim your winnings ASAP.
+scam,Claim your prize money by paying a small processing fee at the link below
+scam,"Claim your BDT 15,000 bonus credits from our new app by signing up now."
+scam,Claim your tax refund by uploading your financial documents immediately.
+scam,Claim your exclusive membership rewards by clicking here. Limited time offer!
+ham,Your BDT 2000 payment has been received. Thank you for using our service.
+scam,Urgent: Verify your identity to avoid account closure. Click this link now.
+scam,Congratulations! You have been selected for a free smartwatch. Reply YES.
+ham,Your electricity bill of BDT 1500 is due tomorrow. Please pay on time.
+scam,Immediate action required! Suspicious login detected. Confirm your password.
+ham,Your mobile recharge of BDT 500 was successful.
+scam,"Last chance to claim your cashback offer worth BDT 10,000!"
+ham,Package delivered! Track it anytime using tracking number #12345.
+scam,You won an exclusive holiday package. Contact us immediately to claim.
+ham,Your online subscription has been renewed successfully
+scam,Warning! Your account has been suspended due to suspicious activity.
+ham,Enjoy 20% discount on your next purchase. Use code SAVE20.
+scam,Your loan application was approved. Submit documents to receive payment.
+ham,Thank you for your recent payment of BDT 3000.
+scam,Alert! Unrecognized device logged in to your account. Verify immediately.
+ham,Your food delivery has arrived. Please collect it.
+scam,Claim your prize money worth BDT 5000 by sending your bank details now.
+ham,Your appointment with Dr. Rahman has been confirmed for tomorrow.
+scam,"You are selected for government subsidy. Verify details to claim BDT 15,000."
+ham,Your electricity bill payment of BDT 2600 was successful.
+ham,Your BDT 3000 utility bill has been paid successfully.
+scam,Urgent! Confirm your credit card details to avoid suspension.
+scam,Congratulations! You won a free trip. Reply YES to claim your prize.
+ham,Your mobile data has been recharged with 2GB. Enjoy surfing.
+scam,Warning: Suspicious transaction detected. Verify your identity immediately.
+ham,Your food order from FoodieApp is delivered. Enjoy your meal!
+scam,Limited-time offer! Double your investment in 15 days. Call now.
+ham,You have successfully booked a taxi for 9 AM tomorrow.
+scam,"Final notice! Claim your BDT 10,000 insurance payout today."
+ham,Your monthly gym subscription has been renewed. Thank you.
+scam,You have unpaid fines totaling BDT 1200. Pay now to avoid penalties.
+ham,Event reminder: Music concert tonight at 7 PM at City Arena.
+scam,Your debit card has been temporarily blocked for security reasons.
+ham,Your parcel #XZ1234 is ready for pickup at the post office.
+scam,Urgent: Your loan approval is pending. Submit documents to proceed.
+ham,Your cab driver will arrive in 5 minutes. Please be ready
+scam,"Get rich quick! Invest BDT 20,000 in crypto mining and earn huge profits."
+ham,Thank you for registering for the webinar. We will email the link soon.
+ham,Your electricity meter reading is due. Please pay your bill of BDT 2500.
+scam,Last chance: Claim your cashback by verifying your account details now.
+scam,Your BDT 4000 electricity bill has been paid. Thank you for your payment.
+ham,Alert: Suspicious account activity detected. Verify your info immediately.
+scam,Congratulations! You are selected for a free smartphone giveaway. Reply YES.
+ham,Your monthly mobile recharge of BDT 600 was successful.
+scam,Urgent! Your login was from an unknown device. Confirm your identity now.
+ham,Your food delivery order has arrived. Enjoy your meal!
+scam,Double your money with our new investment plan. Call us today
+scam,Urgent! Verify your bank details to prevent account suspension.
+scam,"Claim your prize worth BDT 10,000 by replying"
+ham,Your recent payment of BDT 1500 was successful
+ham,Your parcel #AB123 is out for delivery.
+ham,Your electricity bill of BDT 800 is due tomorrow.
+scam,"Immediate notice: Unauthorized transaction detected, act now!"
+scam,You have won a free luxury watch. Reply to claim now.
+ham,Your mobile recharge of BDT 300 was successful.
+ham,Reminder: Doctor’s appointment tomorrow at 10 AM
+ham,Thank you for your recent bank deposit of BDT 5000.
+scam,"Claim your government grant of BDT 12,000 now."
+scam,"Alert! Suspicious login attempt detected, verify your account."
+ham,Your cab driver will arrive in 10 minutes.
+ham,Your online subscription has been renewed. Thank you!
+ham,You have a new message from the lottery office. Claim winnings.
+scam,Your credit card has been temporarily blocked. Confirm details.
+scam,Congratulations! You are selected for exclusive cashback offer.
+ham,Your electricity payment of BDT 2200 was successful.
+ham,Your order #5678 has been processed and shipped.
+ham,Payment reminder: Your internet bill of BDT 1200 is due.
+scam,Alert: Suspicious debit card transaction of BDT 5000 detected. Verify immediately.
+scam,You won a free vacation to the Bahamas! Reply YES to claim your prize.
+ham,Your electricity bill payment of BDT 3200 was successful.
+ham,Your package #ZX12345 is out for delivery. Track it using our app.
+ham,Reminder: Doctor appointment scheduled for tomorrow at 9:30 AM.
+scam,Urgent: Your bank account has been locked due to suspicious activity. Verify now.
+scam,"Claim your cash reward of BDT 10,000 now. Send your bank details to proceed."
+ham,Your mobile recharge of BDT 300 was successful.
+ham,Your Uber ride has been confirmed for 3 PM today.
+ham,Payment of BDT 5000 received. Thank you for your timely payment.
+scam,Last chance to update your payment info or your subscription will be suspended.
+scam,Congratulations! You have been pre-approved for a loan. Apply now to get instant approval.
+ham,Your recent grocery order #78345 has been delivered. Enjoy your purchase!
+ham,Your Netflix subscription has been renewed. Thank you for staying with us.
+scam,Alert: Unrecognized login attempt detected on your email. Secure your account now.
+ham,"You've received BDT 1,000 cashback from your last purchase"
+scam,Please verify your social security number to claim your government grant.
+ham,Your cab driver is on the way and will arrive in 5 minutes.
+scam,Verify your Apple ID to prevent permanent lockout. Ignore if you did not request.
+ham,Thank you for your donation of BDT 500. Your generosity is appreciated.
+ham,Let's meet at the cafe around 8 PM?
+scam,Claim your cashback reward #10 now! Limited time offer.
+scam,আপনার বিকাশে 350 টাকা জিতেছেন! তথ্য নিশ্চিত করতে এখনই লিঙ্কে যান।
+scam,Congratulations! You won a free iPhone. Claim now at secure-link.com
+ham,Don't forget to bring the documents for tomorrow's meeting
+scam,Limited offer! Get 50% cashback on your next payment. Click here
+scam,আপনার নাম্বারটি নির্বাচিত হয়েছে লটারি জেতার জন্য। লিঙ্কে যাচাই করুন।
+ham,Can you send me your notes for today's class?
+scam,Win ₹5000 instantly! Verify your account at rewardsite.com
+scam,Alert: Unusual withdrawal of BDT 4500 from your account. Verify now to avoid loss.
+scam,"Congratulations! You have won a BDT 20,000 shopping voucher. Reply to claim your prize."
+ham,Your water bill of BDT 1200 has been paid successfully.
+ham,Your parcel #YZ6789 will be delivered today. Track live through our app
+ham,Reminder: Your flight booking to Dhaka is scheduled for tomorrow at 6 AM.
+scam,Important: Your bank account is locked due to suspicious activity. Verify your identity now.
+scam,"Claim instant loan approval up to BDT 50,000. Send your documents to proceed."
+ham,Your mobile recharge of BDT 350 was processed successfully.
+ham,Your hotel booking confirmation #12345 for 3 nights in London.
+ham,Payment of BDT 3800 received. Thank you for your payment to ABC Store
+scam,Final notice: Update your billing info or your mobile service will be suspended.
+scam,Congratulations! You’re pre-qualified for a credit card with a $5000 limit. Apply now.
+ham,Your online shopping order #78654 is confirmed and will be delivered soon.
+ham,Your subscription to Sports Daily renewed successfully. Enjoy your exclusive content!
+scam,Alert: Suspicious login attempt on your email account. Secure it immediately.
+ham,You’ve earned BDT 1500 cashback on your last grocery purchase.
+scam,"Claim your government relief fund of BDT 30,000. Submit your documents today."
+ham,"Your taxi will arrive in 7 minutes. Driver: Saiful, Car: Blue Toyota."
+scam,Your Apple ID has been temporarily disabled. Verify now to avoid permanent lockout
+ham,Thank you for your charitable donation of BDT 1000. Your kindness is appreciated.
+scam,Urgent payment required: Your credit card bill of BDT 7000 is overdue. Pay now to avoid fees
+scam,"অভিনন্দন! আপনি ২০,০০০ টাকার ভাউচার জিতেছেন। আপনার পুরস্কার পেতে “YES” রিপ্লাই করুন।"
+ham,আপনার বিদ্যুতের বিল ৩১৫০ টাকা সফলভাবে পরিশোধ হয়েছে। ধন্যবাদ।
+ham,আপনার প্যাকেজ #এসটি১২৩৪৪ আজ ডেলিভারি হবে। ট্র্যাক করতে আমাদের অ্যাপ ব্যবহার করুন।
+ham,"Your bank transfer of BDT 10,000 has been successfully processed"
+scam,You’ve won a free entry to the VIP concert! Reply YES to claim your tickets.
+ham,Your parcel #A7821 was successfully delivered. Thank you for shopping with us.
+scam,Warning: Multiple failed login attempts on your social media account. Check activity now.
+ham,"Your insurance claim was approved. BDT 15,000 will be credited to your account shortly."
+scam,"Last chance to claim your cashback offer worth BDT 5,000. Verify now."
+ham,Your flight to Chittagong is on schedule for 10 AM tomorrow. Have a safe trip!
+scam,Confirm your bank details now to avoid loan application cancellation.
+ham,Your electricity bill for this month is BDT 2900. Please pay by the due date.
+scam,Congratulations! You have been selected to get an exclusive reward! Your name came up for a YETI War Survival Kit. This special gift is from Tractor Supply. Hurry up! Your Reward is Ready
+scam,Enjoy Annual Fee Waiver on Your Medical Quota Debit Card for Safe and Convenient Payment Abroad!
+scam,Your cloud storage is full. Please take action to free up space. Cloud Storage – Storage Limit Reached Your storage reached 100%
+scam,ANSWER FOR FREE!You have been chosen to participate in our Loyalty Program for FREE! It will take you only a minute to receive this fantastic prize.
+scam,Get a free Amazon voucher by completing this survey now.
+scam,Congratulations! Your subscription is upgraded. Click to confirm
+scam,Alert: Suspicious activity detected in your PayPal account. Verify now
+scam,bKash: You received 2000 BDT. Click here to confirm your account
+ham,Do you want to join the study group this evening?
+scam,Bank Alert: Your account will be locked due to pending verification.
+scam,Earn $100 per day from home with this financial program. Apply now!
+ham,"Bhai, I sent you 1500 taka via bKash. Check and confirm"
+scam,Congratulations! You have been selected for a $5000 government loan with 0% interest. Apply now!
+scam,Can you return the 1000 BDT I lent you last week? Need it urgently
+scam,Get 200% return by investing just $100 in our crypto program. Limited seats!
+ham,"Salary credited: 35,000 BDT has been deposited to your account"
+scam,Claim your free cashback of $250 today by entering your card details
+scam,"Your Tax Refund of 20,000 BDT is pending. Submit your details to receive it instantly"
+ham,"Nagad e 500 taka pathaisi, mama. Dekho paiso naki"
+scam,Last chance! Clear your loan dues now to avoid legal action
+ham,"Please approve the 12,500 BDT payment request I sent on Payoneer."
+scam,Win a brand new iPhone 15 by paying just $5 registration fee!
+scam,Your credit card has been temporarily blocked. Reactivate by verifying your PIN.
+ham,Client sent the 40% advance today. Check the bank statement
+scam,Earn $300 per day without investment. Just forward messages!
+ham,Can you share the bank details for transferring the rent money?
+scam,"Your bank flagged a transaction of $1,250. Verify at securebank-verify.com within 24 hours to avoid suspension"
+ham,"Sent 2,500 BDT via bKash just now. Please confirm when you get it"
+scam,"Congratulations, you have been pre-approved for an instant $5,000 loan. Apply here to receive funds within 24 hours"
+ham,"Invoice INV-3321 for 18,750 BDT has been paid and receipt uploaded to your email"
+scam,Alert: Unusual login detected on your PayPal. Confirm identity to prevent account hold
+ham,"I transferred the rent 12,000 BDT to your account. Check and tell me if it cleared"
+scam,Limited offer: Get 15% cashback on utility bill payments. Submit card details to claim reward
+ham,"Company salary transfer of 45,000 BDT processed today. Payslip sent to your inbox"
+scam,Immediate action required: Confirm your bank OTP to stop a pending fraudulent transfer
+ham,"I have paid the supplier 30,000 BDT via bank transfer; please confirm delivery schedule"
+scam,"You are shortlisted for a high-return investment program. Invest $200 to get $2,000 monthly returns. Limited seats"
+ham,"Shared the invoice for last month. Please approve payment of 22,500 BDT by Friday"
+scam,Final notice: Overdue loan amount of $850 must be cleared or legal action will follow. Click to resolve
+scam,Reward claim: Your tax refund of $420 is pending. Submit bank details to process immediately
+ham,"Payment confirmation: Received 4,200 BDT for the event booking. Thanks for the prompt payment"
+scam,Urgent verification requested: Reactivate your debit card by confirming 4-digit PIN at banklink.verify
+ham,"I sent the freelance payment of $150 via Payoneer. Check and confirm receipt, please"
+scam,"Exclusive: Instant credit limit increase to $3,000 available. Click link to accept the offer now"
+ham,"Reminder: Utility bill of 1,250 BDT due tomorrow. Please pay to avoid late fee"
+scam,Claim your cashback reward of $300 now. Complete the form to receive instant transfer
+ham,"Transferred 5,000 BDT for the project materials. Inform me when it arrives"
+scam,Your credit score has been upgraded. Unlock premium loan access with zero documentation
+ham,Sent the advance payment of $200 via Wise. Check your email for confirmation
+scam,"Lottery draw result: Your mobile number has won 75,000 BDT. Submit bank info to collect winning"
+ham,I refunded the extra 850 BDT you sent earlier. Please recheck your balance
+scam,PayPal alert: Unverified login attempt blocked. Recover account before suspension
+ham,"Final payment of 12,600 BDT processed successfully. Kindly send delivery schedule"
+scam,Government relief fund available for selected citizens. Register to receive $500 instantly
+ham,"Rent of 9,000 BDT paid via Nagad. Let me know if it shows pending"
+scam,Your insurance refund request is approved. Submit billing address to release payment
+ham,"Paid the tuition installment of 15,000 BDT today. Please confirm on your side"
+scam,"Crypto investment deal: Deposit $100 and earn $1,000 monthly return guaranteed"
+ham,"Can you send 2,300 BDT by evening? Need to settle an urgent bill"
+scam,"Security alert: Suspicious transaction of 4,500 BDT detected on your card. Approve or decline immediately"
+ham,Salary allowance of $120 added separately. Check your payroll slip
+scam,Your subscription payment failed. Update card details to avoid service halt
+ham,Settled the vendor payment through bank draft just now. Awaiting your acknowledgment
+scam,Limited stock: Get gold savings account with 5x bonus interest. Activate through special code
+ham,"Received 1,100 BDT on Rocket just now. Sending receipt shortly"
+scam,Immediate action required to prevent permanent block on your debit card. Confirm identity at verify-mybank.net
+ham,"Just sent 3,200 BDT to your account for the utility bills. Please check and confirm"
+scam,"Exclusive loan offer of $10,000 with no credit check. Apply before midnight"
+ham,"Client transferred 65,000 BDT this morning. Update the balance sheet"
+scam,Final reminder: Your pending tax fee of $260 must be cleared to avoid penalty
+ham,"Your online order payment of 2,750 BDT is successfully received. Thank you"
+scam,"Congratulations, your wallet has been credited with $700 bonus. Activate reward using secure link"
+ham,"I will return your 1,500 BDT tomorrow once my salary arrives"
+scam,Suspicious payment attempt detected on your MasterCard. Validate transaction immediately
+ham,"Sent the advance booking amount of 5,500 BDT. Please reserve the slot"
+scam,Your reward of $950 is waiting for withdrawal. Submit bank details to receive instantly
+ham,"I transferred 4,800 BDT for the exam fees. Please verify if it reached your account"
+scam,Urgent notification: Loan recovery team assigned to your case. Clear dues to avoid legal visit
+ham,"The vendor confirmed receipt of 22,000 BDT. Delivery will be dispatched tomorrow"
+scam,"Increase your credit limit to $5,000 instantly without documentation. Click to activate"
+ham,"Mom sent 1,200 BDT through Rocket. Check if it reflects in your balance"
+scam,Your insurance refund of $350 is ready. Complete verification before it expires
+ham,I paid the hotel booking charge via Visa. Check the confirmation email
+scam,Security alert: Multiple failed login attempts on your wallet. Restore access now
+ham,"The rent of 8,500 BDT has been transferred. Please send acknowledgment"
+scam,Final warning: Your credit card account will be frozen within 24 hours. Verify now at securebankportal.com
+ham,"I sent 3,700 BDT for groceries via bKash. Let me know once it reaches"
+scam,"Congratulations! You are selected for a $2,000 investment bonus. Submit details to claim"
+ham,"Paid the electricity bill of 1,250 BDT today. Please check if it cleared"
+scam,Your PayPal account is under review due to suspicious activity. Confirm identity immediately
+ham,"I transferred 5,500 BDT for the office stationery. Confirm receipt"
+scam,Exclusive: Unlock a high-yield savings account with 5% bonus interest. Apply now
+ham,"Sent advance payment of 15,000 BDT for the event hall booking. Await confirmation"
+scam,Alert: Unauthorized loan application detected in your name. Verify or report now
+ham,"I repaid the 2,300 BDT loan you gave last week. Please confirm"
+scam,Urgent: Your bank account has been flagged for multiple failed login attempts. Verify now to avoid freeze
+ham,"I transferred 2,800 BDT for the monthly internet bill. Check and confirm receipt"
+scam,"Limited offer: Apply for an instant $1,500 payday loan without credit check"
+ham,"Client has deposited 50,000 BDT today. Update your records accordingly"
+scam,"Your lottery reward of $1,200 is pending. Submit bank details to claim before deadline"
+ham,"Paid the school fees of 12,500 BDT today. Please acknowledge"
+scam,Security alert: Your debit card shows suspicious activity. Confirm transaction immediately
+ham,"I sent 1,800 BDT to settle the grocery expenses. Let me know if it’s received"
+scam,"Exclusive crypto investment opportunity: Deposit $200 to earn $1,500 monthly. Limited seats"
+ham,"Salary of 45,000 BDT has been credited. Check your payroll slip"
+scam,আপনার একাউন্টে সন্দেহজনক লেনদেন হয়েছে। দ্রুত যাচাই করুন।
+ham,আপনার মোবাইল রিচার্জ সফল হয়েছে। ধন্যবাদ।
+scam,"জরুরি! আপনার অ্যাকাউন্ট ব্লক হতে চলেছে, লগইন করুন"
+scam,আপনার লটারি জিতেছেন! এখনই তথ্য পাঠান।
+scam,আপনার ব্যাংক অ্যাকাউন্টে সন্দেহজনক লেনদেন হয়েছে। বিশদ তথ্যের জন্য কল করুন।
+ham,আপনার অ্যাকাউন্টের ব্যালেন্স ৭০০০ টাকা।
+scam,আপনি এখনই লটারি জিতেছেন। বিস্তারিত জানার জন্য কল করুন।
+ham,"অজানা নম্বর থেকে কল এড়ান, এটি প্রতারণামূলক।"
+scam,অনলাইন ট্রেডিং প্লাটফর্মে যোগ দিয়ে বিনিয়োগ করুন।
+scam,আপনার অ্যাকাউন্ট থেকে অবৈধ লেনদেন হয়েছে। অচিরেই অভিযোগ জানান।
+scam,আপনার ব্যাংক অ্যাকাউন্টের বিস্তারিত তথ্য আপডেট করুন।
+ham,আপনার মোবাইল নম্বর রিচার্জ সফল হয়েছে। ধন্যবাদ।
+scam,অনলাইন লেনদেনে আগ্রহী? দ্রুত যোগাযোগ করুন।
+scam,আপনার লোন এর আবেদন অগ্রগামী। দ্রুত OTP দিন।
+scam,আপনার অ্যাকাউন্টে কিছু সন্দেহজনক কার্যকলাপ লক্ষ্য করা গেছে। সাহায্য করার জন্য কল করুন।
+scam,"চলুন, আজই আপনার ব্যালেন্স বাড়ান। বিনিয়োগের জন্য দ্রুত যোগাযোগ করুন।"
+ham,"আপনার ওটিপি কোড ১২৩৪৫৬, দয়া করে কারো সাথে শেয়ার করবেন না।"
+scam,Congratulations! You have won a prize. Send OTP to claim your reward.
+scam,"Urgent! Your account will be suspended, verify now by sending OTP."
+scam,Your loan approved! Send your personal details to receive funds.
+ham,Monthly subscription payment received. Thank you for your service usage.
+scam,"Warning! Suspicious login detected, confirm your identity with OTP."
+ham,"নতুন মোবাইল প্ল্যান অফার, বিস্তারিত জানতে কল করুন।"
+scam,Account locked! Provide OTP now to unlock your account.
+ham,"আপনার পেমেন্ট সফল হয়েছে, মোট ব্যালেন্স BDT ১২,০০০।"
+scam,"আপনার কার্ড থেকে অননুমোদিত লেনদেন করা হয়েছে, কল করুন অবিলম্বে।"
+scam,Urgent! Update your bank details to continue service.
+ham,Your account balance is BDT 7000. Thank you for banking with us.
+scam,"জরুরি: আপনার একাউন্টে অস্থায়ী সমস্যা হয়েছে, এখনি লগইন করে যাচাই করুন।"
+scam,Congratulations! You are selected for a free gift. Send OTP to claim.
+ham,"আপনার মোবাইল রিচার্জ সফল হয়েছে, ধন্যবাদ।"
+scam,Urgent action required! Verify your account with OTP within 10 minutes.
+scam,Your debit card is blocked for suspicious activity. Call now to unblock.
+ham,New mobile plan launched. Contact customer care for details.
+ham,OTP verification failed. Please try again.
+ham,"আপনার লোড ব্যালেন্স ক্ষীণ হচ্ছে, দ্রুত রিফিল করুন।"
+scam,Warning! Unauthorized access attempt detected. Verify with OTP now.
+scam,আপনার অ্যাকাউন্ট থেকে টাকা কেটে নেওয়া হয়েছে। সতর্ক থাকুন।
+ham,"Your subscription has been renewed successfully.	"
+ham,আপনার মোবাইল ফোনের বিল পরিশোধ সফল হয়েছে। ধন্যবাদ।
+scam,Earn BDT 3000 daily working from home. Register now.
+scam,আজকের বিশেষ অফার! আপনার ডিসকাউন্ট এনজয় করতে কল করুন আজই।
+scam,Your debit card has been temporarily blocked due to suspicious activity.
+ham,"আপনার মেইল বক্স পূর্ণ, নতুন মেইল দেখতে লগইন করুন।"
+ham,Your subscription has been renewed successfully. Thank you.
+scam,Update your bank details now to avoid service disruption.
+scam,"Dear user, update your payment info to avoid account suspension. Click the link now."
+ham,Your package delivery is scheduled for tomorrow. Track here: tracking-link.com
+scam,Urgent: Verify your email by clicking the verification link within 24 hours.
+scam,Congratulations! You are selected for a free iPhone. Claim by replying with your address.
+ham,"Team meeting is rescheduled to 3 PM, please confirm your availability."
+scam,Win big with our new lottery. Reply WIN to participate.
+ham,A new login to your account was detected from an unknown device. Secure your login now.
+ham,Thank you for your recent purchase. Your order #12345 will arrive soon.
+scam,Update your password immediately to safeguard your account.
+scam,Limited time offer: Upgrade your plan now and save 30%.
+ham,Your bank statement is ready. Download your PDF here.
+ham,New message from support team. Check your inbox for details.
+ham,"আপনার OTP কোড 947123, কারো সাথে শেয়ার করবেন না।	"
+ham,আপনার ফেসবুক একাউন্টে নতুন মেসেজ এসেছে। এখনই চেক করুন।
+ham,"Payment of BDT 2,500 received successfully. Thank you for your payment."
+ham,Friend request from Raisa Moni.
+scam,আপনার ব্যাংক স্টেটমেন্ট ডাউনলোড করতে এখানে ক্লিক করুন।
+scam,Earn BDT 3000 daily from home. Register now!
+ham,"	Your insurance claim has been approved. Contact us for details."
+scam,"আপনার অ্যাকাউন্ট থেকে অবৈধ লেনদেন হয়েছে, দ্রুত কল করুন।"
+ham,Your software update is ready to install. Proceed now.
+scam,Verify your email address by clicking this link.
+ham,আপনার মোবাইল সেটিংস আপডেট করেছেন?
+ham,Your subscription will expire tomorrow. Renew to continue service.
+ham,আপনার ফেসবুক এ নতুন মন্তব্য এসেছে। এখনই দেখুন।
+ham,Friend request from Rafi Ahmed. Accept to connect.
+ham,"আপনার মোবাইল সেটিংস সফলভাবে আপডেট হয়েছে।	"

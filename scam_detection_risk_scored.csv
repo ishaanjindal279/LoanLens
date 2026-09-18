@@ -1,0 +1,521 @@
+message,risk_score,risk_category,flag
+Claim your loan approved by sending OTP immediately.,45,High Risk,1
+"Fraudulent transaction detected, provide your OTP.",30,Medium Risk,1
+"Your account has been suspended, verify OTP now!",45,High Risk,1
+Your account balance is adequate.,0,Low Risk,0
+Please ignore unknown SMS.,0,Low Risk,0
+Click here to reset your banking password.,45,High Risk,1
+Payment received successfully.,0,Low Risk,0
+Send your OTP to claim your prize!,55,High Risk,1
+Your debit card has been blocked.,0,Low Risk,1
+"New offers available, accept today!",0,Low Risk,0
+"Your account is at risk, immediate action required.",0,Low Risk,1
+"Your mobile recharge was successful, thank you.",0,Low Risk,0
+"Your loan application is approved, send OTP now!",45,High Risk,1
+Do not share your bank details with anyone.,0,Low Risk,0
+Account hacked! Open the app now to secure it.,15,Low Risk,1
+"Your OTP code expires in 5 minutes, do not share",30,Medium Risk,0
+"Loan approved, confirm by sending OTP code.",30,Medium Risk,1
+Update your account details to avoid suspension.,0,Low Risk,1
+Thank you for using our service.,0,Low Risk,0
+"নতুন অফার এসেছে, আজই অ্যাকসেপ্ট করুন।",0,Low Risk,0
+Claim your loan approved by sending OTP.,30,Medium Risk,1
+"Fraudulent transaction detected, provide OTP.",30,Medium Risk,1
+"জরুরি! আপনার ব্যাংক একাউন্ট বন্ধ হওয়ার ঝুঁকি, OTP: 3798",30,Medium Risk,1
+আপনার একাউন্টে ৫০০ টাকা জমা হয়েছে।,0,Low Risk,0
+"Your OTP is 8741, do not share it with anyone.",30,Medium Risk,0
+"আপনার নাম্বারে লোন পেয়েছে, ফর্ম জমা দিন দ্রুত!",0,Low Risk,1
+"Your account suspended, verify OTP now!",45,High Risk,1
+সাবধান! আপনার একাউন্ট থেকে অস্বীকৃত টাকা উত্তোলন হয়েছে। জরুরি যাচাই করুন।,0,Low Risk,1
+"আপনার OTP কোড 834729, কেউ যাতে জানতে না পারে সতর্ক থাকুন।",30,Medium Risk,0
+"আপনার মোবাইল ব্যাংকিং একাউন্ট বন্ধ হতে যাচ্ছে, এখনি লগইন করুন।",0,Low Risk,1
+"আপনার একাউন্ট চালু রয়েছে, সর্বশেষ ব্যালেন্স ১০,০০০ টাকা।",0,Low Risk,0
+"ডেবিট কার্ড ব্যবহার সীমিত করতে OTP দিন, অন্যথায় একাউন্ট ব্লক হবে।",30,Medium Risk,1
+আপনার অ্যাকাউন্ট ভেরিফিকেশন করতে নিচের লিঙ্কে ক্লিক করুন।,0,Low Risk,1
+"ওয়ালেট রিচার্জ সফল হয়েছে, পরবর্তী লেনদেনের জন্য প্রস্তুত থাকুন।",0,Low Risk,1
+নতুন অফার! আপনার একাউন্টে নগদ টাকা রিফান্ড করা হয়েছে,0,Low Risk,0
+অবিলম্বে OTP দিন অন্যথায় অ্যাকাউন্ট থেকে টাকা উঠে যেতে পারে।,30,Medium Risk,1
+"আপনার ট্রান্সপোর্ট ফি জমা হয়েছে, ধন্যবাদ।",0,Low Risk,0
+ব্যাংকের তরফ থেকে জরুরি বার্তা: আপনার একাউন্ট আপডেট করুন আজই।,0,Low Risk,1
+"আপনার মোবাইল ব্যাংকিং PIN পরিবর্তন করা হয়েছে, যদি না করেন তবে রিপোর্ট করুন।",30,Medium Risk,0
+একাউন্ট সিকিউরিটি হুমকি! নিম্নলিখিত OTP দিয়ে যাচাই সম্পন্ন করুন।,30,Medium Risk,1
+"আপনার লোন আবেদন প্রক্রিয়াধীন, সম্পূর্ণ করতে OTP দিন।",30,Medium Risk,1
+আপনার ব্যালেন্স ৫০০০ টাকার নিচে এসে গেছে।,0,Low Risk,0
+"আপনার ডেবিট কার্ডের নিরাপত্তা লঙ্ঘিত হয়েছে, অবিলম্বে যাচাই করতে OTP দিন।",30,Medium Risk,1
+"আপনার ডেবিট কার্ড থেকে ৫০০০ টাকা কাটা হয়েছে, অবিলম্বে TRX কোড পাঠান।",0,Low Risk,1
+Congratulations! You won a prize. Please send OTP to claim.,55,High Risk,1
+আপনার মোবাইল অ্যাপ্লিকেশন আপডেট সফল হয়েছে।,0,Low Risk,0
+"Your OTP is 789654, keep it confidential to secure your account.",30,Medium Risk,0
+Claim your cashback by entering OTP received in next 5 minutes.,30,Medium Risk,1
+নিরাপত্তার জন্য আপনার ফোন থেকে আমাদের কনফার্মেশন চান।,0,Low Risk,1
+Important: Your account verification is pending. Please provide OTP.,30,Medium Risk,1
+Your debit card transaction of 5000 taka was declined. Contact support.,0,Low Risk,1
+Congratulations! Claim your reward by submitting OTP within 10 minutes.,45,High Risk,1
+"Your recent login was from a new device. If not you, verify with OTP.",30,Medium Risk,1
+Update your payment information immediately to avoid suspension.,15,Low Risk,1
+Your mobile recharge of 20 taka is successful. Thank you for your payment.,0,Low Risk,0
+Refund of 100 taka has been processed to your account.,0,Low Risk,0
+"Warning: Suspicious activity detected, confirm via OTP now.",45,High Risk,1
+Your loan application was approved. Verify details using OTP.,30,Medium Risk,1
+Please ignore any unknown messages pretending to be your bank.,0,Low Risk,0
+Your online banking password expired. Reset it via the provided link.,45,High Risk,1
+Your account balance is low. Add funds to continue service.,0,Low Risk,0
+"To secure your account, provide the OTP sent to your registered phone.",30,Medium Risk,1
+Payment of 2500 taka received. Thanks for banking with us,0,Low Risk,0
+Alert: Unauthorized transaction attempt detected. Change password now.,45,High Risk,1
+Your credit card limit has been increased. Check details in app.,0,Low Risk,0
+Verify your identity to avoid account suspension. OTP required.,30,Medium Risk,1
+Your request to withdraw 5000 taka was successful.,0,Low Risk,0
+Last chance: Provide OTP to claim your prize money now.,45,High Risk,1
+Your scheduled payment will be processed tomorrow.,0,Low Risk,0
+Alert! Unauthorized login attempt detected. Confirm with OTP immediately.,45,High Risk,1
+"Your BDT 10,000 wallet transfer was successful. Thank you for using our service.",0,Low Risk,0
+"Suspicious withdrawal of BDT 25,000 detected. Please verify with OTP now.",45,High Risk,1
+"Your internet banking password expired, reset it today to avoid service disruption.",30,Medium Risk,1
+BDT 100 recharge completed successfully.,0,Low Risk,0
+"Congratulations! You won BDT 5,000 cashback. Submit OTP to receive.",30,Medium Risk,1
+Verify your identity by entering the OTP sent to your mobile to continue transactions.,30,Medium Risk,1
+Your debit card ending 1234 has been temporarily blocked for suspicious activity.,0,Low Risk,1
+"BDT 35,000 loan approved. Confirm by sending OTP within 10 minutes.",45,High Risk,1
+"Your account balance is BDT 8,200.",0,Low Risk,0
+"Immediate action needed! Unrecognized device logged in, confirm with OTP now.",45,High Risk,1
+"Reminder: Your scheduled BDT 12,000 bill payment will process tomorrow.",0,Low Risk,0
+"Your BDT 2,000 refund has been processed successfully.",0,Low Risk,0
+"OTP validation required to complete your BDT 20,000 transfer.",30,Medium Risk,1
+Update your mobile number in banking records today for uninterrupted service.,0,Low Risk,1
+"Your recent transaction of BDT 7,500 has been verified",0,Low Risk,0
+Secure your account now! OTP sent to your registered contact.,45,High Risk,1
+"BDT 15,000 payment received from your account.",0,Low Risk,0
+Warning: Suspicious activity in your account. Verify using your OTP immediately.,45,High Risk,1
+"Your loan payment of BDT 10,000 is overdue. Please pay immediately to avoid penalties.",15,Low Risk,1
+Congratulations! You won a free investment plan. Call now to claim your prize.,15,Low Risk,1
+New job opportunity with high salary. Send your CV to apply immediately.,15,Low Risk,1
+"You have been selected for a government grant of BDT 50,000. Contact us now.",45,High Risk,1
+Exclusive offer: Double your money in 30 days with our secret scheme.,0,Low Risk,1
+"Your lottery ticket won BDT 1,00,000. Send your details for prize delivery.",0,Low Risk,1
+Join our online trading platform for guaranteed profits.,15,Low Risk,1
+Beware of strangers asking for your financial details over chat or SMS.,0,Low Risk,0
+Your KYC verification is complete. Thank you for your cooperation.,0,Low Risk,0
+"Earn BDT 2,000 daily working from home. Register now!",15,Low Risk,1
+"Immediate payment required for customs clearance. Pay BDT 5,000 now.",15,Low Risk,1
+Congratulations! You are shortlisted for a luxury car giveaway.,0,Low Risk,1
+Investment opportunity with zero risk and high returns. Contact us.,0,Low Risk,1
+Monthly subscription paid successfully.,0,Low Risk,0
+Avoid fake schemes promising overnight wealth. Stay cautious.,0,Low Risk,0
+Free smartphone giveaway for lucky winners. Reply to participate.,0,Low Risk,1
+"Urgent: Pay BDT 10,000 to avoid legal action related to tax dues.",15,Low Risk,1
+Your online order has been shipped successfully.,0,Low Risk,0
+Your health insurance claim has been approved. Contact for details.,0,Low Risk,0
+Secure your future with our pension plan. Enroll today!,0,Low Risk,1
+"Reminder: Electricity bill payment of BDT 3,500 is due tomorrow.",0,Low Risk,0
+বিশাল বিনিয়োগের সুযোগ! দ্রুত আজই ফোন করুন।,0,Low Risk,1
+বিনামূল্যে ক্যাশব্যাক জন্য আজই বেছে নিন।,0,Low Risk,1
+আধার কার্ড হারিয়ে গেলে কি করবেন? আজই যোগাযোগ করুন।,0,Low Risk,0
+জাল ব্যবসায়িক সুযোগ! দ্রুত বিনিয়োগ করুন এবং বড় লাভ করুন।,0,Low Risk,1
+আপনার লাইভ লটারি জেতা হয়েছে! এখনই প্রমাণ পাঠান।,0,Low Risk,1
+মোবাইল ট্রেডিং প্ল্যাটফর্মে যোগ দিন। নিশ্চিত লাভের গ্যারান্টি।,0,Low Risk,1
+অবৈধ আর্থিক লেনদেন এড়ানোর জন্য সতর্ক থাকুন।,0,Low Risk,0
+আপনার বৈধতা নিশ্চিত করতে আমাদের নিকট যোগাযোগ করুন।,0,Low Risk,0
+"বাসা ভাড়া, চাকরি এবং ব্যবসার জন্য দ্রুত ঋণ পেতে যোগাযোগ করুন।",0,Low Risk,1
+দ্রুত বিনিয়োগ করুন এবং মাসে কোটি টাকা উপার্জন করুন।,0,Low Risk,1
+নির্ভরযোগ্য ব্যাংক অ্যাকাউন্ট থেকে টাকা সরাসরি পাঠান।,0,Low Risk,1
+আপনার একটি চূড়ান্ত সুযোগ! আজই অংশ নিন এবং বড় লাভ করুন।,0,Low Risk,1
+বিনামূল্যে ব্যাংক সাবসক্রিপশন পেতে আজই যোগাযোগ করুন।,0,Low Risk,0
+বনধের পরিসীমা থেকে প্রাইভেট জেনারেশন শুরু হয়েছে। বিনিয়োগ করুন।,0,Low Risk,1
+হারানো পণ্য পুনরুদ্ধার করতে আমাদের সাথে যোগাযোগ করুন।,0,Low Risk,0
+দ্রুত উপার্জনের জন্য আজই যোগ দিন। প্রতিদিন BDT 2000 থেকে BDT 5000 পর্যন্ত উপার্জন।,0,Low Risk,1
+আপনার পেমেন্ট পরবর্তী সপ্তাহে কাটা হবে না! দ্রুত কার্যক্রম নিন।,0,Low Risk,0
+আপনার প্রিয়জনের জন্য গোপন নোটিশ: সাধারণ ফিচার ডাউনলোড করুন।,0,Low Risk,0
+বিনিয়োগের জন্য দুর্দান্ত সুযোগ! ব্যাঙ্কের পার্টনারশিপে বড় লাভ।,0,Low Risk,1
+পেমেন্টের জন্য ধন্যবাদ। আপনার ট্রানজেকশন সফল হয়েছে।,0,Low Risk,0
+"আপনার একাউন্ট থেকে অজানা লেনদেন হয়েছে, দ্রুত যাচাই করুন।",0,Low Risk,1
+"আপনার মোবাইল রিচার্জ সফল হয়েছে, ধন্যবাদ।",0,Low Risk,0
+জরুরি! OTP দিয়ে একাউন্ট যাচাই করুন না হলে ব্লক হবে।,30,Medium Risk,1
+"আজকের বিশেষ অফার থেকে সুযোগ নিন, আজই কল করুন।",0,Low Risk,1
+"আপনার লোন আবেদন সফল হয়েছে, ফর্ম পূরণের জন্য OTP প্রদান করুন।",30,Medium Risk,1
+আপনার অ্যাকাউন্টে নতুন অ্যাক্টিভিটি শনাক্ত করা হয়েছে।,0,Low Risk,1
+"নম্বর থেকে টাকা সফলভাবে উত্তোলন হয়েছে, ধন্যবাদ।",0,Low Risk,0
+আপনার একাউন্টের বিস্তারিত তথ্য যাচাই করতে লিঙ্কে ক্লিক করুন।,0,Low Risk,1
+অনলাইন কেনাকাটায় ক্যাশব্যাক পেতে OTP পাঠান।,30,Medium Risk,1
+"নতুন সিম কার্ড চালু হয়েছে, ধন্যবাদ ব্যবহারের জন্য।",0,Low Risk,0
+আপনার জয়েন্ট অ্যাকাউন্টে সন্দেহজনক লেনদেন হয়েছে।,0,Low Risk,1
+সতর্কতা: অজানা নম্বর থেকে কল আসলে অবহেলা করুন।,0,Low Risk,0
+"আজকের ডেলিভারি সফল হয়েছে, পণ্য গ্রহণের জন্য ধন্যবাদ।",0,Low Risk,0
+আপনার ওটিপি কোড দিন অন্যথায় একাউন্ট বন্ধ হবে।,0,Low Risk,1
+Your package has been shipped. Track your delivery at this link.,15,Low Risk,0
+Congratulations! You've won a free gift card. Click now to claim.,15,Low Risk,1
+Our records show suspicious activity in your account. Contact support.,0,Low Risk,1
+Your subscription is about to expire. Renew now for uninterrupted service.,15,Low Risk,1
+You have an overdue bill of BDT 3000. Pay immediately to avoid disconnect.,15,Low Risk,1
+Limited-time offer! Double your money in 7 days. Invest now.,0,Low Risk,0
+Loan approved! Send your details to receive funds today.,0,Low Risk,1
+Your online order is ready. View details here.,0,Low Risk,0
+Fake invoice attached. Please review and click the link to pay.,15,Low Risk,1
+Your car insurance claim has been approved. Contact us to finalize.,0,Low Risk,1
+It’s your last chance to claim your cashback. Act now!,15,Low Risk,1
+"You have been selected for a surveys. Complete now and win BDT 10,000.",15,Low Risk,1
+Attention! Your mobile data plan will expire tomorrow. Renew now.,15,Low Risk,1
+Fake urgent message: You owe BDT 500 for missed payment. Pay now.,15,Low Risk,1
+Your bank account is locked. Verify now to regain access.,35,Medium Risk,1
+Limited-time deal: Buy now and get 50% discount on all products.,0,Low Risk,0
+Mystery shopping opportunity! Earn BDT 2000 daily. Sign up now.,15,Low Risk,1
+Your recent transaction of BDT 4200 was successfully processed.,0,Low Risk,0
+Warning! Suspicious activity detected. Change your credentials now.,15,Low Risk,1
+Your gaming account has been hacked. Change your password immediately.,45,High Risk,1
+"অবিলম্বে আপনার একাউন্ট যাচাই করুন, না হলে এটি বন্ধ হয়ে যাবে।",0,Low Risk,1
+"আজকের বিশেষ ছাড়ে অংশ নিন, আজই যোগাযোগ করুন।",0,Low Risk,1
+"আপনার লোন আবেদন সফল, দ্রুত OTP দিন যাচাইয়ের জন্য।",30,Medium Risk,1
+"আপনার ডেবিট কার্ডের সীমা শেষ হতে যাচ্ছে, আরও তথ্যের জন্য কল করুন।",0,Low Risk,1
+মোবাইল বিল বাবদ ৫০০ টাকা সফলভাবে পরিশোধ হয়েছে।,0,Low Risk,0
+"Hello from BLOrange club. For 1 month's free access to games, news and sport, plus 10 free texts and 20 photo messages, reply YES. Terms apply: www.blorange.club.bd",15,Low Risk,1
+Call FREEPHONE +8800 542 0578 now!,15,Low Risk,1
+"7 wonders in My WORLD 7th You 6th Ur style 5th Ur smile 4th Ur Personality 3rd Ur Nature 2nd Ur SMS and 1st \Ur Lovely Friendship\""... good morning dear""",0,Low Risk,0
+"Loan for any purpose 500 tk- 75,000tk. Homeowners + Tenants welcome. Have you been previously refused? We can still help. Call Free +880 1956669 or text back 'help'",0,Low Risk,1
+Sorry i'm not free...,0,Low Risk,0
+How. Its a little difficult but its a simple way to enter this place,0,Low Risk,0
+BIG BROTHER ALERT! The computer has selected u for 10k cash or #150 voucher. Call +8801906401883. NTT PO Box CRO1327 18+ BT Landline Cost 150ppm mobiles vary,0,Low Risk,1
+Your package delivery is delayed. Track now at this fake link.,30,Medium Risk,1
+"Get rich quick! Invest BDT 10,000 today and double your money fast.",0,Low Risk,1
+Your job application was successful! Reply to claim your position,0,Low Risk,1
+Verify your phone number now to avoid service interruption.,15,Low Risk,1
+Free $1000 gift card! Click here to redeem before it expires.,15,Low Risk,1
+Your recent online purchase has been shipped successfully.,0,Low Risk,0
+Alert: Classified documents found linked to your account. Contact now!,15,Low Risk,1
+Your electricity bill of BDT 3000 is overdue. Pay now to avoid cut-off.,15,Low Risk,1
+Congratulations! You’ve won a holiday trip. Reply to claim.,0,Low Risk,1
+Payment of BDT 5000 received. Thank you for your timely payment.,0,Low Risk,0
+Urgent notice! Verify your social security number immediately.,45,High Risk,1
+Your bank loan has been approved. Send documents to finalize.,0,Low Risk,1
+Your subscription payment failed. Update billing info to continue.,0,Low Risk,1
+Your ticket to the concert is confirmed. Thank you for your purchase.,0,Low Risk,0
+You've been selected for a secret shopper job. Earn BDT 2000 daily.,0,Low Risk,1
+"Important: Claim your tax refund of BDT 8,000 today via this link",45,High Risk,1
+Your online account will be suspended soon. Verify credentials now.,15,Low Risk,1
+Your medical insurance claim has been processed successfully.,0,Low Risk,0
+New investment opportunity: Guaranteed 30% monthly returns.,15,Low Risk,1
+Your parcel has been dispatched. Track with tracking number XYZ123.,0,Low Risk,0
+"Claim your free BDT 5,000 reward now by clicking this link before it expires!",30,Medium Risk,1
+You have unclaimed cashback waiting. Submit your details to claim it immediately.,15,Low Risk,1
+"Final notice: Claim your government grant of BDT 10,000 within 24 hours",45,High Risk,1
+Congratulations! Claim your exclusive shopping voucher by replying with YES.,0,Low Risk,1
+"You are eligible to claim a BDT 3,000 bonus from your telecom operator.",0,Low Risk,1
+Claim your prize by verifying your phone number within 2 hours.,15,Low Risk,1
+Claim your loan disbursed amount now by confirming your bank details.,15,Low Risk,1
+Urgent: Claim compensation for delayed delivery by visiting this link.,30,Medium Risk,1
+Claim your free ticket for the concert happening near you this weekend.,0,Low Risk,1
+"Claim your BDT 7,500 insurance payout by contacting us immediately.",15,Low Risk,1
+Claim your cashback by logging into your account with this link.,15,Low Risk,1
+"You have been selected to claim a new government subsidy, respond with your ID",0,Low Risk,1
+Claim your refund for the recent transaction now before the offer expires.,15,Low Risk,1
+Claim your mystery gift by sending a reply with your full name and address.,0,Low Risk,1
+Claim your free mobile upgrade by confirming your account info via SMS.,0,Low Risk,1
+You have a new message from the lottery office. Claim your winnings ASAP.,15,Low Risk,1
+Claim your prize money by paying a small processing fee at the link below,50,High Risk,1
+"Claim your BDT 15,000 bonus credits from our new app by signing up now.",15,Low Risk,1
+Claim your tax refund by uploading your financial documents immediately.,45,High Risk,1
+Claim your exclusive membership rewards by clicking here. Limited time offer!,0,Low Risk,0
+Your BDT 2000 payment has been received. Thank you for using our service.,0,Low Risk,0
+Urgent: Verify your identity to avoid account closure. Click this link now.,30,Medium Risk,1
+Congratulations! You have been selected for a free smartwatch. Reply YES.,0,Low Risk,1
+Your electricity bill of BDT 1500 is due tomorrow. Please pay on time.,0,Low Risk,0
+Immediate action required! Suspicious login detected. Confirm your password.,30,Medium Risk,1
+Your mobile recharge of BDT 500 was successful.,0,Low Risk,0
+"Last chance to claim your cashback offer worth BDT 10,000!",0,Low Risk,1
+Package delivered! Track it anytime using tracking number #12345.,0,Low Risk,0
+You won an exclusive holiday package. Contact us immediately to claim.,15,Low Risk,1
+Your online subscription has been renewed successfully,0,Low Risk,0
+Warning! Your account has been suspended due to suspicious activity.,0,Low Risk,1
+Enjoy 20% discount on your next purchase. Use code SAVE20.,0,Low Risk,0
+Your loan application was approved. Submit documents to receive payment.,0,Low Risk,1
+Thank you for your recent payment of BDT 3000.,0,Low Risk,0
+Alert! Unrecognized device logged in to your account. Verify immediately.,15,Low Risk,1
+Your food delivery has arrived. Please collect it.,0,Low Risk,0
+Claim your prize money worth BDT 5000 by sending your bank details now.,15,Low Risk,1
+Your appointment with Dr. Rahman has been confirmed for tomorrow.,0,Low Risk,0
+"You are selected for government subsidy. Verify details to claim BDT 15,000.",0,Low Risk,1
+Your electricity bill payment of BDT 2600 was successful.,0,Low Risk,0
+Your BDT 3000 utility bill has been paid successfully.,0,Low Risk,0
+Urgent! Confirm your credit card details to avoid suspension.,15,Low Risk,1
+Congratulations! You won a free trip. Reply YES to claim your prize.,0,Low Risk,1
+Your mobile data has been recharged with 2GB. Enjoy surfing.,0,Low Risk,0
+Warning: Suspicious transaction detected. Verify your identity immediately.,15,Low Risk,1
+Your food order from FoodieApp is delivered. Enjoy your meal!,0,Low Risk,0
+Limited-time offer! Double your investment in 15 days. Call now.,0,Low Risk,0
+You have successfully booked a taxi for 9 AM tomorrow.,0,Low Risk,0
+"Final notice! Claim your BDT 10,000 insurance payout today.",0,Low Risk,1
+Your monthly gym subscription has been renewed. Thank you.,0,Low Risk,0
+You have unpaid fines totaling BDT 1200. Pay now to avoid penalties.,15,Low Risk,1
+Event reminder: Music concert tonight at 7 PM at City Arena.,0,Low Risk,0
+Your debit card has been temporarily blocked for security reasons.,0,Low Risk,1
+Your parcel #XZ1234 is ready for pickup at the post office.,0,Low Risk,0
+Urgent: Your loan approval is pending. Submit documents to proceed.,15,Low Risk,1
+Your cab driver will arrive in 5 minutes. Please be ready,0,Low Risk,0
+"Get rich quick! Invest BDT 20,000 in crypto mining and earn huge profits.",0,Low Risk,1
+Thank you for registering for the webinar. We will email the link soon.,15,Low Risk,0
+Your electricity meter reading is due. Please pay your bill of BDT 2500.,0,Low Risk,0
+Last chance: Claim your cashback by verifying your account details now.,15,Low Risk,1
+Your BDT 4000 electricity bill has been paid. Thank you for your payment.,0,Low Risk,1
+Alert: Suspicious account activity detected. Verify your info immediately.,15,Low Risk,0
+Congratulations! You are selected for a free smartphone giveaway. Reply YES.,0,Low Risk,1
+Your monthly mobile recharge of BDT 600 was successful.,0,Low Risk,0
+Urgent! Your login was from an unknown device. Confirm your identity now.,15,Low Risk,1
+Your food delivery order has arrived. Enjoy your meal!,0,Low Risk,0
+Double your money with our new investment plan. Call us today,0,Low Risk,1
+Urgent! Verify your bank details to prevent account suspension.,15,Low Risk,1
+"Claim your prize worth BDT 10,000 by replying",0,Low Risk,1
+Your recent payment of BDT 1500 was successful,0,Low Risk,0
+Your parcel #AB123 is out for delivery.,0,Low Risk,0
+Your electricity bill of BDT 800 is due tomorrow.,0,Low Risk,0
+"Immediate notice: Unauthorized transaction detected, act now!",15,Low Risk,1
+You have won a free luxury watch. Reply to claim now.,15,Low Risk,1
+Your mobile recharge of BDT 300 was successful.,0,Low Risk,0
+Reminder: Doctor’s appointment tomorrow at 10 AM,0,Low Risk,0
+Thank you for your recent bank deposit of BDT 5000.,0,Low Risk,0
+"Claim your government grant of BDT 12,000 now.",45,High Risk,1
+"Alert! Suspicious login attempt detected, verify your account.",0,Low Risk,1
+Your cab driver will arrive in 10 minutes.,0,Low Risk,0
+Your online subscription has been renewed. Thank you!,0,Low Risk,0
+You have a new message from the lottery office. Claim winnings.,0,Low Risk,0
+Your credit card has been temporarily blocked. Confirm details.,0,Low Risk,1
+Congratulations! You are selected for exclusive cashback offer.,0,Low Risk,1
+Your electricity payment of BDT 2200 was successful.,0,Low Risk,0
+Your order #5678 has been processed and shipped.,0,Low Risk,0
+Payment reminder: Your internet bill of BDT 1200 is due.,0,Low Risk,0
+Alert: Suspicious debit card transaction of BDT 5000 detected. Verify immediately.,15,Low Risk,1
+You won a free vacation to the Bahamas! Reply YES to claim your prize.,0,Low Risk,1
+Your electricity bill payment of BDT 3200 was successful.,0,Low Risk,0
+Your package #ZX12345 is out for delivery. Track it using our app.,0,Low Risk,0
+Reminder: Doctor appointment scheduled for tomorrow at 9:30 AM.,0,Low Risk,0
+Urgent: Your bank account has been locked due to suspicious activity. Verify now.,35,Medium Risk,1
+"Claim your cash reward of BDT 10,000 now. Send your bank details to proceed.",15,Low Risk,1
+Your Uber ride has been confirmed for 3 PM today.,0,Low Risk,0
+Last chance to update your payment info or your subscription will be suspended.,0,Low Risk,1
+Congratulations! You have been pre-approved for a loan. Apply now to get instant approval.,30,Medium Risk,1
+Your recent grocery order #78345 has been delivered. Enjoy your purchase!,0,Low Risk,0
+Your Netflix subscription has been renewed. Thank you for staying with us.,0,Low Risk,0
+Alert: Unrecognized login attempt detected on your email. Secure your account now.,15,Low Risk,1
+"You've received BDT 1,000 cashback from your last purchase",0,Low Risk,0
+Please verify your social security number to claim your government grant.,30,Medium Risk,1
+Your cab driver is on the way and will arrive in 5 minutes.,0,Low Risk,0
+Verify your Apple ID to prevent permanent lockout. Ignore if you did not request.,0,Low Risk,1
+Thank you for your donation of BDT 500. Your generosity is appreciated.,0,Low Risk,0
+Let's meet at the cafe around 8 PM?,0,Low Risk,0
+Claim your cashback reward #10 now! Limited time offer.,0,Low Risk,0
+আপনার বিকাশে 350 টাকা জিতেছেন! তথ্য নিশ্চিত করতে এখনই লিঙ্কে যান।,0,Low Risk,1
+Congratulations! You won a free iPhone. Claim now at secure-link.com,30,Medium Risk,1
+Don't forget to bring the documents for tomorrow's meeting,0,Low Risk,0
+Limited offer! Get 50% cashback on your next payment. Click here,0,Low Risk,0
+আপনার নাম্বারটি নির্বাচিত হয়েছে লটারি জেতার জন্য। লিঙ্কে যাচাই করুন।,0,Low Risk,1
+Can you send me your notes for today's class?,0,Low Risk,0
+Win ₹5000 instantly! Verify your account at rewardsite.com,0,Low Risk,1
+Alert: Unusual withdrawal of BDT 4500 from your account. Verify now to avoid loss.,35,Medium Risk,1
+"Congratulations! You have won a BDT 20,000 shopping voucher. Reply to claim your prize.",0,Low Risk,1
+Your water bill of BDT 1200 has been paid successfully.,0,Low Risk,0
+Your parcel #YZ6789 will be delivered today. Track live through our app,0,Low Risk,0
+Reminder: Your flight booking to Dhaka is scheduled for tomorrow at 6 AM.,0,Low Risk,0
+Important: Your bank account is locked due to suspicious activity. Verify your identity now.,15,Low Risk,1
+"Claim instant loan approval up to BDT 50,000. Send your documents to proceed.",15,Low Risk,1
+Your mobile recharge of BDT 350 was processed successfully.,0,Low Risk,0
+Your hotel booking confirmation #12345 for 3 nights in London.,0,Low Risk,0
+Payment of BDT 3800 received. Thank you for your payment to ABC Store,0,Low Risk,0
+Final notice: Update your billing info or your mobile service will be suspended.,0,Low Risk,1
+Congratulations! You’re pre-qualified for a credit card with a $5000 limit. Apply now.,15,Low Risk,1
+Your online shopping order #78654 is confirmed and will be delivered soon.,0,Low Risk,0
+Your subscription to Sports Daily renewed successfully. Enjoy your exclusive content!,0,Low Risk,0
+Alert: Suspicious login attempt on your email account. Secure it immediately.,15,Low Risk,1
+You’ve earned BDT 1500 cashback on your last grocery purchase.,0,Low Risk,0
+"Claim your government relief fund of BDT 30,000. Submit your documents today.",0,Low Risk,1
+"Your taxi will arrive in 7 minutes. Driver: Saiful, Car: Blue Toyota.",0,Low Risk,0
+Your Apple ID has been temporarily disabled. Verify now to avoid permanent lockout,35,Medium Risk,1
+Thank you for your charitable donation of BDT 1000. Your kindness is appreciated.,0,Low Risk,0
+Urgent payment required: Your credit card bill of BDT 7000 is overdue. Pay now to avoid fees,15,Low Risk,1
+"অভিনন্দন! আপনি ২০,০০০ টাকার ভাউচার জিতেছেন। আপনার পুরস্কার পেতে “YES” রিপ্লাই করুন।",0,Low Risk,1
+আপনার বিদ্যুতের বিল ৩১৫০ টাকা সফলভাবে পরিশোধ হয়েছে। ধন্যবাদ।,0,Low Risk,0
+আপনার প্যাকেজ #এসটি১২৩৪৪ আজ ডেলিভারি হবে। ট্র্যাক করতে আমাদের অ্যাপ ব্যবহার করুন।,0,Low Risk,0
+"Your bank transfer of BDT 10,000 has been successfully processed",0,Low Risk,0
+You’ve won a free entry to the VIP concert! Reply YES to claim your tickets.,0,Low Risk,1
+Your parcel #A7821 was successfully delivered. Thank you for shopping with us.,0,Low Risk,0
+Warning: Multiple failed login attempts on your social media account. Check activity now.,15,Low Risk,1
+"Your insurance claim was approved. BDT 15,000 will be credited to your account shortly.",0,Low Risk,0
+"Last chance to claim your cashback offer worth BDT 5,000. Verify now.",35,Medium Risk,1
+Your flight to Chittagong is on schedule for 10 AM tomorrow. Have a safe trip!,0,Low Risk,0
+Confirm your bank details now to avoid loan application cancellation.,15,Low Risk,1
+Your electricity bill for this month is BDT 2900. Please pay by the due date.,0,Low Risk,0
+Congratulations! You have been selected to get an exclusive reward! Your name came up for a YETI War Survival Kit. This special gift is from Tractor Supply. Hurry up! Your Reward is Ready,0,Low Risk,1
+Enjoy Annual Fee Waiver on Your Medical Quota Debit Card for Safe and Convenient Payment Abroad!,0,Low Risk,1
+Your cloud storage is full. Please take action to free up space. Cloud Storage – Storage Limit Reached Your storage reached 100%,0,Low Risk,1
+ANSWER FOR FREE!You have been chosen to participate in our Loyalty Program for FREE! It will take you only a minute to receive this fantastic prize.,0,Low Risk,1
+Get a free Amazon voucher by completing this survey now.,15,Low Risk,1
+Congratulations! Your subscription is upgraded. Click to confirm,0,Low Risk,1
+Alert: Suspicious activity detected in your PayPal account. Verify now,35,Medium Risk,1
+bKash: You received 2000 BDT. Click here to confirm your account,15,Low Risk,1
+Do you want to join the study group this evening?,0,Low Risk,0
+Bank Alert: Your account will be locked due to pending verification.,0,Low Risk,1
+Earn $100 per day from home with this financial program. Apply now!,15,Low Risk,1
+"Bhai, I sent you 1500 taka via bKash. Check and confirm",0,Low Risk,0
+Congratulations! You have been selected for a $5000 government loan with 0% interest. Apply now!,15,Low Risk,1
+Can you return the 1000 BDT I lent you last week? Need it urgently,0,Low Risk,1
+Get 200% return by investing just $100 in our crypto program. Limited seats!,0,Low Risk,0
+"Salary credited: 35,000 BDT has been deposited to your account",0,Low Risk,0
+Claim your free cashback of $250 today by entering your card details,0,Low Risk,1
+"Your Tax Refund of 20,000 BDT is pending. Submit your details to receive it instantly",30,Medium Risk,1
+"Nagad e 500 taka pathaisi, mama. Dekho paiso naki",0,Low Risk,0
+Last chance! Clear your loan dues now to avoid legal action,15,Low Risk,1
+"Please approve the 12,500 BDT payment request I sent on Payoneer.",0,Low Risk,0
+Win a brand new iPhone 15 by paying just $5 registration fee!,0,Low Risk,1
+Your credit card has been temporarily blocked. Reactivate by verifying your PIN.,30,Medium Risk,1
+Client sent the 40% advance today. Check the bank statement,0,Low Risk,0
+Earn $300 per day without investment. Just forward messages!,0,Low Risk,1
+Can you share the bank details for transferring the rent money?,0,Low Risk,0
+"Your bank flagged a transaction of $1,250. Verify at securebank-verify.com within 24 hours to avoid suspension",15,Low Risk,1
+"Sent 2,500 BDT via bKash just now. Please confirm when you get it",15,Low Risk,0
+"Congratulations, you have been pre-approved for an instant $5,000 loan. Apply here to receive funds within 24 hours",30,Medium Risk,1
+"Invoice INV-3321 for 18,750 BDT has been paid and receipt uploaded to your email",0,Low Risk,0
+Alert: Unusual login detected on your PayPal. Confirm identity to prevent account hold,0,Low Risk,1
+"I transferred the rent 12,000 BDT to your account. Check and tell me if it cleared",0,Low Risk,0
+Limited offer: Get 15% cashback on utility bill payments. Submit card details to claim reward,0,Low Risk,0
+"Company salary transfer of 45,000 BDT processed today. Payslip sent to your inbox",0,Low Risk,0
+Immediate action required: Confirm your bank OTP to stop a pending fraudulent transfer,30,Medium Risk,1
+"I have paid the supplier 30,000 BDT via bank transfer; please confirm delivery schedule",0,Low Risk,0
+"You are shortlisted for a high-return investment program. Invest $200 to get $2,000 monthly returns. Limited seats",0,Low Risk,0
+"Shared the invoice for last month. Please approve payment of 22,500 BDT by Friday",0,Low Risk,0
+Final notice: Overdue loan amount of $850 must be cleared or legal action will follow. Click to resolve,0,Low Risk,1
+Reward claim: Your tax refund of $420 is pending. Submit bank details to process immediately,45,High Risk,1
+"Payment confirmation: Received 4,200 BDT for the event booking. Thanks for the prompt payment",0,Low Risk,0
+Urgent verification requested: Reactivate your debit card by confirming 4-digit PIN at banklink.verify,45,High Risk,1
+"I sent the freelance payment of $150 via Payoneer. Check and confirm receipt, please",0,Low Risk,0
+"Exclusive: Instant credit limit increase to $3,000 available. Click link to accept the offer now",30,Medium Risk,1
+"Reminder: Utility bill of 1,250 BDT due tomorrow. Please pay to avoid late fee",0,Low Risk,0
+Claim your cashback reward of $300 now. Complete the form to receive instant transfer,15,Low Risk,1
+"Transferred 5,000 BDT for the project materials. Inform me when it arrives",0,Low Risk,0
+Your credit score has been upgraded. Unlock premium loan access with zero documentation,0,Low Risk,1
+Sent the advance payment of $200 via Wise. Check your email for confirmation,0,Low Risk,0
+"Lottery draw result: Your mobile number has won 75,000 BDT. Submit bank info to collect winning",0,Low Risk,1
+I refunded the extra 850 BDT you sent earlier. Please recheck your balance,0,Low Risk,0
+PayPal alert: Unverified login attempt blocked. Recover account before suspension,0,Low Risk,1
+"Final payment of 12,600 BDT processed successfully. Kindly send delivery schedule",0,Low Risk,0
+Government relief fund available for selected citizens. Register to receive $500 instantly,0,Low Risk,1
+"Rent of 9,000 BDT paid via Nagad. Let me know if it shows pending",0,Low Risk,0
+Your insurance refund request is approved. Submit billing address to release payment,0,Low Risk,1
+"Paid the tuition installment of 15,000 BDT today. Please confirm on your side",0,Low Risk,0
+"Crypto investment deal: Deposit $100 and earn $1,000 monthly return guaranteed",15,Low Risk,1
+"Can you send 2,300 BDT by evening? Need to settle an urgent bill",15,Low Risk,0
+"Security alert: Suspicious transaction of 4,500 BDT detected on your card. Approve or decline immediately",15,Low Risk,1
+Salary allowance of $120 added separately. Check your payroll slip,0,Low Risk,0
+Your subscription payment failed. Update card details to avoid service halt,0,Low Risk,1
+Settled the vendor payment through bank draft just now. Awaiting your acknowledgment,15,Low Risk,0
+Limited stock: Get gold savings account with 5x bonus interest. Activate through special code,0,Low Risk,0
+"Received 1,100 BDT on Rocket just now. Sending receipt shortly",15,Low Risk,0
+Immediate action required to prevent permanent block on your debit card. Confirm identity at verify-mybank.net,0,Low Risk,1
+"Just sent 3,200 BDT to your account for the utility bills. Please check and confirm",0,Low Risk,0
+"Exclusive loan offer of $10,000 with no credit check. Apply before midnight",0,Low Risk,1
+"Client transferred 65,000 BDT this morning. Update the balance sheet",0,Low Risk,0
+Final reminder: Your pending tax fee of $260 must be cleared to avoid penalty,0,Low Risk,1
+"Your online order payment of 2,750 BDT is successfully received. Thank you",0,Low Risk,0
+"Congratulations, your wallet has been credited with $700 bonus. Activate reward using secure link",15,Low Risk,1
+"I will return your 1,500 BDT tomorrow once my salary arrives",0,Low Risk,0
+Suspicious payment attempt detected on your MasterCard. Validate transaction immediately,15,Low Risk,1
+"Sent the advance booking amount of 5,500 BDT. Please reserve the slot",0,Low Risk,0
+Your reward of $950 is waiting for withdrawal. Submit bank details to receive instantly,0,Low Risk,1
+"I transferred 4,800 BDT for the exam fees. Please verify if it reached your account",0,Low Risk,0
+Urgent notification: Loan recovery team assigned to your case. Clear dues to avoid legal visit,15,Low Risk,1
+"The vendor confirmed receipt of 22,000 BDT. Delivery will be dispatched tomorrow",0,Low Risk,0
+"Increase your credit limit to $5,000 instantly without documentation. Click to activate",0,Low Risk,1
+"Mom sent 1,200 BDT through Rocket. Check if it reflects in your balance",0,Low Risk,0
+Your insurance refund of $350 is ready. Complete verification before it expires,20,Medium Risk,1
+I paid the hotel booking charge via Visa. Check the confirmation email,0,Low Risk,0
+Security alert: Multiple failed login attempts on your wallet. Restore access now,15,Low Risk,1
+"The rent of 8,500 BDT has been transferred. Please send acknowledgment",0,Low Risk,0
+Final warning: Your credit card account will be frozen within 24 hours. Verify now at securebankportal.com,35,Medium Risk,1
+"I sent 3,700 BDT for groceries via bKash. Let me know once it reaches",0,Low Risk,0
+"Congratulations! You are selected for a $2,000 investment bonus. Submit details to claim",0,Low Risk,1
+"Paid the electricity bill of 1,250 BDT today. Please check if it cleared",0,Low Risk,0
+Your PayPal account is under review due to suspicious activity. Confirm identity immediately,15,Low Risk,1
+"I transferred 5,500 BDT for the office stationery. Confirm receipt",0,Low Risk,0
+Exclusive: Unlock a high-yield savings account with 5% bonus interest. Apply now,15,Low Risk,1
+"Sent advance payment of 15,000 BDT for the event hall booking. Await confirmation",0,Low Risk,0
+Alert: Unauthorized loan application detected in your name. Verify or report now,15,Low Risk,1
+"I repaid the 2,300 BDT loan you gave last week. Please confirm",0,Low Risk,0
+Urgent: Your bank account has been flagged for multiple failed login attempts. Verify now to avoid freeze,35,Medium Risk,1
+"I transferred 2,800 BDT for the monthly internet bill. Check and confirm receipt",0,Low Risk,0
+"Limited offer: Apply for an instant $1,500 payday loan without credit check",0,Low Risk,0
+"Client has deposited 50,000 BDT today. Update your records accordingly",0,Low Risk,0
+"Your lottery reward of $1,200 is pending. Submit bank details to claim before deadline",0,Low Risk,1
+"Paid the school fees of 12,500 BDT today. Please acknowledge",0,Low Risk,0
+Security alert: Your debit card shows suspicious activity. Confirm transaction immediately,15,Low Risk,1
+"I sent 1,800 BDT to settle the grocery expenses. Let me know if it’s received",0,Low Risk,0
+"Exclusive crypto investment opportunity: Deposit $200 to earn $1,500 monthly. Limited seats",0,Low Risk,0
+"Salary of 45,000 BDT has been credited. Check your payroll slip",0,Low Risk,0
+আপনার একাউন্টে সন্দেহজনক লেনদেন হয়েছে। দ্রুত যাচাই করুন।,0,Low Risk,1
+আপনার মোবাইল রিচার্জ সফল হয়েছে। ধন্যবাদ।,0,Low Risk,0
+"জরুরি! আপনার অ্যাকাউন্ট ব্লক হতে চলেছে, লগইন করুন",0,Low Risk,1
+আপনার লটারি জিতেছেন! এখনই তথ্য পাঠান।,0,Low Risk,1
+আপনার ব্যাংক অ্যাকাউন্টে সন্দেহজনক লেনদেন হয়েছে। বিশদ তথ্যের জন্য কল করুন।,0,Low Risk,1
+আপনার অ্যাকাউন্টের ব্যালেন্স ৭০০০ টাকা।,0,Low Risk,0
+আপনি এখনই লটারি জিতেছেন। বিস্তারিত জানার জন্য কল করুন।,0,Low Risk,1
+"অজানা নম্বর থেকে কল এড়ান, এটি প্রতারণামূলক।",0,Low Risk,0
+অনলাইন ট্রেডিং প্লাটফর্মে যোগ দিয়ে বিনিয়োগ করুন।,0,Low Risk,1
+আপনার অ্যাকাউন্ট থেকে অবৈধ লেনদেন হয়েছে। অচিরেই অভিযোগ জানান।,0,Low Risk,1
+আপনার ব্যাংক অ্যাকাউন্টের বিস্তারিত তথ্য আপডেট করুন।,0,Low Risk,1
+আপনার মোবাইল নম্বর রিচার্জ সফল হয়েছে। ধন্যবাদ।,0,Low Risk,0
+অনলাইন লেনদেনে আগ্রহী? দ্রুত যোগাযোগ করুন।,0,Low Risk,1
+আপনার লোন এর আবেদন অগ্রগামী। দ্রুত OTP দিন।,30,Medium Risk,1
+আপনার অ্যাকাউন্টে কিছু সন্দেহজনক কার্যকলাপ লক্ষ্য করা গেছে। সাহায্য করার জন্য কল করুন।,0,Low Risk,1
+"চলুন, আজই আপনার ব্যালেন্স বাড়ান। বিনিয়োগের জন্য দ্রুত যোগাযোগ করুন।",0,Low Risk,1
+"আপনার ওটিপি কোড ১২৩৪৫৬, দয়া করে কারো সাথে শেয়ার করবেন না।",0,Low Risk,0
+Congratulations! You have won a prize. Send OTP to claim your reward.,55,High Risk,1
+"Urgent! Your account will be suspended, verify now by sending OTP.",65,High Risk,1
+Your loan approved! Send your personal details to receive funds.,0,Low Risk,1
+Monthly subscription payment received. Thank you for your service usage.,0,Low Risk,0
+"Warning! Suspicious login detected, confirm your identity with OTP.",30,Medium Risk,1
+"নতুন মোবাইল প্ল্যান অফার, বিস্তারিত জানতে কল করুন।",0,Low Risk,0
+Account locked! Provide OTP now to unlock your account.,45,High Risk,1
+"আপনার পেমেন্ট সফল হয়েছে, মোট ব্যালেন্স BDT ১২,০০০।",0,Low Risk,0
+"আপনার কার্ড থেকে অননুমোদিত লেনদেন করা হয়েছে, কল করুন অবিলম্বে।",0,Low Risk,1
+Urgent! Update your bank details to continue service.,15,Low Risk,1
+Your account balance is BDT 7000. Thank you for banking with us.,0,Low Risk,0
+"জরুরি: আপনার একাউন্টে অস্থায়ী সমস্যা হয়েছে, এখনি লগইন করে যাচাই করুন।",0,Low Risk,1
+Congratulations! You are selected for a free gift. Send OTP to claim.,55,High Risk,1
+"আপনার মোবাইল রিচার্জ সফল হয়েছে, ধন্যবাদ।",0,Low Risk,0
+Urgent action required! Verify your account with OTP within 10 minutes.,45,High Risk,1
+Your debit card is blocked for suspicious activity. Call now to unblock.,15,Low Risk,1
+New mobile plan launched. Contact customer care for details.,0,Low Risk,0
+OTP verification failed. Please try again.,30,Medium Risk,0
+"আপনার লোড ব্যালেন্স ক্ষীণ হচ্ছে, দ্রুত রিফিল করুন।",0,Low Risk,0
+Warning! Unauthorized access attempt detected. Verify with OTP now.,45,High Risk,1
+আপনার অ্যাকাউন্ট থেকে টাকা কেটে নেওয়া হয়েছে। সতর্ক থাকুন।,0,Low Risk,1
+Your subscription has been renewed successfully.,0,Low Risk,0
+আপনার মোবাইল ফোনের বিল পরিশোধ সফল হয়েছে। ধন্যবাদ।,0,Low Risk,0
+Earn BDT 3000 daily working from home. Register now.,15,Low Risk,1
+আজকের বিশেষ অফার! আপনার ডিসকাউন্ট এনজয় করতে কল করুন আজই।,0,Low Risk,1
+Your debit card has been temporarily blocked due to suspicious activity.,0,Low Risk,1
+"আপনার মেইল বক্স পূর্ণ, নতুন মেইল দেখতে লগইন করুন।",0,Low Risk,0
+Your subscription has been renewed successfully. Thank you.,0,Low Risk,0
+Update your bank details now to avoid service disruption.,15,Low Risk,1
+"Dear user, update your payment info to avoid account suspension. Click the link now.",30,Medium Risk,1
+Your package delivery is scheduled for tomorrow. Track here: tracking-link.com,15,Low Risk,0
+Urgent: Verify your email by clicking the verification link within 24 hours.,30,Medium Risk,1
+Congratulations! You are selected for a free iPhone. Claim by replying with your address.,0,Low Risk,1
+"Team meeting is rescheduled to 3 PM, please confirm your availability.",0,Low Risk,0
+Win big with our new lottery. Reply WIN to participate.,0,Low Risk,1
+A new login to your account was detected from an unknown device. Secure your login now.,15,Low Risk,0
+Thank you for your recent purchase. Your order #12345 will arrive soon.,0,Low Risk,0
+Update your password immediately to safeguard your account.,45,High Risk,1
+Limited time offer: Upgrade your plan now and save 30%.,0,Low Risk,0
+Your bank statement is ready. Download your PDF here.,0,Low Risk,0
+New message from support team. Check your inbox for details.,0,Low Risk,0
+"আপনার OTP কোড 947123, কারো সাথে শেয়ার করবেন না।",30,Medium Risk,0
+আপনার ফেসবুক একাউন্টে নতুন মেসেজ এসেছে। এখনই চেক করুন।,0,Low Risk,0
+"Payment of BDT 2,500 received successfully. Thank you for your payment.",0,Low Risk,0
+Friend request from Raisa Moni.,0,Low Risk,0
+আপনার ব্যাংক স্টেটমেন্ট ডাউনলোড করতে এখানে ক্লিক করুন।,0,Low Risk,1
+Earn BDT 3000 daily from home. Register now!,15,Low Risk,1
+Your insurance claim has been approved. Contact us for details.,0,Low Risk,0
+"আপনার অ্যাকাউন্ট থেকে অবৈধ লেনদেন হয়েছে, দ্রুত কল করুন।",0,Low Risk,1
+Your software update is ready to install. Proceed now.,15,Low Risk,0
+Verify your email address by clicking this link.,15,Low Risk,1
+আপনার মোবাইল সেটিংস আপডেট করেছেন?,0,Low Risk,0
+Your subscription will expire tomorrow. Renew to continue service.,0,Low Risk,0
+আপনার ফেসবুক এ নতুন মন্তব্য এসেছে। এখনই দেখুন।,0,Low Risk,0
+Friend request from Rafi Ahmed. Accept to connect.,0,Low Risk,0
+আপনার মোবাইল সেটিংস সফলভাবে আপডেট হয়েছে।,0,Low Risk,0

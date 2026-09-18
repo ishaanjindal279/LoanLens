@@ -1,0 +1,200 @@
+{
+  "_metadata": {
+    "description": "Configurable Red Flag Rules for Suspicious Loan Message and T&C Detection",
+    "version": "2.0",
+    "note": "Weights, patterns, and thresholds can be adjusted here without changing source code."
+  },
+  "risk_thresholds": {
+    "HIGH": 65,
+    "SUSPICIOUS": 35,
+    "LOW": 0
+  },
+  "score_contributions": {
+    "rbi_not_found": 30,
+    "rbi_partial_match": 15,
+    "flagged_database_match": 50,
+    "ml_suspicious": 25,
+    "ml_safe": -10
+  },
+  "rules": [
+    {
+      "id": "upfront_fee",
+      "label": "Upfront Fee Demanded",
+      "weight": 25,
+      "patterns": [
+        "pay.*(?:processing|registration|security|insurance|gst|service|file|disbursement).*fee",
+        "(?:processing|registration|security|insurance|service|file|verification).*fee.*(?:before|prior|first|advance|upfront)",
+        "deposit.*before.*(?:loan|disburs)",
+        "(?:fee|payment|charge|amount).*before.*(?:receive|get|loan|disburs)",
+        "advance.*(?:payment|fee|deposit|money)",
+        "pay.*(?:\\u20b9|rs\\.?|inr)\\s*\\d+.*(?:before|prior|upfront|to release)",
+        "transfer.*amount.*(?:first|before|advance|deposit)"
+      ],
+      "explanation": "Legitimate lenders never ask for processing fees, security deposits, or file charges BEFORE disbursing the loan. Fees are always deducted from the sanctioned loan amount.",
+      "recommendation": "Do not pay any upfront fee under any circumstances. Report such demands at cybercrime.gov.in"
+    },
+    {
+      "id": "guaranteed_approval",
+      "label": "Guaranteed / Instant Approval Claim",
+      "weight": 15,
+      "patterns": [
+        "100%\\s*(?:guaranteed|assured|confirm|approval)",
+        "guaranteed.*(?:approval|loan|disbursal|amount|sanction)",
+        "(?:instant|immediate|5\\s*mins?|2\\s*mins?|lightning).*(?:approval|loan|disbursal|cash)",
+        "pre.?approved.*(?:loan|limit|cash)",
+        "assured.*(?:loan|approval)",
+        "no.*(?:credit check|cibil|documents?|income proof|salary slip)",
+        "everyone.*(?:eligible|approved)",
+        "no.*rejection",
+        "zero.*cibil.*required"
+      ],
+      "explanation": "RBI-registered lenders are legally required to evaluate creditworthiness and perform KYC. No genuine lender offers 100% guaranteed approval without credit assessment.",
+      "recommendation": "Be extremely skeptical of guaranteed approval claims. Real lenders always review your credit profile."
+    },
+    {
+      "id": "otp_request",
+      "label": "OTP / Security Credential Request",
+      "weight": 30,
+      "patterns": [
+        "(?:share|send|give|tell|enter|input|forward|submit|type|disclose|transfer).*(?:otp|one.?time.?password|mpin|tpin|atm pin|cvv|password|passcode)",
+        "(?:verify|confirm|validate).*(?:your)?\\s*(?:otp|pin|credentials|passcode)",
+        "(?:ask|request|demand).*(?:for)?\\s*(?:otp|pin|password)",
+        "(?:enter|fill|type|submit).*(?:otp|pin|password|verification code).*(?:link|form|sms|url|page|below)",
+        "(?:otp|pin|cvv).*(?:required|needed|mandatory|must be provided).*(?:loan|disburs|approval|claim|process|release)",
+        "(?:call|contact|message).*(?:to provide|with).*(?:otp|pin)"
+      ],
+      "explanation": "Legitimate financial institutions and loan agents will NEVER ask for your OTP, PIN, CVV, or passwords. Sharing these allows scammers to drain your accounts.",
+      "recommendation": "Never share your OTP or PIN with anyone, even someone claiming to be a bank official or recovery agent."
+    },
+    {
+      "id": "urgency_pressure",
+      "label": "Urgency / High-Pressure Tactics",
+      "weight": 15,
+      "patterns": [
+        "\\b(?:urgent|asap|immediately|right now|hurry|hurrying)\\b",
+        "limited.*(?:time|offer|slots?|seats?|validity)",
+        "expires?.*(?:today|soon|hours?|minutes?|now)",
+        "today.*only",
+        "last.*(?:chance|day|hour)",
+        "act.*(?:now|immediately|fast)",
+        "don.?t.*miss",
+        "within.*(?:\\d+\\s*hours?|\\d+\\s*minutes?|today)"
+      ],
+      "explanation": "Scammers manufacture artificial urgency to force you into making hasty decisions without verifying the lender's legitimacy.",
+      "recommendation": "Do not rush. Take adequate time to verify the lender's official RBI registration."
+    },
+    {
+      "id": "fake_rbi_claim",
+      "label": "Fake RBI / Government Scheme Claim",
+      "weight": 30,
+      "patterns": [
+        "rbi.(?:approved|registered|authorized|certified|licensed|backed|verified|loan)",
+        "reserve.*bank.*(?:approved|authorized|certified|scheme|loan)",
+        "government.*(?:approved|scheme|loan|backed)",
+        "pm.*(?:loan|yojana|scheme|mudra)",
+        "pradhan mantri.*(?:loan|yojana)",
+        "rbi.*(?:loan|scheme|offer|subsidy)"
+      ],
+      "explanation": "The Reserve Bank of India (RBI) is a regulatory body. RBI DOES NOT lend money directly to individuals, operate loan apps, or guarantee loans.",
+      "recommendation": "Any loan message claiming to be directly from RBI or PM Yojana with non-government links is fraudulent."
+    },
+    {
+      "id": "recovery_threat",
+      "label": "Illegal Recovery / Harassment Threats",
+      "weight": 35,
+      "patterns": [
+        "contact.*(?:family|relatives|friends|employer|boss|colleagues|contacts)",
+        "share.*(?:photos?|images?|videos?).*(?:contacts?|family|friends|whatsapp|social media)",
+        "legal.*action.*(?:if|unless|failure|within)",
+        "police.*(?:case|complaint|action|station|fir)",
+        "arrest.*(?:warrant|order|notice)",
+        "morphed.*(?:photos?|images?|nude)",
+        "send.*(?:photos?|images?).*(?:contacts?|whatsapp)",
+        "embarrass.*(?:you|family|employer|publicly)",
+        "court.*notice.*(?:today|within)",
+        "send.*recovery.*agents?.*(?:home|house|office)"
+      ],
+      "explanation": "Threatening borrowers, contacting their friends/family, or accessing photo galleries for extortion violates RBI's Fair Practices Code and is a criminal offense.",
+      "recommendation": "File an immediate complaint on cybercrime.gov.in and dial 1930. Block harassment numbers."
+    },
+    {
+      "id": "hidden_charges",
+      "label": "Hidden Charges & Unclear Terms",
+      "weight": 12,
+      "patterns": [
+        "hidden.*(?:charges?|fees?|costs?)",
+        "additional.*(?:charges?|fees?|costs?).*apply",
+        "extra.*(?:charges?|fees?|interest)",
+        "processing.*(?:fees?|charges?).*(?:deducted|will be|automatically|cut)",
+        "gst.*(?:extra|additional|separate)",
+        "service.*tax.*(?:extra|additional)",
+        "late.*penalty.*(?:daily|every day|per day)"
+      ],
+      "explanation": "Predatory loan apps conceal high deductions, daily penalties, and non-transparent processing fees, often leaving the borrower with only a fraction of the sanctioned loan.",
+      "recommendation": "Demand a Key Fact Statement (KFS) stating the All-Inclusive Annual Percentage Rate (APR) before signing."
+    },
+    {
+      "id": "unfair_clauses",
+      "label": "Unfair Contract / Predatory T&C Clauses",
+      "weight": 20,
+      "patterns": [
+        "modify.*(?:terms|interest|fees?).*(?:without notice|sole discretion|unilateral)",
+        "waive.*(?:right|court|legal remedy|dispute)",
+        "binding.*arbitration.*(?:solely|exclusive jurisdiction outside india)",
+        "auto.?debit.*without.*(?:prior notice|consent|authorization)",
+        "perpetual.*irrevocable.*(?:license|consent|authorization)",
+        "indemnify.*against.*all.*claims"
+      ],
+      "explanation": "Unfair contract terms allowing the lender to unilaterally alter interest rates or waive your rights to approach consumer/civil courts violate consumer protection norms.",
+      "recommendation": "Never accept agreements with unilateral revision clauses or waivers of statutory rights."
+    },
+    {
+      "id": "suspicious_privacy",
+      "label": "Suspicious Privacy & Data Sharing Terms",
+      "weight": 22,
+      "patterns": [
+        "share.*data.*(?:third party|recovery agents?|partners?|affiliates?).*without.*consent",
+        "sell.*(?:personal information|data|contacts|browsing)",
+        "collect.*(?:all files|media|photos|call history|sms logs)",
+        "transfer.*data.*outside.*india",
+        "retain.*data.*indefinitely",
+        "unrestricted.*access.*to.*device"
+      ],
+      "explanation": "RBI Digital Lending Guidelines strictly prohibit lending apps from accessing mobile phone resources like file systems, contact lists, call logs, and telephony data.",
+      "recommendation": "Review privacy policies carefully. Refuse apps that share your data with unauthorized third parties."
+    },
+    {
+      "id": "suspicious_link",
+      "label": "Suspicious / Unverified Links",
+      "weight": 15,
+      "patterns": [
+        "bit\\.ly",
+        "tinyurl",
+        "shorturl",
+        "t\\.co",
+        "is\\.gd",
+        "click.*here.*(?:now|immediately|to apply|to claim)",
+        "tap.*here.*(?:to apply|to get|for loan|to unlock)",
+        "download.*(?:apk|app).*(?:from|at|via).*(?:link|below|drive)",
+        "http[s]?://(?!.*\\.(?:gov\\.in|nic\\.in|bank)).*(?:loan|cash|rupee|credit|instant|paisa).*(?:\\.xyz|\\.top|\\.click|\\.club|\\.site|\\.online|\\.link|\\.app)",
+        "install.*(?:from|via).*link"
+      ],
+      "explanation": "Shortened URLs and direct APK links bypass Google Play Protect and often distribute malicious spyware designed to steal personal data.",
+      "recommendation": "Never download loan apps from direct links, APK files, or SMS. Install only from official app stores."
+    },
+    {
+      "id": "excessive_data_collection",
+      "label": "Excessive App Permission Demands",
+      "weight": 20,
+      "patterns": [
+        "access.*(?:contacts|call logs?|gallery|photos|camera|microphone|location|sms|storage)",
+        "permission.*(?:contacts|call logs?|gallery|photos|camera|sms|media)",
+        "allow.*access.*(?:contacts|messages|photos|storage|files|phone state)",
+        "read.*(?:contacts|call history|sms inbox|device storage)",
+        "mandatory.*permission.*(?:contacts|gallery|photos)"
+      ],
+      "explanation": "A digital lending app only needs basic identity and bank verification. Demanding access to contacts, photos, or call logs is a prime indicator of an illegal predatory app.",
+      "recommendation": "Deny contact, media, and call log permissions. If the app refuses to work without them, uninstall immediately."
+    }
+  ]
+}

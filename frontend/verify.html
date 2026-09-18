@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify Lender — LoanLens | Legitimate Lender Verification</title>
+  <meta name="description" content="Verify a lender against the RBI NBFC database and analyze suspicious loan messages, T&Cs, and permissions." />
+  <link rel="stylesheet" href="css/style.css?v=6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <style>
+    .page-wrap { padding: 32px 0 80px; position: relative; z-index: 1; }
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); margin-bottom: 6px; }
+    .page-header p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    /* Tab Bar */
+    .tab-bar {
+      display: flex;
+      gap: 6px;
+      background: #EEF4F0;
+      border: 1px solid #DDE7E0;
+      border-radius: var(--radius);
+      padding: 5px;
+      margin-bottom: 28px;
+      width: fit-content;
+      max-width: 100%;
+    }
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #0F766E;
+      background: rgba(255, 255, 255, 0.8);
+    }
+    .tab-btn.active {
+      background: #0F766E !important;
+      color: #FFFFFF !important;
+      border-color: #0F766E !important;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.2);
+    }
+
+    /* Progress Steps */
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+      padding: 4px 2px 8px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .progress-steps::-webkit-scrollbar {
+      display: none;
+    }
+    .prog-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      color: #475569;
+      background: #FFFFFF;
+      border: 1px solid #DDE7E0;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .prog-num {
+      width: 22px; height: 22px;
+      border-radius: var(--radius-sm);
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700;
+      color: #475569;
+      transition: all 0.2s ease;
+    }
+    .prog-step.active {
+      color: #0F766E !important;
+      font-weight: 700;
+      background: #ECFDF5 !important;
+      border-color: #0F766E !important;
+      box-shadow: 0 2px 8px rgba(15, 118, 110, 0.12);
+    }
+    .prog-step.active .prog-num {
+      background: #0F766E !important;
+      color: #FFFFFF !important;
+      border-color: #0F766E !important;
+      font-weight: 800;
+    }
+    .prog-step.done {
+      color: #166534 !important;
+      background: #F0FDF4 !important;
+      border-color: #86EFAC !important;
+      font-weight: 600;
+    }
+    .prog-step.done .prog-num {
+      background: #DCFCE7 !important;
+      color: #166534 !important;
+      border-color: #86EFAC !important;
+      font-weight: 800;
+    }
+    .prog-line {
+      width: 14px;
+      height: 2px;
+      background: #CBD5E1;
+      flex-shrink: 0;
+    }
+    .prog-line.done {
+      background: #166534;
+    }
+
+    /* Input Panels */
+    .input-panel {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 35px rgba(20, 83, 45, 0.05);
+    }
+    .input-panel-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; color: #17211B; }
+    .input-panel-sub { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; }
+
+    /* Result Cards */
+    .result-section { margin-bottom: 24px; }
+    .result-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+    .result-icon { font-size: 2rem; flex-shrink: 0; }
+    .result-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 4px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .result-sub { font-size: 0.86rem; color: var(--text-secondary); }
+
+    /* Permission Grid */
+    .perm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+    }
+    .perm-chip {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #FFFFFF;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .perm-chip:hover { border-color: var(--primary-teal); background: #F0FDF4; }
+    .perm-chip.selected { border-color: #0F766E; background: #ECFDF5; }
+    .perm-chip-top { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 0.88rem; color: #17211B; }
+    .perm-chip-sub { font-size: 0.72rem; color: var(--text-muted); line-height: 1.3; }
+    .perm-check { font-size: 0.85rem; opacity: 0; color: #0F766E; transition: opacity 0.15s; font-weight: 700; }
+    .perm-chip.selected .perm-check { opacity: 1; }
+
+    /* Model comparison table */
+    .model-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+    .model-table th, .model-table td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .model-table th { color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+    .model-table tr.primary-row { background: var(--primary-subtle); font-weight: 600; }
+
+    /* Status Bar */
+    #api-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      width: fit-content;
+      margin-bottom: 20px;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); }
+    .status-dot.online { background: var(--risk-low); }
+
+    /* Loading overlay */
+    .loading-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      text-align: center;
+    }
+    .loading-dots span {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      margin: 0 4px;
+      animation: bounce 1.2s ease-in-out infinite;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-header-row">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span>LoanLens</span>
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="verify.html" class="nav-link active" id="nav-verify">Verify Lender</a>
+        <a href="verify.html?tab=message" class="nav-link" id="nav-message">Analyze Message</a>
+        <a href="index.html#how-it-works" class="nav-link">How It Works</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container page-wrap">
+      <div class="container-sm" style="margin:0 auto;">
+
+        <!-- Header -->
+        <div class="page-header">
+          <h1>Legitimate Lender <span class="gradient-text">Verification</span></h1>
+          <p>Two-stage AI &amp; RBI regulatory verification framework to protect borrowers from scam loan apps.</p>
+        </div>
+
+        <!-- Engine Status -->
+        <div id="api-status">
+          <div class="status-dot online" id="status-dot"></div>
+          <span id="status-text">LoanLens Verification Engine Active</span>
+        </div>
+
+        <!-- Tab Bar -->
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tab-lender" onclick="switchTab('lender')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
+            Verify Lender (Stage 1 &amp; 2)
+          </button>
+          <button class="tab-btn" id="tab-message" onclick="switchTab('message')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Message / T&amp;C Only
+          </button>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- TAB 1: FULL DEMO FLOW (LENDER -> RBI -> STAGE 2) -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="panel-lender">
+
+          <!-- Verification Progress Steps -->
+          <div class="progress-steps" id="progress">
+            <div class="prog-step active" id="ps1"><div class="prog-num">1</div> RBI Check</div>
+            <div class="prog-line" id="pl1"></div>
+            <div class="prog-step" id="ps2"><div class="prog-num">2</div> Flagged DB</div>
+            <div class="prog-line" id="pl2"></div>
+            <div class="prog-step" id="ps3"><div class="prog-num">3</div> T&amp;C / NLP</div>
+            <div class="prog-line" id="pl3"></div>
+            <div class="prog-step" id="ps4"><div class="prog-num">4</div> Permissions</div>
+            <div class="prog-line" id="pl4"></div>
+            <div class="prog-step" id="ps5"><div class="prog-num">5</div> Final Verdict</div>
+          </div>
+
+          <!-- STAGE 1: Lender Input -->
+          <div class="input-panel" id="stage1-panel">
+            <div class="input-panel-title"><span>Stage 1</span> — RBI &amp; Banned App Verification</div>
+            <div class="input-panel-sub">Enter the official lender name or loan app title to check against official RBI records and known fraudulent apps.</div>
+
+            <div class="input-group">
+              <label for="lender-input">Lender or App Name</label>
+              <div class="input-with-btn">
+                <input type="text" id="lender-input" class="input"
+                  placeholder="e.g. 121 Finance Private Limited or Loan Mama"
+                  autocomplete="off" spellcheck="false" maxlength="200" />
+                <button class="btn btn-primary" id="btn-verify-lender" onclick="verifyLender()">
+                  <span id="btn-lender-label">Verify Lender</span>
+                  <span class="spinner hidden" id="spinner-lender"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Demo Prompts -->
+            <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+              <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">DEMO PRESETS:</span>
+              <button class="btn btn-secondary btn-sm" onclick="fillDemo('121 Finance Private Limited')">121 Finance — RBI Verified</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillDemo('Bajaj Finance Limited')">Bajaj Finance — Verified</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillDemo('Loan Mama')" style="border-color:rgba(239,68,68,0.3);">Loan Mama — Banned</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillDemo('RBI Instant Loan')" style="border-color:rgba(239,68,68,0.3);">RBI Instant Loan — Fake</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillDemo('SuperFast Cash App')" style="border-color:rgba(245,158,11,0.3);">SuperFast Cash — Unknown</button>
+            </div>
+          </div>
+
+          <!-- Stage 1 Results Container -->
+          <div id="stage1-result" class="result-section hidden fade-in"></div>
+
+          <!-- STAGE 2: Deep Analysis Gate -->
+          <div id="stage2-gate" class="hidden">
+            <div class="input-panel mt-4">
+              <div class="input-panel-title"><span>Stage 2</span> — Loan Message, T&amp;C &amp; Permission Analysis</div>
+              <div class="input-panel-sub">
+                Paste any loan message (SMS/WhatsApp), loan agreement, or Terms &amp; Conditions. We scan for upfront fees, predatory clauses, harassment threats, and excessive Android permissions.
+              </div>
+
+              <div class="input-group">
+                <label for="message-input">Loan Offer Message / Agreement / T&amp;C Text</label>
+                <textarea id="message-input" class="input" rows="6"
+                  placeholder="Paste SMS, WhatsApp loan message, or Terms &amp; Conditions here..."></textarea>
+              </div>
+
+              <!-- Message Demo Presets -->
+              <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">DEMO TEXTS:</span>
+                <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('scam')" style="border-color:rgba(239,68,68,0.3);">Scam Offer — Upfront Fee</button>
+                <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('threat')" style="border-color:rgba(239,68,68,0.3);">Extortion Recovery Threat</button>
+                <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('unfair_tc')" style="border-color:rgba(245,158,11,0.3);">Predatory T&amp;C Clauses</button>
+                <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('legit')">Legitimate Bank SMS</button>
+              </div>
+
+              <!-- App Permissions Selector -->
+              <div style="margin-top:24px;">
+                <label style="margin-bottom:10px; display:block; font-weight:600;">
+                  Permissions Requested by the App <span style="font-weight:400; color:var(--text-muted); font-size:0.8rem;">(Select all that the app prompts on install)</span>
+                </label>
+                <div class="perm-grid" id="perm-grid">
+                  <div class="perm-chip" data-perm="contacts" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Contacts List</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-high" style="font-size:0.65rem;">RBI PROHIBITED</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="call_logs" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Call Logs / History</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-high" style="font-size:0.65rem;">RBI PROHIBITED</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="gallery" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Photos / Gallery</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-high" style="font-size:0.65rem;">HIGH RISK</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="telephony" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Phone State / IMEI</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-high" style="font-size:0.65rem;">HIGH RISK</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="microphone" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Microphone</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-high" style="font-size:0.65rem;">VIDEO KYC ONLY</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="device_admin" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Device Administrator</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-high" style="font-size:0.65rem;">MALWARE ALERT</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="sms" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>SMS Messages</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-medium" style="font-size:0.65rem;">OTP ONLY</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="location" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Location (GPS)</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-medium" style="font-size:0.65rem;">ONE-TIME KYC</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="camera" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Camera</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-medium" style="font-size:0.65rem;">SELFIE KYC ONLY</span></div>
+                  </div>
+                  <div class="perm-chip" data-perm="storage" onclick="togglePerm(this)">
+                    <div class="perm-chip-top"><span>Document Storage</span><span class="perm-check">✓</span></div>
+                    <div class="perm-chip-sub"><span class="badge badge-low" style="font-size:0.65rem;">SANCTION PDF</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+                <button class="btn btn-primary btn-lg" id="btn-analyze" onclick="runFullAnalysis()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <span id="btn-analyze-label">Run ML Analysis &amp; Compute Risk</span>
+                  <span class="spinner hidden" id="spinner-analyze"></span>
+                </button>
+                <button class="btn btn-secondary" onclick="skipToResults()">Skip Stage 2 (Lender Only)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 2 / Full Results Area -->
+          <div id="stage2-result" class="hidden fade-in"></div>
+
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- TAB 2: MESSAGE & T&C ONLY ANALYSIS -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="panel-message" class="hidden">
+          <div class="input-panel">
+            <div class="input-panel-title">Analyze Loan SMS, WhatsApp or Agreement Text</div>
+            <div class="input-panel-sub">Detect 10 categories of red flag patterns including upfront fees, fake RBI claims, extortion threats, and predatory clauses.</div>
+
+            <div class="input-group">
+              <label for="msg-only-input">Message / Agreement Text</label>
+              <textarea id="msg-only-input" class="input" rows="7"
+                placeholder="Paste the loan message or agreement text here..."></textarea>
+            </div>
+
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">DEMO TEXTS:</span>
+              <button class="btn btn-secondary btn-sm" onclick="fillMsgOnly('scam')" style="border-color:rgba(239,68,68,0.3);">Scam Offer</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillMsgOnly('threat')" style="border-color:rgba(239,68,68,0.3);">Extortion Recovery</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillMsgOnly('unfair_tc')" style="border-color:rgba(245,158,11,0.3);">Unfair T&amp;C</button>
+              <button class="btn btn-secondary btn-sm" onclick="fillMsgOnly('legit')">Legitimate Bank</button>
+            </div>
+
+            <div style="margin-top:20px;">
+              <button class="btn btn-primary" id="btn-msg-analyze" onclick="analyzeMsgOnly()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span id="btn-msg-label">Analyze Message &amp; T&amp;C</span>
+                <span class="spinner hidden" id="spinner-msg"></span>
+              </button>
+            </div>
+          </div>
+
+          <div id="msg-only-result" class="hidden fade-in"></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script>
+  // ── Application State ─────────────────────────────────────────────
+  const state = {
+    lenderName: '',
+    rbiResult: null,
+    flaggedResult: null,
+    stage1Verdict: null,
+    redFlags: [],
+    mlResult: null,
+    permissionAnalysis: [],
+    riskResult: null
+  };
+
+  // ── Sample Demonstration Datasets ─────────────────────────────────
+  const DEMO_SCAM_MSG = `Congratulations! You are pre-approved for an instant ₹5,00,000 personal loan under RBI PM Scheme!
+Pay ₹1,499 processing & security fee before disbursement. 100% guaranteed approval within 5 minutes.
+Mandatory: Allow permission to access your contacts list and photo gallery.
+Apply now: bit.ly/fastloan99. Offer expires in 2 hours!`;
+
+  const DEMO_THREAT_MSG = `URGENT NOTICE: Your loan payment of ₹12,500 is overdue! 
+Pay immediately or our recovery team will contact your family members, relatives and employer.
+We have access to your personal photos from your gallery and will share them with your WhatsApp contacts list.
+Police case FIR will be registered within 24 hours.`;
+
+  const DEMO_UNFAIR_TC = `Terms and Conditions:
+1. The company reserves the right to modify interest rates, fees, and penalties at its sole discretion without prior notice.
+2. The borrower waives all rights to approach consumer courts or civil dispute forums.
+3. The borrower grants perpetual irrevocable consent to share device data, call history, and contacts with third-party recovery partners.
+4. Auto-debit will be initiated without prior authorization.`;
+
+  const DEMO_LEGIT_MSG = `Dear Customer, your loan application ref #PL-89421 has been received by HDB Financial Services Ltd (RBI Reg: U65993GJ2007PLC051028).
+Our underwriting team will evaluate your CIBIL score and documents within 2-3 business days.
+No advance fees are charged. Never share your OTP, PIN, or netbanking passwords with anyone.
+Customer Helpline: 1800-123-4567 | www.hdbfs.com`;
+
+  // ── Tab Management ────────────────────────────────────────────────
+  function switchTab(tab, updateUrl = true) {
+    const isMessage = tab === 'message';
+    const tabLender = document.getElementById('tab-lender');
+    const tabMessage = document.getElementById('tab-message');
+    const panelLender = document.getElementById('panel-lender');
+    const panelMessage = document.getElementById('panel-message');
+    const navVerify = document.getElementById('nav-verify');
+    const navMessage = document.getElementById('nav-message');
+
+    if (tabLender) tabLender.classList.toggle('active', !isMessage);
+    if (tabMessage) tabMessage.classList.toggle('active', isMessage);
+    if (panelLender) panelLender.classList.toggle('hidden', isMessage);
+    if (panelMessage) panelMessage.classList.toggle('hidden', !isMessage);
+
+    if (navVerify) navVerify.classList.toggle('active', !isMessage);
+    if (navMessage) navMessage.classList.toggle('active', isMessage);
+
+    if (updateUrl && window.history && window.history.replaceState) {
+      const url = new URL(window.location.href);
+      if (isMessage) {
+        url.searchParams.set('tab', 'message');
+      } else {
+        url.searchParams.delete('tab');
+      }
+      window.history.replaceState({ tab: isMessage ? 'message' : 'lender' }, '', url.pathname + url.search + url.hash);
+    }
+
+    if (isMessage) {
+      const msgInput = document.getElementById('msg-only-input');
+      if (msgInput) setTimeout(() => msgInput.focus(), 50);
+    } else {
+      const lenderInput = document.getElementById('lender-input');
+      if (lenderInput) setTimeout(() => lenderInput.focus(), 50);
+    }
+  }
+
+  function initTabFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    const hash = window.location.hash;
+    if (tabParam === 'message' || hash === '#message' || hash === '#tab-message') {
+      switchTab('message', false);
+    } else {
+      switchTab('lender', false);
+    }
+  }
+
+  function setProgress(step) {
+    for (let i = 1; i <= 5; i++) {
+      const ps = document.getElementById(`ps${i}`);
+      const pl = document.getElementById(`pl${i}`);
+      if (i < step) {
+        ps.className = 'prog-step done';
+        if (pl) pl.className = 'prog-line done';
+      } else if (i === step) {
+        ps.className = 'prog-step active';
+        if (pl) pl.className = 'prog-line';
+      } else {
+        ps.className = 'prog-step';
+        if (pl) pl.className = 'prog-line';
+      }
+    }
+  }
+
+  // ── UI Helpers ───────────────────────────────────────────────────
+  function fillDemo(name) {
+    const input = document.getElementById('lender-input');
+    input.value = name;
+    input.focus();
+    verifyLender();
+  }
+
+  function fillDemoMsg(type) {
+    const el = document.getElementById('message-input');
+    if (type === 'scam') {
+      el.value = DEMO_SCAM_MSG;
+      selectPerms(['contacts', 'gallery']);
+    } else if (type === 'threat') {
+      el.value = DEMO_THREAT_MSG;
+      selectPerms(['contacts', 'gallery', 'call_logs']);
+    } else if (type === 'unfair_tc') {
+      el.value = DEMO_UNFAIR_TC;
+      selectPerms(['contacts', 'telephony']);
+    } else {
+      el.value = DEMO_LEGIT_MSG;
+      selectPerms(['sms', 'storage']);
+    }
+  }
+
+  function fillMsgOnly(type) {
+    const el = document.getElementById('msg-only-input');
+    if (type === 'scam') el.value = DEMO_SCAM_MSG;
+    else if (type === 'threat') el.value = DEMO_THREAT_MSG;
+    else if (type === 'unfair_tc') el.value = DEMO_UNFAIR_TC;
+    else el.value = DEMO_LEGIT_MSG;
+  }
+
+  function togglePerm(el) { el.classList.toggle('selected'); }
+  function selectPerms(permKeys) {
+    document.querySelectorAll('.perm-chip').forEach(c => {
+      c.classList.toggle('selected', permKeys.includes(c.dataset.perm));
+    });
+  }
+  function getSelectedPerms() {
+    return [...document.querySelectorAll('.perm-chip.selected')].map(el => el.dataset.perm);
+  }
+
+  function showLoading(el, msg) {
+    el.innerHTML = `
+      <div class="loading-card">
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+        <div style="margin-top:16px; color:var(--text-secondary); font-size:0.9rem;">${msg}</div>
+      </div>`;
+    el.classList.remove('hidden');
+  }
+
+  function setBtnLoading(btnLabelId, spinnerId, loading) {
+    const label = document.getElementById(btnLabelId);
+    const spinner = document.getElementById(spinnerId);
+    if (label) label.style.opacity = loading ? '0.6' : '1';
+    if (spinner) spinner.classList.toggle('hidden', !loading);
+  }
+
+  // ── Stage 1: Lender Verification ─────────────────────────────────
+  async function verifyLender() {
+    const name = document.getElementById('lender-input').value.trim();
+    if (!name) { alert('Please enter a lender or app name.'); return; }
+
+    state.lenderName = name;
+    const resultEl = document.getElementById('stage1-result');
+    setBtnLoading('btn-lender-label', 'spinner-lender', true);
+    showLoading(resultEl, 'Searching RBI NBFC database (~8,500+ records) and flagged scam app list...');
+    setProgress(1);
+
+    document.getElementById('stage2-gate').classList.add('hidden');
+    document.getElementById('stage2-result').classList.add('hidden');
+
+    try {
+      const data = await LoanLensAPI.verifyLender(name);
+      state.rbiResult = data.rbi_result;
+      state.flaggedResult = data.flagged_result;
+      state.stage1Verdict = data.stage1_verdict;
+
+      resultEl.innerHTML = buildStage1HTML(data);
+      resultEl.classList.remove('hidden');
+      setProgress(2);
+
+      // Auto-reveal and scroll to Stage 2
+      const stage2Gate = document.getElementById('stage2-gate');
+      stage2Gate.classList.remove('hidden');
+
+      if (data.stage1_verdict === 'UNVERIFIED') {
+        // Pre-fill demo scam message if unknown so user can immediately test
+        if (!document.getElementById('message-input').value) {
+          fillDemoMsg('scam');
+        }
+      }
+
+      stage2Gate.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    } catch (e) {
+      resultEl.innerHTML = `<div class="info-box info-box-danger">Error during verification: ${esc(e.message)}</div>`;
+      resultEl.classList.remove('hidden');
+    } finally {
+      setBtnLoading('btn-lender-label', 'spinner-lender', false);
+    }
+  }
+
+  function buildStage1HTML(data) {
+    const { rbi_result: rbi, flagged_result: fl, stage1_verdict: verdict } = data;
+    let html = '';
+
+    // Flagged Match (Top Priority)
+    if (fl && fl.found) {
+      const entry = fl.entry;
+      html += `
+        <div class="rbi-flagged fade-in">
+          <div class="result-header">
+            <div style="width:40px;height:40px;background:var(--risk-high-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--risk-high)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div>
+              <div class="result-title" style="color:var(--risk-high);">FLAGGED AS DANGEROUS — ${entry.status || 'BANNED'}</div>
+              <div class="result-sub">Found in Flagged Lender / Predatory Loan App Database</div>
+            </div>
+          </div>
+          <div class="info-box info-box-danger" style="margin-bottom:14px;">
+            <strong>Violation Reason:</strong><br/>${entry.reason}
+          </div>
+          <div class="lender-details-grid">
+            <div class="detail-field"><span class="detail-label">Entity Name</span><span class="detail-value">${entry.name}</span></div>
+            <div class="detail-field"><span class="detail-label">Regulatory Status</span><span class="detail-value"><span class="badge badge-high">${entry.status}</span></span></div>
+            <div class="detail-field"><span class="detail-label">App Type</span><span class="detail-value">${entry.type || 'Illegal Lending App'}</span></div>
+            <div class="detail-field"><span class="detail-label">Severity</span><span class="detail-value"><span class="badge badge-high">${entry.severity || 'CRITICAL'}</span></span></div>
+            <div class="detail-field" style="grid-column: 1 / -1;"><span class="detail-label">Regulatory Advisory Source</span><span class="detail-value" style="font-size:0.85rem;">${entry.source || 'State Cyber Police & MeitY Warning Lists'}</span></div>
+          </div>
+        </div>`;
+      return html;
+    }
+
+    // RBI Registered
+    if (rbi && rbi.status === 'REGISTERED') {
+      html += `
+        <div class="rbi-registered fade-in">
+          <div class="result-header">
+            <div style="width:44px;height:44px;background:var(--risk-low-bg);border-radius:11px;border:1px solid rgba(16,185,129,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--risk-low)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div class="result-title" style="color:var(--risk-low);">✓ RBI REGISTERED NBFC</div>
+              <div class="result-sub">Matched in RBI NBFC Master Data</div>
+            </div>
+          </div>
+          <div class="lender-details-grid">
+            <div class="detail-field"><span class="detail-label">Official Registered Name</span><span class="detail-value">${rbi.name || '—'}</span></div>
+            <div class="detail-field"><span class="detail-label">CIN / Registration No.</span><span class="detail-value mono">${rbi.cin || '—'}</span></div>
+            <div class="detail-field"><span class="detail-label">RBI Classification</span><span class="detail-value">${rbi.classification || '—'}</span></div>
+            <div class="detail-field"><span class="detail-label">RBI Layer</span><span class="detail-value"><span class="badge badge-info">${rbi.layer || 'Base Layer'}</span></span></div>
+            <div class="detail-field"><span class="detail-label">Regional Office</span><span class="detail-value">${rbi.regional_office || '—'}</span></div>
+            <div class="detail-field"><span class="detail-label">Public Deposit Accepting</span><span class="detail-value">${rbi.deposit_status === 'Yes' ? '✅ Yes' : '❌ No (Non-Deposit)'}</span></div>
+            ${rbi.address ? `<div class="detail-field" style="grid-column: 1 / -1;"><span class="detail-label">Registered Corporate Office</span><span class="detail-value" style="font-size:0.85rem; font-weight:400;">${rbi.address}</span></div>` : ''}
+          </div>
+          <div style="height:1px; background:var(--border); margin:16px 0;"></div>
+          <div class="info-box info-box-success" style="margin-top:16px; margin-bottom:14px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Verification Passed:</strong> Entity holds a valid NBFC license from RBI. Proceed with Stage 2 below to inspect specific loan offers or messages for hidden terms.</span>
+          </div>
+          <a href="https://rbi.org.in" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:600;color:var(--primary-light);border:1px solid var(--border-teal);border-radius:var(--radius-sm);padding:7px 13px;text-decoration:none;transition:var(--transition);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View official RBI NBFC source →
+          </a>
+        </div>`;
+    } else if (rbi && rbi.status === 'PARTIAL_MATCH') {
+      html += `
+        <div class="rbi-partial fade-in">
+          <div class="result-header">
+            <div style="width:40px;height:40px;background:var(--risk-suspicious-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--risk-suspicious)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="result-title" style="color:var(--risk-suspicious);">POSSIBLE MATCH DETECTED</div>
+              <div class="result-sub">Found a closely matching RBI Registered Entity</div>
+            </div>
+          </div>
+          <div class="lender-details-grid">
+            <div class="detail-field"><span class="detail-label">Closest Matching Entity</span><span class="detail-value">${rbi.name || '—'}</span></div>
+            <div class="detail-field"><span class="detail-label">Match Confidence</span><span class="detail-value"><span class="badge badge-medium">${rbi.match_confidence || 85}% Match</span></span></div>
+            <div class="detail-field"><span class="detail-label">CIN / Registration No.</span><span class="detail-value mono">${rbi.cin || '—'}</span></div>
+            <div class="detail-field"><span class="detail-label">RBI Layer</span><span class="detail-value"><span class="badge badge-info">${rbi.layer || 'Base Layer'}</span></span></div>
+          </div>
+          <div class="info-box info-box-warning" style="margin-top:14px;">
+            <strong>Caution:</strong> The name you typed is similar to <em>${rbi.name}</em>. Ensure you are dealing with the genuine corporate entity and not an impersonator clone.
+          </div>
+        </div>`;
+    } else {
+      html += `
+        <div class="rbi-notfound fade-in">
+          <div class="result-header">
+            <div style="width:40px;height:40px;background:rgba(245,158,11,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--risk-suspicious)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="11"/><line x1="11" y1="14" x2="11.01" y2="14"/></svg>
+            </div>
+            <div>
+              <div class="result-title" style="color:var(--risk-suspicious);">UNVERIFIED</div>
+              <div class="result-sub">No matching NBFC found in the official ~8,500+ database</div>
+            </div>
+          </div>
+          <div class="info-box info-box-warning">
+            <strong>Not found in current RBI NBFC dataset.</strong> This does not automatically mean the lender is fraudulent. Additional analysis is required below to inspect message claims, T&amp;C terms, and permissions.
+          </div>
+        </div>`;
+    }
+
+    return html;
+  }
+
+  // ── Stage 2: Comprehensive Risk & Explainable AI ──────────────────
+  async function runFullAnalysis() {
+    const message = document.getElementById('message-input').value.trim();
+    const perms = getSelectedPerms();
+    const resultEl = document.getElementById('stage2-result');
+
+    setBtnLoading('btn-analyze-label', 'spinner-analyze', true);
+    showLoading(resultEl, 'Running TF-IDF ML text classifier, scanning 10 red flag rules, and evaluating permissions...');
+    setProgress(3);
+
+    try {
+      const [msgData, permData] = await Promise.all([
+        message ? LoanLensAPI.analyzeMessage(message) : Promise.resolve({ red_flags: [], ml_result: { prediction: 'LEGITIMATE', decision_score: 0.1, model_available: true } }),
+        perms.length ? LoanLensAPI.analyzePermissions(perms) : Promise.resolve({ permission_analysis: [], overall_permission_risk: 'LOW' })
+      ]);
+
+      state.redFlags = msgData.red_flags || [];
+      state.mlResult = msgData.ml_result || {};
+      state.permissionAnalysis = permData.permission_analysis || [];
+
+      setProgress(4);
+
+      const riskData = await LoanLensAPI.calculateRisk({
+        rbi_status: state.rbiResult ? state.rbiResult.status : 'NOT_FOUND',
+        flagged_result: state.flaggedResult || { found: false },
+        red_flags: state.redFlags,
+        ml_result: state.mlResult,
+        permission_analysis: state.permissionAnalysis
+      });
+
+      state.riskResult = riskData;
+      setProgress(5);
+
+      resultEl.innerHTML = buildFullResultsHTML(msgData, permData, riskData, message);
+      resultEl.classList.remove('hidden');
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (e) {
+      resultEl.innerHTML = `<div class="info-box info-box-danger">Error: ${esc(e.message)}</div>`;
+      resultEl.classList.remove('hidden');
+    } finally {
+      setBtnLoading('btn-analyze-label', 'spinner-analyze', false);
+    }
+  }
+
+  function skipToResults() {
+    document.getElementById('message-input').value = '';
+    document.querySelectorAll('.perm-chip').forEach(c => c.classList.remove('selected'));
+    runFullAnalysis();
+  }
+
+  // ── Tab 2: Message Only Analysis ──────────────────────────────────
+  async function analyzeMsgOnly() {
+    const message = document.getElementById('msg-only-input').value.trim();
+    if (!message) { alert('Please paste a loan message or agreement text.'); return; }
+
+    const resultEl = document.getElementById('msg-only-result');
+    setBtnLoading('btn-msg-label', 'spinner-msg', true);
+    showLoading(resultEl, 'Analyzing message text with NLP pattern matcher and ML classifier...');
+
+    try {
+      const msgData = await LoanLensAPI.analyzeMessage(message);
+      const riskData = await LoanLensAPI.calculateRisk({
+        rbi_status: 'NOT_APPLICABLE',
+        flagged_result: { found: false },
+        red_flags: msgData.red_flags || [],
+        ml_result: msgData.ml_result || {},
+        permission_analysis: []
+      });
+
+      resultEl.innerHTML = buildMsgOnlyHTML(msgData, riskData, message);
+      resultEl.classList.remove('hidden');
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) {
+      resultEl.innerHTML = `<div class="info-box info-box-danger">Error: ${esc(e.message)}</div>`;
+      resultEl.classList.remove('hidden');
+    } finally {
+      setBtnLoading('btn-msg-label', 'spinner-msg', false);
+    }
+  }
+
+  // ── HTML Visual Builders ──────────────────────────────────────────
+  function riskClass(level) {
+    return { HIGH: 'high', SUSPICIOUS: 'suspicious', MEDIUM: 'suspicious', LOW: 'low' }[level] || 'low';
+  }
+  function riskEmoji(level) {
+    return { HIGH: '🔴', SUSPICIOUS: '🟡', LOW: '🟢' }[level] || '⚪';
+  }
+  function riskColor(level) {
+    return { HIGH: 'var(--risk-high)', SUSPICIOUS: 'var(--risk-suspicious)', LOW: 'var(--risk-low)' }[level] || 'var(--text-muted)';
+  }
+
+  function buildGauge(score, level) {
+    const r = 70; const cx = 90; const cy = 90;
+    const circ = 2 * Math.PI * r;
+    const dashArray = circ * 0.75;
+    const dashOffset = dashArray * (1 - score / 100);
+    const color = riskColor(level);
+    return `
+      <div style="position:relative; width:180px; height:180px; margin:0 auto;">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.07)"
+            stroke-width="14" stroke-dasharray="${dashArray} ${circ - dashArray}"
+            stroke-dashoffset="${circ * 0.125}" stroke-linecap="round" transform="rotate(135 90 90)" />
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}"
+            stroke-width="14" stroke-dasharray="${dashArray - dashOffset} ${circ - (dashArray - dashOffset)}"
+            stroke-dashoffset="${circ * 0.125}" stroke-linecap="round" transform="rotate(135 90 90)"
+            style="filter: drop-shadow(0 0 10px ${color}80); transition: all 1.2s ease;" />
+        </svg>
+        <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <div style="font-size:2.4rem; font-weight:900; font-family:'Plus Jakarta Sans',sans-serif; color:${color}; line-height:1;">${score}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">RISK SCORE</div>
+        </div>
+      </div>`;
+  }
+
+  function buildRedFlagsHTML(redFlags) {
+    if (!redFlags.length) {
+      return `<div class="info-box info-box-success">✅ No red flag patterns detected in message/T&amp;C text.</div>`;
+    }
+    return redFlags.map(f => `
+      <div class="red-flag-item" style="margin-bottom:12px;">
+        <div class="red-flag-header">
+          <span style="font-size:1.1rem;">🚩</span>
+          <span class="red-flag-title">${f.label}</span>
+          <span class="badge badge-high" style="margin-left:auto;">+${f.weight} Risk Pts</span>
+        </div>
+        <div class="red-flag-explanation" style="font-size:0.875rem; color:var(--text-secondary); margin:6px 0;">${f.explanation}</div>
+        ${f.evidence && f.evidence.length ? `
+          <div style="margin-top:8px;">
+            <span style="font-size:0.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Flagged Evidence Snippet:</span>
+            <div class="red-flag-evidence" style="margin-top:4px;">
+              ${f.evidence.map(ev => `<span class="evidence-chip">"${esc(ev)}"</span>`).join(' ')}
+            </div>
+          </div>` : ''}
+        ${f.recommendation ? `<div style="font-size:0.8rem; color:var(--accent); margin-top:8px;">💡 <strong>Advice:</strong> ${f.recommendation}</div>` : ''}
+      </div>`).join('');
+  }
+
+  function buildPermissionsHTML(permAnalysis) {
+    if (!permAnalysis.length) return `<div class="text-muted text-sm">No permissions selected.</div>`;
+    const badges = { CRITICAL: 'badge-high', HIGH: 'badge-high', MEDIUM: 'badge-medium', LOW: 'badge-low' };
+    return permAnalysis.map(p => `
+      <div class="perm-row" style="display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border);">
+        <div style="font-size:1.6rem; flex-shrink:0;">${p.icon}</div>
+        <div style="flex:1;">
+          <div style="font-weight:700; font-size:0.92rem; display:flex; align-items:center; gap:8px;">
+            ${p.label}
+            <span class="badge ${badges[p.level] || 'badge-neutral'}">${p.level} RISK</span>
+          </div>
+          <div style="font-size:0.82rem; color:var(--primary-light); margin-top:2px;">📜 ${p.rbi_guideline || 'RBI Compliance Guideline'}</div>
+          <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:4px;">${p.explanation}</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;"><strong>Legitimate usage:</strong> ${p.legitimate_use}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function buildBreakdownHTML(breakdown) {
+    const labels = {
+      rbi_verification: '🏦 Stage 1: RBI NBFC Check',
+      flagged_database: '🚫 Stage 1: Banned App DB',
+      message_analysis: '📝 Stage 2: Message/T&C NLP',
+      ml_analysis: '🤖 Stage 2: ML Model Score',
+      permissions: '📱 Stage 2: Permissions Risk'
+    };
+    return Object.entries(breakdown).map(([key, val]) => {
+      const barW = Math.min(100, Math.abs(val.score));
+      const isNegative = val.score < 0;
+      const barColor = isNegative ? 'var(--risk-low)' : (val.score > 20 ? 'var(--risk-high)' : 'var(--risk-suspicious)');
+      return `
+        <div class="breakdown-row" style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <div style="font-size:0.85rem; font-weight:600; width:180px; flex-shrink:0;">${labels[key] || key}</div>
+          <div style="flex:1; background:rgba(255,255,255,0.06); height:8px; border-radius:100px; overflow:hidden;">
+            <div style="width:${barW}%; height:100%; background:${barColor};"></div>
+          </div>
+          <div style="font-size:0.85rem; font-weight:700; color:${barColor}; min-width:48px; text-align:right;">
+            ${val.score > 0 ? '+' : ''}${val.score} pts
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function buildFullResultsHTML(msgData, permData, riskData, message) {
+    const { risk_score, risk_level, risk_breakdown, verdict, stages_used, recommendations } = riskData;
+    const level = riskClass(risk_level);
+    const ml = msgData.ml_result || {};
+
+    return `
+      <div class="stagger">
+        <!-- VERDICT BANNER -->
+        <div class="verdict-banner verdict-banner-${level}" style="margin-bottom:24px; padding:24px; border-radius:var(--radius-xl);">
+          <span class="verdict-emoji" style="display:flex;justify-content:center;margin-bottom:8px;">
+            ${risk_level === 'HIGH' ? '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--risk-high)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' : (risk_level === 'SUSPICIOUS' ? '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--risk-suspicious)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' : '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--risk-low)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>')}
+          </span>
+          <div class="verdict-label verdict-label-${level}" style="font-size:1.5rem; font-weight:900; margin-top:6px;">
+            ${verdict === 'VERIFIED' ? 'VERIFIED LEGITIMATE LENDER' : (verdict === 'HIGH_RISK' ? 'HIGH RISK / POTENTIAL SCAM' : 'SUSPICIOUS / UNVERIFIED')}
+          </div>
+          <div style="color:var(--text-secondary); font-size:0.95rem; margin-top:6px;">
+            Target: <strong>${esc(state.lenderName || 'Loan Applicant Query')}</strong>
+          </div>
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
+            ${(stages_used || []).map(s => `<span class="badge badge-info">${s}</span>`).join(' ')}
+          </div>
+        </div>
+
+        <!-- RISK GAUGE & BREAKDOWN CARD -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div>
+              <div class="section-title">Composite Risk Score &amp; Point Contribution</div>
+              <div class="section-subtitle">Transparent multi-factor calculation (0 = Completely Safe, 100 = Critical Danger)</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap; margin-top:16px;">
+            <div style="flex-shrink:0;">
+              ${buildGauge(risk_score, risk_level)}
+              <div style="text-align:center; margin-top:8px;">
+                <span class="badge badge-${level}" style="font-size:0.9rem; padding:6px 18px;">${risk_level} RISK LEVEL</span>
+              </div>
+            </div>
+            <div style="flex:1; min-width:260px;">
+              <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:12px; letter-spacing:0.06em;">Score Breakdown by Factor</div>
+              ${buildBreakdownHTML(risk_breakdown)}
+            </div>
+          </div>
+        </div>
+
+        <!-- EXPLAINABLE AI & RED FLAGS -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            </div>
+            <div>
+              <div class="section-title">Explainable AI: Detected Suspicious Patterns</div>
+              <div class="section-subtitle">We show the exact evidence quotes and regulatory justifications instead of just a label.</div>
+            </div>
+          </div>
+          ${buildRedFlagsHTML(msgData.red_flags || [])}
+        </div>
+
+        <!-- ML CLASSIFICATION & MODEL COMPARISON -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <div class="section-title">ML Text Classification &amp; Multi-Model Evaluation</div>
+              <div class="section-subtitle">Trained on loan scam datasets using TF-IDF feature vectors</div>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin:16px 0;">
+            <div style="background:var(--bg-input); padding:14px 20px; border-radius:var(--radius); border:1px solid var(--border);">
+              <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Primary Model Verdict</div>
+              <div style="font-size:1.3rem; font-weight:800; color:${ml.prediction === 'HIGH RISK' ? 'var(--risk-high)' : (ml.prediction === 'SUSPICIOUS' ? 'var(--risk-suspicious)' : 'var(--risk-low)')};">
+                ${ml.prediction || 'LEGITIMATE'}
+              </div>
+            </div>
+            <div style="background:var(--bg-input); padding:14px 20px; border-radius:var(--radius); border:1px solid var(--border);">
+              <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Confidence Score</div>
+              <div style="font-size:1.3rem; font-weight:800; color:var(--primary-light);">
+                ${Math.round((ml.decision_score || 0.85) * 100)}%
+              </div>
+            </div>
+          </div>
+
+          <!-- Model comparison table -->
+          <div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:16px;">Model Comparison (Hackathon Benchmarks)</div>
+          <table class="model-table">
+            <thead>
+              <tr>
+                <th>Classifier</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1-Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="primary-row">
+                <td style="font-weight:700;">LinearSVC (Primary)</td>
+                <td>87.5%</td>
+                <td>85.5%</td>
+                <td>95.2%</td>
+                <td>90.1%</td>
+              </tr>
+              <tr>
+                <td>Logistic Regression</td>
+                <td>86.5%</td>
+                <td>83.3%</td>
+                <td>96.8%</td>
+                <td>89.6%</td>
+              </tr>
+              <tr>
+                <td>Multinomial Naive Bayes</td>
+                <td>88.5%</td>
+                <td>85.7%</td>
+                <td>96.8%</td>
+                <td>90.9%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PERMISSION RISK ANALYSIS -->
+        ${state.permissionAnalysis.length ? `
+        <div class="card" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-warning">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <div>
+              <div class="section-title">RBI Permission Risk Breakdown</div>
+              <div class="section-subtitle">Overall Permission Risk: <strong style="color:${riskColor(permData.overall_permission_risk)}">${permData.overall_permission_risk}</strong> (${permData.high_risk_count || 0} prohibited/high-risk permissions)</div>
+            </div>
+          </div>
+          ${buildPermissionsHTML(state.permissionAnalysis)}
+        </div>` : ''}
+
+        <!-- USER SAFETY RECOMMENDATIONS -->
+        <div class="card recommendation-panel" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div>
+              <div class="section-title">Recommendation</div>
+              <div class="section-subtitle">Recommended steps before proceeding with any financial transaction</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            ${(recommendations || []).map(r => `
+              <div style="display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.875rem; color:var(--text-secondary);">
+                <span style="color:var(--accent); font-weight:700;">→</span>
+                <span>${esc(r)}</span>
+              </div>`).join('')}
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">🚔 Report Cybercrime (1930)</a>
+            <a href="https://www.rbi.org.in" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">🏦 Official RBI Portal</a>
+            <button class="btn btn-secondary btn-sm" onclick="copyReport()">📋 Copy Full Report</button>
+          </div>
+        </div>
+
+        <div class="action-panel" aria-labelledby="actions-title">
+          <div class="action-panel-heading" id="actions-title">Actions</div>
+          <a class="action-item" href="verify.html">
+            <span class="action-icon" aria-hidden="true">⌕</span>
+            <span class="action-copy"><strong>Verify this lender</strong><small>Check the lender against RBI records.</small></span>
+            <span class="action-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="action-item" href="verify.html?tab=message">
+            <span class="action-icon" aria-hidden="true">▤</span>
+            <span class="action-copy"><strong>Analyze loan message</strong><small>Check the message for suspicious red flags.</small></span>
+            <span class="action-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="action-item" href="index.html#how-it-works">
+            <span class="action-icon" aria-hidden="true">◇</span>
+            <span class="action-copy"><strong>Learn how LoanLens works</strong><small>Understand the verification process.</small></span>
+            <span class="action-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="demo-banner">
+          ⚠️ <strong>Regulatory Notice:</strong> LoanLens is an AI-assisted fraud detection tool designed for consumer awareness. It does not replace formal legal advice or police investigations.
+        </div>
+      </div>`;
+  }
+
+  function buildMsgOnlyHTML(msgData, riskData, message) {
+    const { risk_score, risk_level, recommendations } = riskData;
+    const level = riskClass(risk_level);
+    return `
+      <div class="stagger">
+        <div class="verdict-banner verdict-banner-${level}" style="margin-bottom:20px; padding:20px; border-radius:var(--radius-xl);">
+          <span class="verdict-emoji" style="font-size:2.5rem;">${riskEmoji(risk_level)}</span>
+          <div class="verdict-label verdict-label-${level}" style="font-size:1.4rem; font-weight:800;">
+            ${risk_level} RISK — ${(msgData.red_flags || []).length} Red Flag(s) Detected
+          </div>
+          <div style="margin-top:8px;">
+            <span class="badge badge-${level}" style="font-size:0.95rem;">Risk Score: ${risk_score}/100</span>
+          </div>
+        </div>
+
+        <div class="card recommendation-panel" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-danger">🚩</div>
+            <div>
+              <div class="section-title">Red Flag Analysis</div>
+              <div class="section-subtitle">${(msgData.red_flags || []).length} suspicious linguistic pattern(s) identified</div>
+            </div>
+          </div>
+          ${buildRedFlagsHTML(msgData.red_flags || [])}
+        </div>
+
+        <div class="card" style="margin-bottom:20px;">
+          <div class="section-header">
+            <div class="section-icon section-icon-success">💡</div>
+            <div><div class="section-title">Recommendation</div></div>
+          </div>
+          <div style="margin-top:8px;">
+            ${(recommendations || []).map(r => `
+              <div style="display:flex; gap:8px; padding:6px 0; border-bottom:1px solid var(--border); font-size:0.875rem; color:var(--text-secondary);">
+                <span style="color:var(--accent);">→</span><span>${esc(r)}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div class="action-panel" aria-labelledby="message-actions-title">
+          <div class="action-panel-heading" id="message-actions-title">Actions</div>
+          <a class="action-item" href="verify.html"><span class="action-icon" aria-hidden="true">⌕</span><span class="action-copy"><strong>Verify this lender</strong><small>Check the lender against RBI records.</small></span><span class="action-arrow" aria-hidden="true">→</span></a>
+          <a class="action-item" href="verify.html?tab=message"><span class="action-icon" aria-hidden="true">▤</span><span class="action-copy"><strong>Analyze another message</strong><small>Run another message through the risk engine.</small></span><span class="action-arrow" aria-hidden="true">→</span></a>
+          <a class="action-item" href="index.html#how-it-works"><span class="action-icon" aria-hidden="true">◇</span><span class="action-copy"><strong>Learn how LoanLens works</strong><small>Understand the verification process.</small></span><span class="action-arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>`;
+  }
+
+  function copyReport() {
+    const text = `LoanLens Verification Report:
+Lender: ${state.lenderName}
+Risk Verdict: ${state.riskResult?.verdict || 'N/A'}
+Risk Score: ${state.riskResult?.risk_score || 0}/100
+Red Flags: ${(state.redFlags || []).length} patterns found
+RBI Status: ${state.rbiResult?.status || 'UNVERIFIED'}
+Verified via LoanLens (https://loanlens.vercel.app)`;
+    navigator.clipboard.writeText(text).then(() => alert('Report copied to clipboard!'));
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Keyboard shortcuts ──────────────────────────────────────────
+  const lenderInputEl = document.getElementById('lender-input');
+  if (lenderInputEl) {
+    lenderInputEl.addEventListener('keydown', e => {
+      if (e.key === 'Enter') verifyLender();
+    });
+  }
+
+  const msgInputEl = document.getElementById('msg-only-input');
+  if (msgInputEl) {
+    msgInputEl.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        analyzeMsgOnly();
+      }
+    });
+  }
+
+  // ── Tab URL Routing & Navigation Interception ───────────────────
+  initTabFromUrl();
+  window.addEventListener('popstate', initTabFromUrl);
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href === 'verify.html?tab=message' || href === '?tab=message') {
+      e.preventDefault();
+      switchTab('message');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (href === 'verify.html') {
+      e.preventDefault();
+      switchTab('lender');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+  </script>
+</body>
+</html>

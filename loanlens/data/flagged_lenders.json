@@ -1,0 +1,126 @@
+{
+  "_metadata": {
+    "description": "Flagged, Banned, and Illegal Loan App Database",
+    "data_type": "REGULATORY_FLAGGED_REGISTRY",
+    "warning": "This database contains entries compiled from regulatory alerts, state cybercrime advisories, and reported predatory lending app patterns.",
+    "last_updated": "2024-06-01",
+    "sources": [
+      "RBI Press Releases & Caution Notices — https://www.rbi.org.in",
+      "Ministry of Electronics and Information Technology (MeitY) App Ban Orders",
+      "State Police Cybercrime Advisory Lists",
+      "National Cyber Crime Reporting Portal (1930 / cybercrime.gov.in)"
+    ]
+  },
+  "entries": [
+    {
+      "id": "FL001",
+      "name": "Loan Mama",
+      "aliases": ["LoanMama", "Loan-Mama", "loanmama app", "Mama Loan"],
+      "type": "ILLEGAL_LOAN_APP",
+      "status": "BANNED",
+      "reason": "Extortionate daily interest rates (up to 400% APR), illegal recovery tactics, abusive calls to borrower's phone contacts, and sharing defamatory content.",
+      "source": "State Cyber Cell Advisory & MeitY Blocklist",
+      "date": "2023-11-10",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "FL002",
+      "name": "Cash Bee",
+      "aliases": ["CashBee", "Cash-Bee", "cashbee app", "Bee Cash"],
+      "type": "PREDATORY_APP",
+      "status": "BANNED",
+      "reason": "Unauthorized access to photo gallery and contact list; extortion using morphed photographs sent to friends and family members.",
+      "source": "Cybercrime Police FIR & Regulatory Warning",
+      "date": "2023-09-25",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "FL003",
+      "name": "KreditBee Fake",
+      "aliases": ["Kredit Bee Fake", "KreditBee Clone", "Fake KreditBee", "KreditBee Pro Clone", "KreditBee APK"],
+      "type": "IMPERSONATOR",
+      "status": "FLAGGED",
+      "reason": "Phishing clone impersonating legitimate NBFC KreditBee. Collects advance processing fees via UPI and steals bank account credentials.",
+      "source": "RBI Consumer Awareness Bulletin & Industry Impersonation Alert",
+      "date": "2023-12-01",
+      "severity": "HIGH"
+    },
+    {
+      "id": "FL004",
+      "name": "Quick Rupee",
+      "aliases": ["QuickRupee", "Quick-Rupee", "Rupee Quick", "Fast Rupee Instant"],
+      "type": "ILLEGAL_LOAN_APP",
+      "status": "BANNED",
+      "reason": "Operating without RBI NBFC registration, demanding 50% upfront deduction, sending abusive recovery notices with fake court stamps.",
+      "source": "Cyber Crime Complaint Records",
+      "date": "2023-07-14",
+      "severity": "HIGH"
+    },
+    {
+      "id": "FL005",
+      "name": "RBI Instant Loan",
+      "aliases": ["RBI Loan App", "RBI Approved Loans", "Reserve Bank Instant Loan", "RBI Mudra Loan Portal", "Govt RBI Loan"],
+      "type": "FAKE_REGULATOR",
+      "status": "BANNED",
+      "reason": "Fraudulent entity falsely claiming direct loan sanctioning from RBI. RBI NEVER provides personal loans, operates loan apps, or solicits deposits from individuals.",
+      "source": "RBI Caution Notice (Press Release 2023-2024)",
+      "date": "2023-10-05",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "FL006",
+      "name": "FastCash Loan",
+      "aliases": ["Fast Cash Loan", "FastCash App", "Fast-Cash", "Fast Cash 24x7"],
+      "type": "ILLEGAL_LOAN_APP",
+      "status": "FLAGGED",
+      "reason": "Mass harassment of borrower's phone contacts, accessing camera/microphone in background, unauthorized third-party data transmission.",
+      "source": "National Cybercrime Reporting Portal Advisory",
+      "date": "2023-08-20",
+      "severity": "HIGH"
+    },
+    {
+      "id": "FL007",
+      "name": "Money View Fake",
+      "aliases": ["MoneyView Fake", "Fake Money View", "MoneyView Clone", "MoneyView Instant APK"],
+      "type": "IMPERSONATOR",
+      "status": "FLAGGED",
+      "reason": "Malicious clone impersonating registered Money View platform. Distributes trojanized APK to steal SMS OTPs and personal financial files.",
+      "source": "CERT-In Security Advisory",
+      "date": "2024-01-05",
+      "severity": "HIGH"
+    },
+    {
+      "id": "FL008",
+      "name": "EasyLoan247",
+      "aliases": ["Easy Loan 247", "EasyLoan 24/7", "Loan 247", "Easy Cash 247"],
+      "type": "PREDATORY_APP",
+      "status": "BANNED",
+      "reason": "Short 7-day tenure loans with hidden 50% deduction charges, threatening borrowers with morphed intimate imagery if not repaid within 4 days.",
+      "source": "State Police Cybercrime Enforcement Division",
+      "date": "2023-05-30",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "FL009",
+      "name": "Lightning Rupee",
+      "aliases": ["LightningRupee", "Lightning Cash", "Flash Rupee"],
+      "type": "ILLEGAL_LOAN_APP",
+      "status": "BANNED",
+      "reason": "Unlicensed lending operation hosted on shady third-party app stores; excessive device permissions including Call Log and Contacts for harassment.",
+      "source": "MeitY Digital Lending Advisory",
+      "date": "2023-04-18",
+      "severity": "HIGH"
+    },
+    {
+      "id": "FL010",
+      "name": "Smart Coin Clone",
+      "aliases": ["Fake SmartCoin", "Smart Coin Fake", "SmartCoin APK Mod"],
+      "type": "IMPERSONATOR",
+      "status": "FLAGGED",
+      "reason": "Impersonator scam asking users to pay 'insurance deposit' or 'file opening fee' before loan disbursement.",
+      "source": "RBI / Cybercrime Consumer Alert",
+      "date": "2024-02-12",
+      "severity": "HIGH"
+    }
+  ]
+}

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoanLens — Official RBI Lender Verification & Loan Safety Engine</title>
+  <meta name="description" content="Verify lenders against the official RBI NBFC database and detect suspicious loan offers before sharing money, OTPs, or personal data. Built for borrower security." />
+  <link rel="stylesheet" href="css/style.css?v=6" />
+  <style>
+    /* ─── Hero Section ─────────────────────────────────────── */
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 88px 24px 64px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+      width: 100%;
+    }
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--primary-light);
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--risk-low);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      margin-bottom: 18px;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      line-height: 1.12;
+      color: #17211B;
+    }
+    .hero-highlight {
+      color: #14532D;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 32px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .stat { display: flex; flex-direction: column; gap: 2px; }
+    .stat-value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #14532D;
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.76rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* ─── Hero Regulatory Status Card ──────────────────────── */
+    .hero-preview-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 16px 36px rgba(20, 83, 45, 0.08);
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .preview-title { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+    .preview-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: #F1F7F3;
+      margin-bottom: 8px;
+      font-size: 0.86rem;
+      color: #17211B;
+    }
+
+    /* ─── Demo Section ─────────────────────────────────────── */
+    .demo-section { padding: 72px 0; position: relative; z-index: 1; }
+    .demo-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 36px;
+    }
+    @media (max-width: 760px) { .demo-layout { grid-template-columns: 1fr; } }
+    
+    .demo-tab-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    @media (max-width: 760px) {
+      .demo-tab-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+    }
+    @media (max-width: 480px) {
+      .demo-tab-list {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .demo-tab-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      color: #334155;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+      text-align: left;
+      width: 100%;
+    }
+    .demo-tab-item:hover {
+      color: #0F766E;
+      background: #F0FDF4;
+      border-color: #0F766E;
+    }
+    .demo-tab-item.active {
+      background: #ECFDF5 !important;
+      border-color: #0F766E !important;
+      color: #0F766E !important;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(15, 118, 110, 0.12);
+    }
+    .demo-tab-item-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #94A3B8;
+      transition: all 0.2s ease;
+    }
+    .demo-tab-item.active .demo-tab-item-dot {
+      background: #0F766E;
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.2);
+    }
+    .demo-panel-v2 {
+      display: none;
+    }
+    .demo-panel-v2.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .demo-input-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .demo-input-display {
+      background: #FBFDFC;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      color: #17211B;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* ─── Differentiation Block ────────────────────────────── */
+    .differentiation-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 32px;
+    }
+    .diff-text-strike {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      margin-bottom: 8px;
+    }
+    .diff-text-main {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.55;
+    }
+    .diff-text-main span { color: #14532D; }
+
+    /* ─── Final CTA ─────────────────────────────────────────── */
+    .cta-banner {
+      background: #FFFFFF;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 48px 36px;
+      text-align: center;
+      margin: 16px 0 64px;
+    }
+    .cta-overline {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0F766E;
+      margin-bottom: 12px;
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      background: #EEF4F0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-text { font-size: 0.82rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-link { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; }
+    .footer-link:hover { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-header-row">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <span>LoanLens</span>
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="verify.html" class="nav-link">Verify Lender</a>
+        <a href="verify.html?tab=message" class="nav-link">Analyze Message</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ══════════ 1. HERO ══════════ -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-eyebrow">
+              <div class="eyebrow-dot"></div>
+              LENDER VERIFICATION &amp; RISK ANALYSIS
+            </div>
+
+            <h1>
+              Is this lender<br />
+              <span class="hero-highlight">actually legitimate?</span>
+            </h1>
+
+            <p class="hero-desc">
+              Verify lenders against RBI records and analyze suspicious loan messages before you share money, personal information or payment.
+            </p>
+
+            <div class="hero-ctas">
+              <a href="verify.html" class="btn btn-primary btn-lg" id="cta-verify">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Verify a Lender <span aria-hidden="true">→</span>
+              </a>
+              <a href="verify.html?tab=message" class="btn btn-secondary btn-lg" id="cta-message">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Analyze a Loan Message
+              </a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <span class="stat-value">8.5K+</span>
+                <span class="stat-label">RBI records checked</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">10+</span>
+                <span class="stat-label">Risk signals detected</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">2</span>
+                <span class="stat-label">Verification layers</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">100%</span>
+                <span class="stat-label">RBI match on verified records</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Institutional Preview Box -->
+          <div class="hero-preview-card">
+            <div class="hero-stat-float hero-stat-records"><strong data-target="8500" data-format="compact" data-suffix="+">0</strong><span>RBI records checked</span></div>
+            <div class="hero-stat-float hero-stat-signals"><strong data-target="10" data-suffix="+">0</strong><span>risk signals detected</span></div>
+            <div class="hero-stat-float hero-stat-layers"><strong data-target="2">0</strong><span>verification layers</span></div>
+            <div class="hero-stat-float hero-stat-credentials"><strong data-target="100" data-suffix="%">0</strong><span>RBI match on verified records</span></div>
+            <div class="hero-float hero-float-verified"><span class="float-check">✓</span> RBI VERIFIED</div>
+            <div class="hero-float hero-float-flags"><span class="float-alert">!</span> 3 RED FLAGS DETECTED</div>
+            <div class="hero-float hero-float-score"><strong>72</strong><span>/ 100 RISK</span></div>
+            <div class="preview-header">
+              <div class="preview-brand"><span class="preview-shield">✓</span><span><strong>LOANLENS</strong><small>Lender Verification</small></span></div>
+              <span class="badge badge-low">Verified</span>
+            </div>
+            <div class="preview-row">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:var(--risk-low); font-weight:700;">✓</span>
+                <span style="font-weight:600; color:#17211B;">121 Finance Private Limited</span>
+              </div>
+              <span class="badge badge-low">RBI Match 100%</span>
+            </div>
+
+            <div class="preview-row">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:var(--risk-high); font-weight:700;">✕</span>
+                <span style="font-weight:600; color:#17211B;">Loan Mama App</span>
+              </div>
+              <span class="badge badge-high">Flagged</span>
+            </div>
+
+            <div class="preview-row">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:var(--risk-high); font-weight:700;">⚠</span>
+                <span style="font-weight:600; color:#17211B;">Upfront Fee "₹999"</span>
+              </div>
+              <span class="badge badge-high">Red flag</span>
+            </div>
+
+            <div style="margin-top:16px; padding:12px; background:#F1F7F3; border-radius:var(--radius-sm); border:1px solid var(--border);">
+              <div style="font-size:0.75rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Risk Level <strong style="color:var(--risk-low);">LOW</strong></div>
+              <div style="font-size:0.86rem; color:var(--text-secondary); margin-top:4px;">
+                Combines official regulatory registries with NLP clause analysis to produce transparent evidence.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 2. TRUST STRIP ══════════ -->
+    <div class="trust-strip" role="list" aria-label="Key features">
+      <div class="container trust-strip-inner">
+        <div class="trust-item" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          RBI Data Verification
+        </div>
+        <div class="trust-item" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
+          Explainable AI
+        </div>
+        <div class="trust-item" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          No Sign-up
+        </div>
+        <div class="trust-item" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          Privacy First
+        </div>
+        <div class="trust-item" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Instant Analysis
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ 3. HOW IT WORKS — PIPELINE ══════════ -->
+    <section class="pipeline-section" id="how-it-works">
+      <div class="container">
+        <div style="text-align:center; margin-bottom:8px;">
+          <span class="badge badge-info">Two-Stage Pipeline</span>
+        </div>
+        <h2 style="text-align:center; margin-bottom:8px;">How LoanLens Protects You</h2>
+        <p style="text-align:center; color:var(--text-secondary); max-width:500px; margin:0 auto; font-size:0.92rem;">
+          A multi-factor verification pipeline with transparent evidence for every finding.
+        </p>
+
+        <div class="pipeline-grid">
+          <div class="pipeline-step">
+            <div class="pipeline-num-wrap">
+              <svg class="pipeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
+              <span class="pipeline-num">01</span>
+            </div>
+            <div class="pipeline-title">RBI Registry Lookup</div>
+            <div class="pipeline-desc">Checks official RBI NBFC database with fuzzy &amp; alias matching</div>
+          </div>
+          
+          <div class="pipeline-step">
+            <div class="pipeline-num-wrap">
+              <svg class="pipeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              <span class="pipeline-num">02</span>
+            </div>
+            <div class="pipeline-title">Banned App Check</div>
+            <div class="pipeline-desc">Cross-references known fraudulent and predatory apps</div>
+          </div>
+          
+          <div class="pipeline-step">
+            <div class="pipeline-num-wrap">
+              <svg class="pipeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <span class="pipeline-num">03</span>
+            </div>
+            <div class="pipeline-title">Message Analysis</div>
+            <div class="pipeline-desc">Scans for advance fees, threats, and prohibited permissions</div>
+          </div>
+          
+          <div class="pipeline-step">
+            <div class="pipeline-num-wrap">
+              <svg class="pipeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span class="pipeline-num">04</span>
+            </div>
+            <div class="pipeline-title">Pattern Classifier</div>
+            <div class="pipeline-desc">Evaluates linguistic scam markers and predatory patterns</div>
+          </div>
+          
+          <div class="pipeline-step">
+            <div class="pipeline-num-wrap">
+              <svg class="pipeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <span class="pipeline-num">05</span>
+            </div>
+            <div class="pipeline-title">Risk Scoring</div>
+            <div class="pipeline-desc">Generates a weighted 0-100 risk score breakdown</div>
+          </div>
+          
+          <div class="pipeline-step">
+            <div class="pipeline-num-wrap">
+              <svg class="pipeline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span class="pipeline-num">06</span>
+            </div>
+            <div class="pipeline-title">Clear Evidence</div>
+            <div class="pipeline-desc">Provides exact quotes and regulatory guidelines to follow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 4. INTERACTIVE DEMO ══════════ -->
+    <section class="demo-section">
+      <div class="container">
+        <div style="text-align:center; margin-bottom:8px;">
+          <span class="badge badge-info">Interactive Demo</span>
+        </div>
+        <h2 style="text-align:center; margin-bottom:8px;">See LoanLens in action</h2>
+        <p style="text-align:center; color:var(--text-secondary); margin-bottom:0; font-size:0.92rem;">
+          Select a sample scenario to preview the verification output.
+        </p>
+
+        <div class="demo-layout">
+          <!-- Tab List -->
+          <div class="demo-tab-list">
+            <button class="demo-tab-item active" onclick="switchDemoV2(0)" id="dv0">
+              <div class="demo-tab-item-dot"></div>
+              Verified Lender
+            </button>
+            <button class="demo-tab-item" onclick="switchDemoV2(1)" id="dv1">
+              <div class="demo-tab-item-dot"></div>
+              Flagged App
+            </button>
+            <button class="demo-tab-item" onclick="switchDemoV2(2)" id="dv2">
+              <div class="demo-tab-item-dot"></div>
+              Unknown Lender
+            </button>
+            <button class="demo-tab-item" onclick="switchDemoV2(3)" id="dv3">
+              <div class="demo-tab-item-dot"></div>
+              Scam Message
+            </button>
+          </div>
+
+          <!-- Demo Content Panels -->
+          <div class="demo-content">
+
+            <!-- Panel 0: Verified Lender -->
+            <div class="demo-panel-v2 active" id="dvp0">
+              <div class="demo-input-label">Query Input</div>
+              <div class="demo-input-display">"121 Finance Private Limited"</div>
+              <div class="rbi-badge-card">
+                <div class="rbi-badge-header">
+                  <div class="preview-brand"><span class="preview-shield">✓</span><span><strong>LOANLENS</strong><small>Lender Verification</small></span></div>
+                  <span class="badge badge-low">Verified</span>
+                </div>
+                <div class="rbi-badge-details">
+                  <div class="rbi-badge-title">✓ RBI REGISTERED NBFC</div>
+                  <div class="rbi-badge-sub">Matched in RBI NBFC Master Database</div>
+                  <div class="rbi-detail-grid">
+                    <div class="rbi-detail-field"><span class="rbi-detail-label">Official Registered Name</span><span class="rbi-detail-value">121 Finance Private Limited</span></div>
+                    <div class="rbi-detail-field"><span class="rbi-detail-label">RBI Match</span><span class="rbi-detail-value"><span class="badge badge-low">100%</span></span></div>
+                    <div class="rbi-detail-field"><span class="rbi-detail-label">Classification</span><span class="rbi-detail-value">Factor</span></div>
+                    <div class="rbi-detail-field"><span class="rbi-detail-label">Regulatory Layer</span><span class="rbi-detail-value">Base Layer</span></div>
+                  </div>
+                  <div style="margin-bottom:16px;"><div class="info-box info-box-success"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> This lender holds a valid NBFC registration with RBI. Always inspect the loan agreement and sanction letter before signing.</div></div>
+                  <a href="https://rbi.org.in" target="_blank" rel="noopener noreferrer" class="rbi-source-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> View official RBI source →</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 1: Flagged App -->
+            <div class="demo-panel-v2" id="dvp1">
+              <div class="demo-input-label">Query Input</div>
+              <div class="demo-input-display">"RBI Instant Loan"</div>
+              <div class="flagged-card">
+                <div class="flagged-header">
+                  <div class="flagged-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </div>
+                  <div>
+                    <div class="flagged-title">FLAGGED — BANNED ENTITY</div>
+                    <div class="flagged-sub">Listed in Regulatory Warning Database</div>
+                  </div>
+                </div>
+                <div class="flagged-body">
+                  <div class="info-box info-box-danger">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <div>
+                      <strong>Why flagged:</strong> Falsely claims direct loan disbursement from RBI. The Reserve Bank of India does not offer personal loans or operate consumer lending apps.
+                      <div style="margin-top:6px; font-size:0.78rem; opacity:0.75;">Source: RBI Public Caution Advisories</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 2: Unknown Lender -->
+            <div class="demo-panel-v2" id="dvp2">
+              <div class="demo-input-label">Query Input</div>
+              <div class="demo-input-display">"SuperFast Loan App"</div>
+              <div class="unverified-card">
+                <div class="unverified-header">
+                  <div class="unverified-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </div>
+                  <div>
+                    <div class="unverified-title">UNVERIFIED LENDER</div>
+                    <div class="unverified-sub">Not found in active RBI NBFC records</div>
+                  </div>
+                </div>
+                <div class="unverified-body">
+                  <div class="info-box info-box-warning" style="margin-bottom:14px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    This entity is not present in the current RBI NBFC dataset. This does <strong>NOT</strong> automatically mean fraud, but requires checking their loan agreement and permission requests.
+                  </div>
+                  <a href="verify.html?tab=message" class="btn btn-secondary btn-sm">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Analyze Loan Offer / Message →
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3: Scam Message -->
+            <div class="demo-panel-v2" id="dvp3">
+              <div class="demo-input-label">Message Analyzed</div>
+              <div class="demo-input-display">"Congratulations! Pay ₹999 processing fee. 100% guaranteed approval. Give access to contacts to verify identity."</div>
+              <div class="risk-result-card">
+                <div class="risk-result-header">
+                  <div class="risk-result-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </div>
+                  <div class="risk-result-title-block">
+                    <div class="risk-result-title">HIGH RISK DETECTED</div>
+                    <div class="risk-result-sub">3 suspicious signals identified</div>
+                  </div>
+                  <div class="risk-score-pill">
+                    <span class="risk-score-num">78</span>
+                    <span class="risk-score-label">/ 100</span>
+                  </div>
+                </div>
+
+                <div class="risk-result-flags">
+                  <div class="risk-flag-row">
+                    <div class="risk-flag-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    </div>
+                    <div class="risk-flag-content">
+                      <div class="risk-flag-name">Advance Processing Fee Demand</div>
+                      <div class="risk-flag-quote">"Pay ₹999 processing fee"</div>
+                    </div>
+                    <span class="badge badge-high">High</span>
+                  </div>
+                  
+                  <div class="risk-flag-row">
+                    <div class="risk-flag-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    </div>
+                    <div class="risk-flag-content">
+                      <div class="risk-flag-name">Guaranteed Approval Claim</div>
+                      <div class="risk-flag-quote">"100% guaranteed approval"</div>
+                    </div>
+                    <span class="badge badge-high">High</span>
+                  </div>
+                  
+                  <div class="risk-flag-row">
+                    <div class="risk-flag-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    </div>
+                    <div class="risk-flag-content">
+                      <div class="risk-flag-name">Prohibited Contact List Access</div>
+                      <div class="risk-flag-quote">"Give access to contacts to verify identity"</div>
+                    </div>
+                    <span class="badge badge-medium">Medium</span>
+                  </div>
+                </div>
+
+                <div class="risk-result-recommendation">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <div class="risk-reco-text">
+                    <strong>Recommendation:</strong> Do not pay any money upfront. Legitimate lenders deduct genuine processing fees directly from sanctioned loan amounts, never via advance UPI or gift cards.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /demo-content -->
+        </div><!-- /demo-layout -->
+      </div>
+    </section>
+
+    <!-- ══════════ 5. WHY LOANLENS ══════════ -->
+    <section class="why-section">
+      <div class="container">
+        <div style="text-align:center; margin-bottom:8px;">
+          <span class="badge badge-neutral">Core Difference</span>
+        </div>
+        <h2 style="text-align:center; margin-bottom:24px;">Why LoanLens?</h2>
+
+        <div class="differentiation-block">
+          <div class="diff-text-strike">Commercial loan platforms help you get a loan.</div>
+          <div class="diff-text-main">LoanLens helps you decide whether you should <span>trust the lender</span> — by combining authoritative RBI registry verification, predatory clause detection, and transparent evidence.</div>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
+            </div>
+            <div class="why-title">Official RBI Registry Matching</div>
+            <div class="why-desc">Directly indexes the complete RBI NBFC dataset. Employs fuzzy matching and alias normalization to prevent evasion through minor name variations.</div>
+          </div>
+          
+          <div class="why-card">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="why-title">Scam Pattern Engine</div>
+            <div class="why-desc">Identifies 10+ high-risk indicators including advance fees, fake regulator claims, and prohibited Android permissions like contact and gallery access.</div>
+          </div>
+          
+          <div class="why-card">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="why-title">Transparent Evidence</div>
+            <div class="why-desc">Every verdict is backed by the exact sentence flagged, regulatory guidelines, and actionable steps to safeguard your identity and funds.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 6. FINAL CTA ══════════ -->
+    <div class="container">
+      <div class="cta-banner">
+        <div class="cta-overline">Free &middot; No Sign-Up &middot; Privacy Preserving</div>
+        <h2 style="font-size:clamp(1.5rem, 3vw, 2rem); margin-bottom:12px; color:#17211B;">
+          Don't trust the message. Verify the lender.
+        </h2>
+        <p style="color:var(--text-secondary); max-width:480px; margin:0 auto 28px; font-size:0.92rem;">
+          Takes less than 30 seconds. Check any lender name against RBI records or paste a loan offer for instant risk analysis.
+        </p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <a href="verify.html" class="btn btn-primary btn-lg" id="bottom-cta-verify">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Check a Lender
+          </a>
+          <a href="verify.html?tab=message" class="btn btn-secondary btn-lg" id="bottom-cta-msg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Analyze a Message
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="container" style="margin-bottom:40px;">
+      <div class="demo-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>
+          <strong>Disclaimer:</strong> LoanLens is an independent risk assessment tool and not an official regulatory body. Data is compiled from public RBI NBFC master lists. Always confirm registrations on <a href="https://rbi.org.in" target="_blank" style="color:var(--primary-light); text-decoration:underline;">rbi.org.in</a>.
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-text"><span id="footer-year"></span> LoanLens &nbsp;·&nbsp; Lender Verification &amp; Risk Analysis &nbsp;·&nbsp; Informational tool, not a legal authority.</div>
+      <div class="footer-links">
+        <a href="https://rbi.org.in" target="_blank" class="footer-link">RBI Official Portal</a>
+        <a href="https://cybercrime.gov.in" target="_blank" class="footer-link">National Cybercrime Reporting Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function switchDemoV2(idx) {
+      document.querySelectorAll('.demo-tab-item').forEach((t, i) => t.classList.toggle('active', i === idx));
+      document.querySelectorAll('.demo-panel-v2').forEach((p, i) => p.classList.toggle('active', i === idx));
+    }
+
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+    document.querySelectorAll('.hero-stat-float strong[data-target]').forEach((element, index) => {
+      const target = Number(element.dataset.target);
+      const suffix = element.dataset.suffix || '';
+      const compact = element.dataset.format === 'compact';
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const render = value => {
+        const display = compact && value >= 1000 ? `${(value / 1000).toFixed(1)}K` : Math.round(value);
+        element.textContent = `${display}${suffix}`;
+      };
+      if (reduced) { render(target); return; }
+      const start = performance.now() + index * 90;
+      const tick = now => {
+        const progress = Math.min(1, Math.max(0, (now - start) / 950));
+        render(target * (1 - Math.pow(1 - progress, 3)));
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  </script>
+</body>
+</html>
