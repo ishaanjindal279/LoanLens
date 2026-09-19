@@ -258,3 +258,4 @@ class LocalWhisperTranscriber {
 
 // Attach to window
 window.LocalWhisperTranscriber = new LocalWhisperTranscriber();
+
