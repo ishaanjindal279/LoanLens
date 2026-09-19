@@ -886,6 +886,22 @@ const api = {
   },
 
   async transcribeAudio(payload, isFormData = false, apiKey = '') {
+    // 1. If audio file is provided and LocalWhisperTranscriber is active, use client-side Whisper
+    const audioFile = isFormData ? payload.get('audio') : null;
+    const language = (isFormData ? payload.get('language') : payload.language) || 'en-IN';
+
+    if (audioFile && window.LocalWhisperTranscriber && window.LocalWhisperTranscriber.isSupported() && !apiKey) {
+      try {
+        const localResult = await window.LocalWhisperTranscriber.transcribe(audioFile, { language });
+        if (localResult && (localResult.transcript || localResult.fullText)) {
+          return localResult;
+        }
+      } catch (localErr) {
+        console.warn("Local Whisper transcription error, attempting server fallback:", localErr.message);
+      }
+    }
+
+    // 2. Server fallback (e.g. for demo presets or environments without WebAudio)
     try {
       const headers = {};
       if (apiKey) {
@@ -907,7 +923,7 @@ const api = {
     }
     return {
       status: 'error',
-      message: 'Failed to transcribe audio via server. Please use microphone dictation or paste dialogue.'
+      message: 'Failed to transcribe audio. Please use microphone dictation or paste dialogue.'
     };
   }
 };

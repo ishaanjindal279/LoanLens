@@ -511,7 +511,7 @@
             <div style="margin-bottom:16px; padding:12px 16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:var(--radius-md); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;">
               <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                 <label for="audio-language-select" style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin:0;">
-                  🌐 Language / बोली:
+                  🌐 Target Language:
                 </label>
                 <select id="audio-language-select" class="input" style="width:auto; padding:4px 10px; height:34px; font-size:0.82rem; font-weight:600;" onchange="onLanguageChange()">
                   <option value="en-IN" selected>English (India / Global)</option>
@@ -526,34 +526,37 @@
                   <option value="pa-IN">Punjabi (ਪੰਜਾਬੀ)</option>
                   <option value="es-ES">Spanish (Español)</option>
                 </select>
-                <span class="badge badge-neutral" id="lang-badge" style="font-size:0.7rem;">10+ Indic Languages Supported</span>
+                <span class="badge badge-low" style="font-size:0.72rem; display:inline-flex; align-items:center; gap:4px;">
+                  🔒 100% Private On-Device AI
+                </span>
               </div>
 
               <div style="display:flex; align-items:center; gap:8px;">
-                <button type="button" class="btn btn-secondary btn-sm" id="btn-transcribe-speech" onclick="transcribeCurrentAudio()" style="font-size:0.78rem; font-weight:600; padding:6px 12px; background:#FFF;">
+                <button type="button" class="btn btn-primary btn-sm" id="btn-transcribe-speech" onclick="transcribeCurrentAudio()" style="font-size:0.78rem; font-weight:700; padding:6px 14px;">
                   ✨ Transcribe Audio
-                </button>
-                <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-stt-settings" onclick="toggleSttSettings()" style="font-size:0.78rem; padding:6px 10px; background:#FFF;" title="Configure Optional Cloud Whisper STT API Key">
-                  ⚙️ STT Settings
                 </button>
               </div>
             </div>
 
-            <!-- Optional STT Engine API Key Drawer -->
-            <div id="stt-settings-card" class="hidden" style="margin-bottom:16px; padding:14px 16px; background:#F0FDFA; border:1px solid #CCFBF1; border-radius:var(--radius-md);">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <div style="font-size:0.84rem; font-weight:700; color:#0F766E;">Optional Cloud STT Whisper API Key (Groq / OpenAI)</div>
-                <button type="button" onclick="toggleSttSettings()" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:#0F766E;">&times;</button>
+            <!-- On-Device Whisper Progress & Status Widget -->
+            <div id="transcription-status-card" class="hidden" style="margin-bottom:16px; padding:14px 16px; background:#F0FDFA; border:1px solid #0D9488; border-radius:var(--radius-md); box-shadow:0 2px 8px rgba(13,148,136,0.08);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span id="stt-status-icon" style="font-size:1.2rem;">⏳</span>
+                  <div>
+                    <div id="stt-status-title" style="font-size:0.86rem; font-weight:700; color:#0F766E;">Preparing on-device transcription...</div>
+                    <div id="stt-status-sub" style="font-size:0.74rem; color:#475569; margin-top:2px;">Runs 100% locally in your browser. Audio never leaves your computer.</div>
+                  </div>
+                </div>
+                <button type="button" id="btn-cancel-stt" class="btn btn-secondary btn-sm" onclick="cancelTranscription()" style="font-size:0.7rem; padding:3px 8px;">Cancel</button>
               </div>
-              <p style="font-size:0.76rem; color:#334155; margin-bottom:10px; line-height:1.45;">
-                <strong>Zero-key default:</strong> Built-in microphone dictation and forensic demo calls work with <strong>no API key required</strong> across all 11 languages! If you wish to transcribe custom uploaded audio files via Cloud Whisper, enter your <strong>Groq API key</strong> (Free &amp; instant) or <strong>OpenAI API key</strong> below. Keys are stored safely in your local browser only.
-              </p>
-              <div style="display:flex; gap:8px;">
-                <input type="password" id="stt-api-key-input" class="input" placeholder="gsk_... (Groq Whisper free) or sk-... (OpenAI)" style="font-size:0.8rem; height:34px;">
-                <button type="button" class="btn btn-primary btn-sm" onclick="saveSttApiKey()" style="padding:4px 14px; font-size:0.78rem;">Save Key</button>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="clearSttApiKey()" style="padding:4px 10px; font-size:0.78rem;">Clear</button>
+              <div id="stt-progress-bar-container" style="margin-top:10px; background:#CCFBF1; border-radius:10px; height:8px; overflow:hidden;">
+                <div id="stt-progress-bar-fill" style="width:0%; height:100%; background:#0D9488; transition:width 0.25s ease;"></div>
               </div>
-              <div id="stt-key-status" style="font-size:0.72rem; color:#0D9488; margin-top:6px;"></div>
+              <div id="stt-progress-details" style="display:flex; justify-content:space-between; font-size:0.7rem; color:#0F766E; margin-top:4px;">
+                <span id="stt-progress-msg">Initializing...</span>
+                <span id="stt-progress-percent">0%</span>
+              </div>
             </div>
 
             <!-- Drag & Drop Audio Upload Box -->
@@ -632,6 +635,7 @@
 
   <!-- Scripts -->
   <script src="js/api.js"></script>
+  <script src="js/transcriber.js"></script>
   <script>
   // ── Application State ─────────────────────────────────────────────
   const state = {
@@ -828,34 +832,6 @@ Borrower: Understood, thank you for confirming.`
         status.style.color = '#64748B';
       }
     }
-  }
-
-  function saveSttApiKey() {
-    const input = document.getElementById('stt-api-key-input');
-    const status = document.getElementById('stt-key-status');
-    const val = input ? input.value.trim() : '';
-    if (val) {
-      localStorage.setItem('loanlens_stt_api_key', val);
-      if (status) {
-        status.textContent = '✓ API Key saved securely in your browser.';
-        status.style.color = '#0F766E';
-      }
-    } else {
-      clearSttApiKey();
-    }
-  }
-
-  function clearSttApiKey() {
-    localStorage.removeItem('loanlens_stt_api_key');
-    const input = document.getElementById('stt-api-key-input');
-    const status = document.getElementById('stt-key-status');
-    if (input) input.value = '';
-    if (status) {
-      status.textContent = 'API key removed. Running in zero-key local dictation mode.';
-      status.style.color = '#64748B';
-    }
-  }
-
   function onLanguageChange() {
     const select = document.getElementById('audio-language-select');
     const badge = document.getElementById('lang-badge');
@@ -864,15 +840,92 @@ Borrower: Understood, thank you for confirming.`
     if (badge) badge.textContent = `Target: ${text}`;
   }
 
+  function updateSttProgress(data) {
+    const card = document.getElementById('transcription-status-card');
+    const title = document.getElementById('stt-status-title');
+    const sub = document.getElementById('stt-status-sub');
+    const msg = document.getElementById('stt-progress-msg');
+    const pct = document.getElementById('stt-progress-percent');
+    const bar = document.getElementById('stt-progress-bar-fill');
+    const icon = document.getElementById('stt-status-icon');
+
+    if (!card) return;
+    card.classList.remove('hidden');
+
+    if (data.status === 'downloading') {
+      if (icon) icon.textContent = '📥';
+      if (title) title.textContent = 'Downloading transcription model (one-time setup)...';
+      if (sub) sub.textContent = 'This is a one-time download (~39MB). Future transcriptions will run immediately from browser cache.';
+      if (msg) msg.textContent = data.message || 'Downloading Whisper AI weights...';
+      const p = data.percent || 0;
+      if (pct) pct.textContent = `${p}%`;
+      if (bar) bar.style.width = `${p}%`;
+    } else if (data.status === 'loading') {
+      if (icon) icon.textContent = '⚙️';
+      if (title) title.textContent = 'Initializing on-device AI engine...';
+      if (sub) sub.textContent = 'Preparing WebAssembly runtime in background worker.';
+      if (msg) msg.textContent = data.message || 'Loading model weights...';
+      if (bar) bar.style.width = '100%';
+    } else if (data.status === 'transcribing') {
+      if (icon) icon.textContent = '🎙️';
+      if (title) title.textContent = 'Transcribing audio locally on your device...';
+      if (sub) sub.textContent = 'Running on-device neural transcription. Zero audio is uploaded to external servers.';
+      if (msg) msg.textContent = 'Processing speech tokens...';
+      if (pct) pct.textContent = 'Analyzing...';
+      if (bar) bar.style.width = '100%';
+    } else if (data.status === 'preparing') {
+      if (icon) icon.textContent = '🔊';
+      if (title) title.textContent = 'Preparing audio...';
+      if (sub) sub.textContent = 'Decoding audio to 16kHz mono Float32 PCM via Web Audio API.';
+      if (msg) msg.textContent = data.message || 'Decoding audio file...';
+      if (bar) bar.style.width = '15%';
+    }
+  }
+
+  function hideSttProgress() {
+    const card = document.getElementById('transcription-status-card');
+    if (card) card.classList.add('hidden');
+  }
+
+  function cancelTranscription() {
+    if (window.LocalWhisperTranscriber) {
+      window.LocalWhisperTranscriber.cancel();
+    }
+    hideSttProgress();
+    const btn = document.getElementById('btn-transcribe-speech');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '✨ Transcribe Audio';
+    }
+    const transcriptInput = document.getElementById('audio-transcript-input');
+    if (transcriptInput && transcriptInput.placeholder.includes('Transcribing')) {
+      transcriptInput.placeholder = "Transcribed dialogue will automatically appear here once audio is loaded, or you can paste an existing call transcription...";
+    }
+  }
+
   async function transcribeCurrentAudio() {
     const transcriptInput = document.getElementById('audio-transcript-input');
     const langSelect = document.getElementById('audio-language-select');
     const selectedLang = langSelect ? langSelect.value : 'en-IN';
-    const apiKey = (document.getElementById('stt-api-key-input')?.value || localStorage.getItem('loanlens_stt_api_key') || '').trim();
     const btn = document.getElementById('btn-transcribe-speech');
 
-    if (!selectedAudioFile && !selectedDemoId && (!transcriptInput || !transcriptInput.value.trim())) {
-      alert('Please upload an audio file or click a test demo recording first.');
+    // Case 1: Preset demo audio loaded
+    if (selectedDemoId && DEMO_AUDIO_CALLS[selectedDemoId]) {
+      const demo = DEMO_AUDIO_CALLS[selectedDemoId];
+      if (transcriptInput) {
+        transcriptInput.value = demo.transcript;
+        transcriptInput.style.borderColor = '#0D9488';
+        setTimeout(() => { transcriptInput.style.borderColor = ''; }, 1000);
+      }
+      return;
+    }
+
+    if (!selectedAudioFile && (!transcriptInput || !transcriptInput.value.trim())) {
+      alert('Please upload an audio file or select a test demo recording first.');
+      return;
+    }
+
+    if (!selectedAudioFile) {
       return;
     }
 
@@ -882,36 +935,50 @@ Borrower: Understood, thank you for confirming.`
     }
 
     try {
-      let data;
-      if (selectedAudioFile) {
-        const fd = new FormData();
-        fd.append('audio', selectedAudioFile);
-        fd.append('language', selectedLang);
-        if (apiKey) fd.append('api_key', apiKey);
-        data = await LoanLensAPI.transcribeAudio(fd, true, apiKey);
-      } else if (selectedDemoId) {
-        data = await LoanLensAPI.transcribeAudio({ demo_id: selectedDemoId, language: selectedLang, api_key: apiKey }, false, apiKey);
+      // Primary: Client-Side Local Whisper via WebAssembly & Web Audio
+      if (window.LocalWhisperTranscriber && window.LocalWhisperTranscriber.isSupported()) {
+        updateSttProgress({ status: 'preparing', message: 'Decoding audio locally...' });
+
+        const result = await window.LocalWhisperTranscriber.transcribe(selectedAudioFile, {
+          language: selectedLang,
+          onProgress: (p) => updateSttProgress(p)
+        });
+
+        if (result && (result.transcript || result.fullText)) {
+          const finalText = result.transcript || result.fullText;
+          if (transcriptInput) {
+            transcriptInput.value = finalText;
+            transcriptInput.style.borderColor = '#0D9488';
+            setTimeout(() => { transcriptInput.style.borderColor = ''; }, 1200);
+          }
+          const title = document.getElementById('stt-status-title');
+          const icon = document.getElementById('stt-status-icon');
+          if (title) title.textContent = '✓ Transcribed 100% locally in your browser';
+          if (icon) icon.textContent = '✅';
+          setTimeout(() => hideSttProgress(), 3000);
+          return;
+        }
       }
 
+      // Fallback if browser does not support WebAssembly/Web Workers
+      const fd = new FormData();
+      fd.append('audio', selectedAudioFile);
+      fd.append('language', selectedLang);
+      const data = await LoanLensAPI.transcribeAudio(fd, true);
       if (data && data.transcript) {
         if (transcriptInput) {
           transcriptInput.value = data.transcript;
           transcriptInput.style.borderColor = '#0D9488';
           setTimeout(() => { transcriptInput.style.borderColor = ''; }, 1200);
         }
-      } else if (data && data.status === 'requires_key') {
-        const card = document.getElementById('stt-settings-card');
-        if (card) card.classList.remove('hidden');
-        const sttInput = document.getElementById('stt-api-key-input');
-        if (sttInput) sttInput.focus();
-        alert('To transcribe custom audio recordings, please provide a free Groq or OpenAI Whisper API key in STT Settings, or use "Record via Microphone" for free browser dictation.');
       } else if (data && data.message) {
         alert(data.message);
       }
     } catch (err) {
       console.error('Transcription error:', err);
-      alert('Transcription notice: ' + err.message);
+      alert('Local transcription notice: ' + err.message);
     } finally {
+      hideSttProgress();
       if (btn) {
         btn.disabled = false;
         btn.textContent = '✨ Transcribe Audio';
@@ -2025,7 +2092,6 @@ Verified via LoanLens (https://loanlens.vercel.app)`;
 
   // ── Tab URL Routing & Navigation Interception ───────────────────
   initTabFromUrl();
-  initSttSettings();
   window.addEventListener('popstate', initTabFromUrl);
 
   document.addEventListener('click', (e) => {
