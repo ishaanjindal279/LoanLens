@@ -244,6 +244,7 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="verify.html" class="nav-link active" id="nav-verify">Verify Lender</a>
         <a href="verify.html?tab=message" class="nav-link" id="nav-message">Analyze Message</a>
+        <a href="verify.html?tab=audio" class="nav-link" id="nav-audio">Call Recording</a>
         <a href="index.html#how-it-works" class="nav-link">How It Works</a>
       </div>
     </div>
@@ -274,6 +275,10 @@
           <button class="tab-btn" id="tab-message" onclick="switchTab('message')">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             Message / T&amp;C Only
+          </button>
+          <button class="tab-btn" id="tab-audio" onclick="switchTab('audio')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call Recording (Audio)
           </button>
         </div>
 
@@ -348,6 +353,20 @@
                 <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('threat')" style="border-color:rgba(239,68,68,0.3);">Extortion Recovery Threat</button>
                 <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('unfair_tc')" style="border-color:rgba(245,158,11,0.3);">Predatory T&amp;C Clauses</button>
                 <button class="btn btn-secondary btn-sm" onclick="fillDemoMsg('legit')">Legitimate Bank SMS</button>
+              </div>
+
+              <!-- Call Recording Banner in Stage 2 -->
+              <div style="margin-top:16px; padding:12px 16px; background:#F8FAFC; border:1px dashed #0F766E; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-size:1.3rem;">🎙️</span>
+                  <div>
+                    <div style="font-size:0.85rem; font-weight:700; color:#0F172A;">Have a Call Recording or Telecaller Audio?</div>
+                    <div style="font-size:0.75rem; color:var(--text-secondary);">Verify extortion threats &amp; RBI Recovery Agent Code violations in the Audio Analyzer.</div>
+                  </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="switchTab('audio')" style="border-color:#0F766E; color:#0F766E; font-weight:600;">
+                  Upload &amp; Analyze Call Recording →
+                </button>
               </div>
 
               <!-- App Permissions Selector -->
@@ -450,6 +469,108 @@
           <div id="msg-only-result" class="hidden fade-in"></div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- TAB 3: CALL RECORDING & AUDIO EXTORTION ANALYZER -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="panel-audio" class="hidden">
+          <div class="input-panel">
+            <div class="input-panel-title" style="display:flex; align-items:center; gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>Call Recording &amp; Recovery Agent Verification</span>
+              <span class="badge badge-high" style="font-size:0.65rem; margin-left:auto;">RBI 2022 Circular Compliant</span>
+            </div>
+            <div class="input-panel-sub">
+              Upload or test telecaller recordings to detect <strong>illegal recovery harassment, morphed photo threats, police/court impersonation, upfront fee extortion</strong>, and violations of RBI's Fair Practices Code for Recovery Agents.
+            </div>
+
+            <!-- 1-Click Demo Scenarios -->
+            <div style="margin-bottom:20px;">
+              <div style="font-size:0.78rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">
+                Quick Test Demo Recordings:
+              </div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('threat')" style="border-color:rgba(239,68,68,0.4); background:rgba(239,68,68,0.05); color:#991B1B;">
+                  ⚠️ Extortion Recovery Threat (Photos &amp; Goons)
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('advance_fee')" style="border-color:rgba(245,158,11,0.4); background:rgba(245,158,11,0.05); color:#92400E;">
+                  🚨 Pre-Approved Scam (UPI Advance Fee &amp; OTP)
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('legitimate')" style="border-color:rgba(16,185,129,0.4); background:rgba(16,185,129,0.05); color:#065F46;">
+                  ✅ Legitimate Bank KYC Verification Call
+                </button>
+              </div>
+            </div>
+
+            <!-- Drag & Drop Audio Upload Box -->
+            <div class="audio-dropzone" id="audio-dropzone" onclick="document.getElementById('audio-file-input').click()">
+              <input type="file" id="audio-file-input" accept="audio/*,.mp3,.wav,.m4a,.ogg,.webm,.aac" style="display:none;" onchange="handleAudioFileSelect(this.files)">
+              <div class="audio-dropzone-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div class="audio-dropzone-title" id="audio-dropzone-title">Upload Call Recording Audio File</div>
+              <div class="audio-dropzone-sub" id="audio-dropzone-sub">Drag &amp; drop WAV, MP3, M4A, OGG, or WEBM audio file here, or click to browse</div>
+              <div style="margin-top:10px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                <span class="badge badge-neutral" style="font-size:0.72rem;">MP3 / WAV / M4A / OGG</span>
+                <span class="badge badge-neutral" style="font-size:0.72rem;">Voice Call Forensics</span>
+                <span class="badge badge-neutral" style="font-size:0.72rem;">Max 50MB</span>
+              </div>
+            </div>
+
+            <!-- Audio Player Preview Card -->
+            <div id="audio-player-card" class="audio-player-card hidden" style="margin-top:16px;">
+              <div class="audio-player-header">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div class="audio-pulse-indicator" id="audio-pulse-indicator"></div>
+                  <div>
+                    <div id="audio-player-filename" style="font-weight:700; font-size:0.92rem; color:#0F172A;">call_recording.wav</div>
+                    <div id="audio-player-meta" style="font-size:0.76rem; color:var(--text-secondary);">44.1 kHz • Voice Call Recording</div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearSelectedAudio()" style="font-size:0.72rem; padding:4px 8px;">Change File</button>
+              </div>
+              <audio id="audio-player-elem" controls style="width:100%; margin-top:12px; height:40px; border-radius:20px;"></audio>
+            </div>
+
+            <!-- Mic Recording & Time Controls -->
+            <div style="margin-top:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:12px 16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:var(--radius-md);">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-mic-record" onclick="toggleMicRecording()">
+                  <span id="mic-icon">🎙️</span>
+                  <span id="mic-label">Record via Microphone</span>
+                </button>
+                <span id="mic-status" style="font-size:0.78rem; color:var(--text-muted);">Record ongoing speakerphone call</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label for="call-time-input" style="font-size:0.78rem; color:var(--text-secondary); font-weight:600; margin:0;">Call Time (RBI 8 AM - 7 PM check):</label>
+                <input type="time" id="call-time-input" class="input" style="width:auto; padding:4px 8px; font-size:0.8rem; height:32px;" value="21:45">
+              </div>
+            </div>
+
+            <!-- Transcript & Dialogue Editor -->
+            <div class="input-group" style="margin-top:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <label for="audio-transcript-input" style="margin-bottom:0; font-weight:700;">
+                  Call Transcript &amp; Dialogue Flow
+                </label>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Auto-transcribed • Editable</span>
+              </div>
+              <textarea id="audio-transcript-input" class="input" rows="6" placeholder="Transcribed dialogue will automatically appear here once audio is loaded, or you can paste an existing call transcription..."></textarea>
+            </div>
+
+            <!-- Action Button -->
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn-primary btn-lg" id="btn-analyze-audio" onclick="analyzeAudioRecording()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span id="btn-audio-label">Run AI Call &amp; RBI Compliance Analysis</span>
+                <span class="spinner hidden" id="spinner-audio"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Audio Analysis Results Container -->
+          <div id="audio-result" class="hidden fade-in"></div>
+        </div>
+
       </div>
     </div>
   </main>
@@ -494,32 +615,49 @@ Customer Helpline: 1800-123-4567 | www.hdbfs.com`;
   // ── Tab Management ────────────────────────────────────────────────
   function switchTab(tab, updateUrl = true) {
     const isMessage = tab === 'message';
+    const isAudio = tab === 'audio';
+    const isLender = !isMessage && !isAudio;
+
     const tabLender = document.getElementById('tab-lender');
     const tabMessage = document.getElementById('tab-message');
+    const tabAudio = document.getElementById('tab-audio');
+
     const panelLender = document.getElementById('panel-lender');
     const panelMessage = document.getElementById('panel-message');
+    const panelAudio = document.getElementById('panel-audio');
+
     const navVerify = document.getElementById('nav-verify');
     const navMessage = document.getElementById('nav-message');
+    const navAudio = document.getElementById('nav-audio');
 
-    if (tabLender) tabLender.classList.toggle('active', !isMessage);
+    if (tabLender) tabLender.classList.toggle('active', isLender);
     if (tabMessage) tabMessage.classList.toggle('active', isMessage);
-    if (panelLender) panelLender.classList.toggle('hidden', isMessage);
-    if (panelMessage) panelMessage.classList.toggle('hidden', !isMessage);
+    if (tabAudio) tabAudio.classList.toggle('active', isAudio);
 
-    if (navVerify) navVerify.classList.toggle('active', !isMessage);
+    if (panelLender) panelLender.classList.toggle('hidden', !isLender);
+    if (panelMessage) panelMessage.classList.toggle('hidden', !isMessage);
+    if (panelAudio) panelAudio.classList.toggle('hidden', !isAudio);
+
+    if (navVerify) navVerify.classList.toggle('active', isLender);
     if (navMessage) navMessage.classList.toggle('active', isMessage);
+    if (navAudio) navAudio.classList.toggle('active', isAudio);
 
     if (updateUrl && window.history && window.history.replaceState) {
       const url = new URL(window.location.href);
-      if (isMessage) {
+      if (isAudio) {
+        url.searchParams.set('tab', 'audio');
+      } else if (isMessage) {
         url.searchParams.set('tab', 'message');
       } else {
         url.searchParams.delete('tab');
       }
-      window.history.replaceState({ tab: isMessage ? 'message' : 'lender' }, '', url.pathname + url.search + url.hash);
+      window.history.replaceState({ tab: isAudio ? 'audio' : (isMessage ? 'message' : 'lender') }, '', url.pathname + url.search + url.hash);
     }
 
-    if (isMessage) {
+    if (isAudio) {
+      const transcriptInput = document.getElementById('audio-transcript-input');
+      if (transcriptInput) setTimeout(() => transcriptInput.focus(), 50);
+    } else if (isMessage) {
       const msgInput = document.getElementById('msg-only-input');
       if (msgInput) setTimeout(() => msgInput.focus(), 50);
     } else {
@@ -532,11 +670,380 @@ Customer Helpline: 1800-123-4567 | www.hdbfs.com`;
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get('tab');
     const hash = window.location.hash;
-    if (tabParam === 'message' || hash === '#message' || hash === '#tab-message') {
+    if (tabParam === 'audio' || hash === '#audio' || hash === '#tab-audio') {
+      switchTab('audio', false);
+    } else if (tabParam === 'message' || hash === '#message' || hash === '#tab-message') {
       switchTab('message', false);
     } else {
       switchTab('lender', false);
     }
+  }
+
+  // ── Audio Call Recording Forensics State & Handlers ───────────────
+  const DEMO_AUDIO_CALLS = {
+    threat: {
+      id: 'threat',
+      filename: 'recovery_agent_extortion_call.wav',
+      audio_url: '/audio/threat_call_demo.wav',
+      call_time: '21:45',
+      transcript: `Telecaller (Rahul): Listen carefully! This is Rahul from QuickPaisa recovery cell. You have not paid your loan EMI of Rs 8,500 due yesterday. If you don't pay within 1 hour, our team of recovery boys will reach your home address in Rohini and create a scene in front of your society!
+Borrower: Sir, I asked for a 2-day grace period. My salary gets credited tomorrow.
+Telecaller (Rahul): No excuses! I have your entire phone contact list and gallery backup. We have already morphed your photo with a fraud alert banner. In 30 minutes, I will forward this photo to your father, your office colleagues, and all WhatsApp groups unless you immediately transfer Rs 10,000 on this Google Pay number!
+Borrower: This is illegal, RBI does not allow this harassment.
+Telecaller (Rahul): Don't teach me RBI rules! Police FIR is also being registered under Section 420. Crime Branch team is on the way. Either transfer on UPI now or face police arrest and public humiliation!`
+    },
+    advance_fee: {
+      id: 'advance_fee',
+      filename: 'pre_approved_scam_call.wav',
+      audio_url: '/audio/advance_fee_demo.wav',
+      call_time: '11:15',
+      transcript: `Telecaller (Pooja): Congratulations! I am calling from Reserve Bank Central Loan Department. Your pre-approved personal loan of Rs 5,00,000 has been sanctioned at 3.5% interest without any CIBIL check or income proof.
+Borrower: Really? But I never applied for this loan.
+Telecaller (Pooja): Sir, this is under the Government PM Mudra Relief scheme. The loan amount is ready to be credited to your bank account within 10 minutes. However, as per RBI norms, you must first deposit Rs 4,200 as refundable file processing and GST clearance fee.
+Borrower: Can you deduct the fee from the Rs 5 lakh loan directly?
+Telecaller (Pooja): No sir, the government portal requires an upfront security deposit. Please send Rs 4,200 immediately via PhonePe or Paytm to our officer's UPI ID. Also read out the 6-digit OTP you just received on SMS so we can release the sanction letter.`
+    },
+    legitimate: {
+      id: 'legitimate',
+      filename: 'bank_official_kyc_verification.wav',
+      audio_url: '/audio/legit_call_demo.wav',
+      call_time: '14:30',
+      transcript: `Bank Representative (Vikram): Good afternoon, am I speaking with Mr. Sharma? I am calling from HDB Financial Services regarding your personal loan application reference #PL-89421 submitted on our official website.
+Borrower: Yes, speaking.
+Bank Representative (Vikram): Thank you. This is a routine verification call to confirm that you have submitted your KYC documents and income tax returns for underwriting. The evaluation process takes 2 to 3 business days.
+Borrower: Are there any advance fees or charges I need to pay to your team?
+Bank Representative (Vikram): No sir. HDB Financial Services never charges any advance fee, registration deposit, or cash payment. Any processing fee is transparently detailed in your Key Fact Statement and deducted solely from the disbursed amount. Also, please remember that our representatives will never ask you for your OTP, ATM PIN, or netbanking passwords.
+Borrower: Understood, thank you for confirming.`
+    }
+  };
+
+  let selectedAudioFile = null;
+  let selectedDemoId = null;
+  let mediaRecorder = null;
+  let audioChunks = [];
+  let isRecording = false;
+
+  function loadDemoAudio(type) {
+    const demo = DEMO_AUDIO_CALLS[type];
+    if (!demo) return;
+
+    selectedDemoId = type;
+    selectedAudioFile = null;
+
+    const transcriptInput = document.getElementById('audio-transcript-input');
+    const timeInput = document.getElementById('call-time-input');
+    const playerCard = document.getElementById('audio-player-card');
+    const playerElem = document.getElementById('audio-player-elem');
+    const filenameElem = document.getElementById('audio-player-filename');
+    const metaElem = document.getElementById('audio-player-meta');
+    const dropzone = document.getElementById('audio-dropzone');
+
+    if (transcriptInput) transcriptInput.value = demo.transcript;
+    if (timeInput) timeInput.value = demo.call_time;
+    if (filenameElem) filenameElem.textContent = demo.filename;
+    if (metaElem) metaElem.textContent = 'Voice Call • Sample Forensic Recording';
+
+    if (playerElem) {
+      playerElem.src = demo.audio_url;
+      playerElem.load();
+    }
+    if (playerCard) playerCard.classList.remove('hidden');
+    if (dropzone) dropzone.style.display = 'none';
+
+    // Automatically analyze the demo recording
+    analyzeAudioRecording();
+  }
+
+  function handleAudioFileSelect(files) {
+    if (!files || !files.length) return;
+    const file = files[0];
+    selectedAudioFile = file;
+    selectedDemoId = null;
+
+    const playerCard = document.getElementById('audio-player-card');
+    const playerElem = document.getElementById('audio-player-elem');
+    const filenameElem = document.getElementById('audio-player-filename');
+    const metaElem = document.getElementById('audio-player-meta');
+    const dropzone = document.getElementById('audio-dropzone');
+    const transcriptInput = document.getElementById('audio-transcript-input');
+
+    if (filenameElem) filenameElem.textContent = file.name;
+    const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+    if (metaElem) metaElem.textContent = `${file.type || 'Audio File'} • ${sizeMb} MB`;
+
+    if (playerElem) {
+      const objUrl = URL.createObjectURL(file);
+      playerElem.src = objUrl;
+      playerElem.load();
+    }
+    if (playerCard) playerCard.classList.remove('hidden');
+    if (dropzone) dropzone.style.display = 'none';
+
+    if (transcriptInput && !transcriptInput.value.trim()) {
+      transcriptInput.placeholder = "Audio loaded! Review or paste dialogue lines (e.g. 'Agent: ...', 'Borrower: ...'), or click 'Run AI Call & RBI Compliance Analysis' to evaluate speech.";
+    }
+  }
+
+  function clearSelectedAudio() {
+    selectedAudioFile = null;
+    selectedDemoId = null;
+    const playerCard = document.getElementById('audio-player-card');
+    const playerElem = document.getElementById('audio-player-elem');
+    const dropzone = document.getElementById('audio-dropzone');
+    const fileInput = document.getElementById('audio-file-input');
+
+    if (playerElem) {
+      playerElem.pause();
+      playerElem.src = '';
+    }
+    if (fileInput) fileInput.value = '';
+    if (playerCard) playerCard.classList.add('hidden');
+    if (dropzone) dropzone.style.display = 'block';
+  }
+
+  async function toggleMicRecording() {
+    const btn = document.getElementById('btn-mic-record');
+    const icon = document.getElementById('mic-icon');
+    const label = document.getElementById('mic-label');
+    const status = document.getElementById('mic-status');
+
+    if (!isRecording) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = e => {
+          if (e.data.size > 0) audioChunks.push(e.data);
+        };
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const audioFile = new File([audioBlob], 'live_recorded_call.webm', { type: 'audio/webm' });
+          handleAudioFileSelect([audioFile]);
+        };
+        mediaRecorder.start();
+        isRecording = true;
+        if (label) label.textContent = 'Stop Recording';
+        if (icon) icon.textContent = '⏹️';
+        if (status) status.textContent = 'Recording live audio... Speak or play into microphone';
+        if (btn) btn.style.background = '#FEE2E2';
+      } catch (err) {
+        alert('Microphone access was denied or is unavailable: ' + err.message);
+      }
+    } else {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(t => t.stop());
+      }
+      isRecording = false;
+      if (label) label.textContent = 'Record via Microphone';
+      if (icon) icon.textContent = '🎙️';
+      if (status) status.textContent = 'Recording saved & loaded!';
+      if (btn) btn.style.background = '';
+    }
+  }
+
+  async function analyzeAudioRecording() {
+    const btn = document.getElementById('btn-analyze-audio');
+    const label = document.getElementById('btn-audio-label');
+    const spinner = document.getElementById('spinner-audio');
+    const resultDiv = document.getElementById('audio-result');
+    const transcriptInput = document.getElementById('audio-transcript-input');
+    const callTimeInput = document.getElementById('call-time-input');
+
+    const transcript = transcriptInput ? transcriptInput.value.trim() : '';
+    const callTime = callTimeInput ? callTimeInput.value : '';
+
+    if (!selectedAudioFile && !selectedDemoId && !transcript) {
+      alert('Please select a demo call, upload an audio file, or enter a transcript to analyze.');
+      return;
+    }
+
+    if (btn) btn.disabled = true;
+    if (label) label.textContent = 'Analyzing Voice Forensics & RBI Norms...';
+    if (spinner) spinner.classList.remove('hidden');
+
+    try {
+      let data;
+      if (selectedAudioFile) {
+        const fd = new FormData();
+        fd.append('audio', selectedAudioFile);
+        if (transcript) fd.append('transcript', transcript);
+        if (callTime) fd.append('call_time', callTime);
+        const res = await fetch('/api/analyze-audio', {
+          method: 'POST',
+          body: fd
+        });
+        data = await res.json();
+      } else {
+        const payload = {
+          demo_id: selectedDemoId,
+          transcript: transcript,
+          call_time: callTime
+        };
+        const res = await fetch('/api/analyze-audio', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        data = await res.json();
+      }
+
+      renderAudioResults(data);
+      if (resultDiv) {
+        resultDiv.classList.remove('hidden');
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } catch (err) {
+      console.error('Audio analysis error:', err);
+      alert('Analysis failed: ' + err.message);
+    } finally {
+      if (btn) btn.disabled = false;
+      if (label) label.textContent = 'Run AI Call & RBI Compliance Analysis';
+      if (spinner) spinner.classList.add('hidden');
+    }
+  }
+
+  function renderAudioResults(data) {
+    const div = document.getElementById('audio-result');
+    if (!div) return;
+
+    const isHigh = data.risk_level === 'HIGH';
+    const isSuspicious = data.risk_level === 'SUSPICIOUS';
+    const isLow = data.risk_level === 'LOW';
+
+    let verdictBadge = '';
+    let headerBorder = '';
+
+    if (isHigh) {
+      headerBorder = '#EF4444';
+      verdictBadge = '<span class="badge badge-high" style="font-size:0.85rem; padding:6px 12px;">CRITICAL RISK — EXTORTION &amp; HARASSMENT</span>';
+    } else if (isSuspicious) {
+      headerBorder = '#F59E0B';
+      verdictBadge = '<span class="badge badge-medium" style="font-size:0.85rem; padding:6px 12px;">SUSPICIOUS CALL — CONDUCT VIOLATION</span>';
+    } else {
+      headerBorder = '#10B981';
+      verdictBadge = '<span class="badge badge-low" style="font-size:0.85rem; padding:6px 12px;">VERIFIED — LEGITIMATE INSTITUTIONAL CONDUCT</span>';
+    }
+
+    // Build RBI violations list
+    let violationsHtml = '';
+    if (data.rbi_recovery_violations && data.rbi_recovery_violations.length > 0) {
+      violationsHtml = `
+        <div style="margin-top:20px;">
+          <div style="font-size:0.95rem; font-weight:800; color:#1E293B; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+            <span>⚠️</span> Statutory RBI Fair Practices Violations (${data.rbi_recovery_violations.length} Detected)
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            ${data.rbi_recovery_violations.map(v => `
+              <div style="background:#FFFFFF; border:1px solid #FECACA; border-left:4px solid #EF4444; border-radius:var(--radius-sm); padding:14px; box-shadow:0 2px 6px rgba(239,68,68,0.05);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+                  <span style="font-weight:700; color:#991B1B; font-size:0.92rem;">${v.title}</span>
+                  <span class="badge badge-high" style="font-size:0.65rem;">${v.severity} VIOLATION</span>
+                </div>
+                <div style="font-size:0.75rem; color:#64748B; margin-top:4px;">
+                  <strong>RBI Reference:</strong> ${v.rbi_clause} | <strong>Governing Statute:</strong> ${v.statute}
+                </div>
+                <div style="font-size:0.82rem; color:#334155; margin-top:6px; background:#F8FAFC; padding:8px 10px; border-radius:4px; font-family:monospace;">
+                  <strong>Evidence Snippet:</strong> "${v.evidence.join('", "')}"
+                </div>
+                <div style="font-size:0.78rem; color:#B91C1C; margin-top:6px; font-weight:600;">
+                  Legal Penalty / Consequence: ${v.penalty}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    } else {
+      violationsHtml = `
+        <div style="margin-top:20px; padding:14px; background:#F0FDF4; border:1px solid #86EFAC; border-radius:var(--radius-sm); display:flex; align-items:center; gap:12px;">
+          <span style="font-size:1.4rem;">✅</span>
+          <div>
+            <div style="font-weight:700; color:#166534; font-size:0.92rem;">Zero Statutory Violations Detected</div>
+            <div style="font-size:0.8rem; color:#15803D;">The telecaller maintained institutional decorum, did not use abusive threats, and warned against credential sharing.</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Build dialogue breakdown
+    let dialogueHtml = '';
+    if (data.dialogue && data.dialogue.length > 0) {
+      dialogueHtml = `
+        <div style="margin-top:24px;">
+          <div style="font-size:0.95rem; font-weight:800; color:#1E293B; margin-bottom:12px;">
+            💬 Conversational Turn Forensics &amp; Speaker Breakdown
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            ${data.dialogue.map(turn => {
+              const isAgent = turn.role === 'agent';
+              return `
+                <div style="padding:12px 14px; border-radius:var(--radius-md); background:${isAgent ? '#F8FAFC' : '#F0FDF4'}; border:1px solid ${isAgent ? '#E2E8F0' : '#BBF7D0'}; margin-left:${isAgent ? '0' : '24px'}; margin-right:${isAgent ? '24px' : '0'};">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.75rem;">
+                    <span style="font-weight:700; color:${isAgent ? '#0F766E' : '#15803D'};">${turn.speaker}</span>
+                    <span style="color:var(--text-muted);">${turn.time || ''}</span>
+                  </div>
+                  <div style="font-size:0.86rem; color:#1E293B; line-height:1.45;">${turn.text}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Build safety actions & legal rights
+    let actionsHtml = `
+      <div style="margin-top:24px; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+        <div style="background:#FFFFFF; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px;">
+          <div style="font-weight:800; color:#0F172A; font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span>🛡️</span> Immediate Protection Checklist
+          </div>
+          <ul style="margin:0; padding-left:18px; font-size:0.82rem; color:#334155; line-height:1.6;">
+            ${data.safety_actions.map(act => `<li style="margin-bottom:6px;">${act}</li>`).join('')}
+          </ul>
+        </div>
+        <div style="background:#FFFFFF; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px;">
+          <div style="font-weight:800; color:#0F172A; font-size:0.88rem; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <span>⚖️</span> Statutory Consumer Rights
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            ${data.legal_rights.map(r => `
+              <div style="font-size:0.78rem; color:#475569; border-bottom:1px solid #F1F5F9; padding-bottom:6px;">
+                <div style="font-weight:700; color:#0F766E;">${r.title}</div>
+                <div>${r.detail}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    div.innerHTML = `
+      <div class="result-card" style="border-top:4px solid ${headerBorder}; background:#FFFFFF; padding:24px; margin-top:24px; box-shadow:0 12px 35px rgba(20, 83, 45, 0.05); border-radius:var(--radius-lg);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; border-bottom:1px solid #F1F5F9; padding-bottom:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              ${verdictBadge}
+              <span style="font-size:0.8rem; color:var(--text-secondary);">${data.filename || 'Call Audio'} (${data.duration_seconds || 45}s)</span>
+            </div>
+            <h2 style="font-size:1.35rem; font-weight:800; color:#0F172A; margin:0;">
+              Call Recording Forensic Verdict
+            </h2>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:2.4rem; font-weight:900; color:${headerBorder}; line-height:1;">
+              ${data.risk_score}<span style="font-size:1rem; font-weight:600; color:var(--text-muted);">/100</span>
+            </div>
+            <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-top:2px;">Call Risk Score</div>
+          </div>
+        </div>
+
+        ${violationsHtml}
+        ${dialogueHtml}
+        ${actionsHtml}
+      </div>
+    `;
   }
 
   function setProgress(step) {

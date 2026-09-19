@@ -1283,3 +1283,89 @@ nav { background: rgba(247, 249, 246, 0.96) !important; border-bottom: 1px solid
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ─── Call Recording & Audio Forensics Styles ───────────────── */
+.audio-dropzone {
+  border: 2px dashed #0F766E;
+  background: #F0FDF4;
+  border-radius: var(--radius-md);
+  padding: 36px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.audio-dropzone:hover {
+  background: #DCFCE7;
+  border-color: #047857;
+  transform: translateY(-1px);
+}
+.audio-dropzone-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #BBF7D0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px auto;
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.08);
+}
+.audio-dropzone-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+.audio-dropzone-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.audio-player-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+.audio-player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.audio-pulse-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: audioPulse 2s infinite;
+}
+@keyframes audioPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+.btn-recording-active {
+  background: #FEE2E2 !important;
+  border-color: #EF4444 !important;
+  color: #DC2626 !important;
+  animation: recBlink 1s infinite alternate;
+}
+@keyframes recBlink {
+  from { opacity: 1; }
+  to { opacity: 0.6; }
+}
+

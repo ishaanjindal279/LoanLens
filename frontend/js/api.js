@@ -815,6 +815,49 @@ const api = {
     }
 
     return clientCalculateRisk(payload);
+  },
+
+  async analyzeAudio(payload, isFormData = false) {
+    try {
+      const opts = {
+        method: 'POST',
+        body: isFormData ? payload : JSON.stringify(payload)
+      };
+      if (!isFormData) {
+        opts.headers = { 'Content-Type': 'application/json' };
+      }
+      const r = await fetch(`${API_BASE}/api/analyze-audio`, opts);
+      if (r.ok) return await r.json();
+    } catch (e) {
+      console.warn("Using client-side audio analysis fallback:", e.message);
+    }
+
+    const transcript = (isFormData ? payload.get('transcript') : payload.transcript) || '';
+    const redFlags = clientDetectRedFlags(transcript);
+    return {
+      status: 'success',
+      filename: isFormData ? (payload.get('audio')?.name || 'uploaded_call.wav') : 'demo_call.wav',
+      duration_seconds: 48,
+      audio_format: 'Voice Audio',
+      transcript: transcript,
+      dialogue: [
+        { speaker: 'Caller / Agent', role: 'agent', time: '0:00 - 0:25', text: transcript }
+      ],
+      red_flags: redFlags,
+      red_flag_count: redFlags.length,
+      rbi_recovery_violations: [],
+      violation_count: 0,
+      risk_score: redFlags.length >= 2 ? 88 : (redFlags.length === 1 ? 55 : 10),
+      risk_level: redFlags.length >= 2 ? 'HIGH' : (redFlags.length === 1 ? 'SUSPICIOUS' : 'LOW'),
+      verdict: redFlags.length >= 2 ? 'HIGH_RISK_HARASSMENT' : (redFlags.length === 1 ? 'SUSPICIOUS_CALL' : 'VERIFIED_LEGITIMATE'),
+      legal_rights: [
+        { title: 'RBI Recovery Guidelines Compliance', detail: 'Recovery calls are restricted between 8 AM and 7 PM with zero tolerance for harassment.' }
+      ],
+      safety_actions: [
+        'Preserve call recordings for evidentiary compliance.',
+        'Report extortion demands to cybercrime.gov.in or helpline 1930.'
+      ]
+    };
   }
 };
 

@@ -19,6 +19,8 @@ import re
 import json
 import joblib
 import numpy as np
+import io
+import wave
 from pathlib import Path
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
@@ -389,6 +391,14 @@ def _is_match_negated(text: str, match_start: int, match_end: int, matched_str: 
     if _SAFETY_DISCLAIMER_RE.search(full_clause):
         return True
 
+    # Questions or borrower inquiries (e.g. 'Are there any advance fees?') are not scam demands
+    if full_clause.endswith("?") or re.search(r"\b(?:are there any|is there any|do i need to|do we need to|can you deduct)\b", full_clause):
+        return True
+
+    # Legitimate loan deduction statements (RBI compliant fee disclosure)
+    if "deducted" in full_clause and any(w in full_clause for w in ("disbursed", "sanctioned", "loan amount", "transparently detailed", "key fact statement")):
+        return True
+
     return False
 
 # ─── Suspicious pattern detection ─────────────────────────────────────────
@@ -561,7 +571,328 @@ def get_safety_recommendations(risk_level: str, red_flags: list, permission_anal
     
     return recs
 
+# ─── RBI Recovery Agent Conduct Violations & Call Recording Engine ────────
+RBI_RECOVERY_VIOLATIONS = [
+    {
+        "id": "harassment_intimidation",
+        "title": "Threats of Violence, Physical Harm & Intimidation",
+        "rbi_clause": "Clause 2(b), RBI Circular DOR.ORG.REC.65/21.04.158/2022-23",
+        "statute": "IPC Sections 503 & 506 (Criminal Intimidation)",
+        "patterns": [
+            r"\b(?:beat\s+up|break\s+legs|see\s+you\s+personally|come\s+to\s+(?:your\s+)?(?:home|house|address)|send\s+(?:boys|goons|men|recovery team|agents))\b",
+            r"\b(?:gherao|dharna|create\s+(?:a\s+)?scene|tamasha|teach\s+(?:you\s+)?a\s+lesson)\b",
+            r"\b(?:face\s+consequences|destroy\s+(?:your\s+)?life|ruin\s+(?:your\s+)?life)\b"
+        ],
+        "severity": "CRITICAL",
+        "penalty": "Severe regulatory sanction on Regulated Entity & Criminal FIR against recovery agent."
+    },
+    {
+        "id": "defamation_contacts",
+        "title": "Contacting Relatives/Friends, Defamation & Morphing Blackmail",
+        "rbi_clause": "Clause 2(c), RBI Circular DOR.ORG.REC.65/21.04.158/2022-23",
+        "statute": "IT Act Section 66E/67 & IPC Section 499/500 (Defamation) & Section 384 (Extortion)",
+        "patterns": [
+            r"\b(?:call|contact)\s+(?:all\s+)?(?:your\s+)?(?:contacts|family|relatives|parents|father|mother|boss|office|friends)\b",
+            r"\b(?:send|share|forward)\s+(?:morphed|photos?|images?|pictures?|nude)\b",
+            r"\bmorphed\s+your\s+photo\b",
+            r"\b(?:shame|embarrass)\s+(?:you|family|relatives|society|neighborhood|colleagues|office)\b",
+            r"\b(?:post.*(?:chor|fraud|defaulter)|fraud\s+alert\s+banner)\b"
+        ],
+        "severity": "CRITICAL",
+        "penalty": "RBI explicitly prohibits contacting third parties. Punishable non-bailable offense under IT Act."
+    },
+    {
+        "id": "impersonating_authorities",
+        "title": "Impersonation of Police, CBI, Cyber Cell or Judicial Officers",
+        "rbi_clause": "Clause 3, RBI Fair Practices Code for Lenders",
+        "statute": "IPC Section 170 (Impersonating a Public Servant) & Section 419/420 (Cheating)",
+        "patterns": [
+            r"\b(?:calling from|this is)\s+(?:the\s+)?(?:reserve bank|rbi|police|crime branch|cbi|ed|cyber cell|high court|rbi vigilance)\b",
+            r"\b(?:police|crime branch)\s+(?:team|fir|arrest warrant|custody|lockup)\b",
+            r"\b(?:court\s+(?:summons|order|warrant|case filed))\b",
+            r"\b(?:section\s+420|surrender at\s+police\s+station)\b"
+        ],
+        "severity": "CRITICAL",
+        "penalty": "Cognizable criminal offense. Police cannot arrest borrowers for civil loan defaults without warrants."
+    },
+    {
+        "id": "personal_upi_demands",
+        "title": "Unauthorised Demand for Personal UPI / Advance Cash Transfer",
+        "rbi_clause": "RBI Digital Lending Norms 2022 (Direct Account-to-Account Rule)",
+        "statute": "RBI Master Direction on NBFC Fair Practices Code",
+        "patterns": [
+            r"\b(?:send|transfer|pay)\b.{0,60}\b(?:phonepe|paytm|gpay|google pay|personal upi|upi id|qr code)\b",
+            r"\b(?:send\s+screenshot|utr\s+immediately|pay\s+while on call)\b",
+            r"\b(?:advance|file|registration|gst|insurance)\s+(?:deposit|fee|charge)\s+before\b"
+        ],
+        "severity": "HIGH",
+        "penalty": "Repayments and fees must strictly flow solely to the lender's registered bank account."
+    },
+    {
+        "id": "credential_extortion",
+        "title": "Demand for OTP, MPIN, or Banking Passwords Over Phone",
+        "rbi_clause": "RBI Master Direction on Digital Payment Security",
+        "statute": "IT Act Section 43/66C (Identity Theft & Fraud)",
+        "patterns": [
+            r"\b(?:read out|share|tell|give|enter)\b.{0,40}\b(?:otp|one time password|pin|mpin|password|passcode)\b",
+            r"\b(?:6-digit|4-digit)\s+otp\b"
+        ],
+        "severity": "CRITICAL",
+        "penalty": "High-risk banking fraud indicator. Genuine lenders never ask for OTP or credentials over phone calls."
+    }
+]
+
+DEMO_CALL_RECORDINGS = {
+    "threat": {
+        "id": "threat",
+        "title": "Illegal Recovery Harassment & Morphing Extortion Call",
+        "caller_type": "Illegal Recovery Telecaller",
+        "alleged_entity": "QuickPaisa Instant App (Flagged Predatory App)",
+        "call_time": "21:45",
+        "filename": "recovery_agent_extortion_call.wav",
+        "audio_url": "/audio/threat_call_demo.wav",
+        "duration_seconds": 58,
+        "format": "WAV (Audio/PCM, 16.0kHz)",
+        "category": "CRITICAL_EXTORTION",
+        "transcript": (
+            "Telecaller (Rahul): Listen carefully! This is Rahul from QuickPaisa recovery cell. You have not paid your loan EMI of Rs 8,500 due yesterday. If you don't pay within 1 hour, our team of recovery boys will reach your home address in Rohini and create a scene in front of your society!\n"
+            "Borrower: Sir, I asked for a 2-day grace period. My salary gets credited tomorrow.\n"
+            "Telecaller (Rahul): No excuses! I have your entire phone contact list and gallery backup. We have already morphed your photo with a fraud alert banner. In 30 minutes, I will forward this photo to your father, your office colleagues, and all WhatsApp groups unless you immediately transfer Rs 10,000 on this Google Pay number!\n"
+            "Borrower: This is illegal, RBI does not allow this harassment.\n"
+            "Telecaller (Rahul): Don't teach me RBI rules! Police FIR is also being registered under Section 420. Crime Branch team is on the way. Either transfer on UPI now or face police arrest and public humiliation!"
+        ),
+        "dialogue": [
+            {"speaker": "Recovery Telecaller (Rahul)", "role": "agent", "time": "0:00 - 0:15", "text": "Listen carefully! This is Rahul from QuickPaisa recovery cell. You have not paid your loan EMI of Rs 8,500 due yesterday. If you don't pay within 1 hour, our team of recovery boys will reach your home address in Rohini and create a scene in front of your society!"},
+            {"speaker": "Borrower", "role": "user", "time": "0:16 - 0:23", "text": "Sir, I asked for a 2-day grace period. My salary gets credited tomorrow."},
+            {"speaker": "Recovery Telecaller (Rahul)", "role": "agent", "time": "0:24 - 0:42", "text": "No excuses! I have your entire phone contact list and gallery backup. We have already morphed your photo with a fraud alert banner. In 30 minutes, I will forward this photo to your father, your office colleagues, and all WhatsApp groups unless you immediately transfer Rs 10,000 on this Google Pay number!"},
+            {"speaker": "Borrower", "role": "user", "time": "0:43 - 0:47", "text": "This is illegal, RBI does not allow this harassment."},
+            {"speaker": "Recovery Telecaller (Rahul)", "role": "agent", "time": "0:48 - 0:58", "text": "Don't teach me RBI rules! Police FIR is also being registered under Section 420. Crime Branch team is on the way. Either transfer on UPI now or face police arrest and public humiliation!"}
+        ]
+    },
+    "advance_fee": {
+        "id": "advance_fee",
+        "title": "Pre-Approval Advance Fee Scam Call",
+        "caller_type": "Fake Loan Executive",
+        "alleged_entity": "RBI Central Loan Wing (Fictitious Impersonation)",
+        "call_time": "11:15",
+        "filename": "pre_approved_scam_call.wav",
+        "audio_url": "/audio/advance_fee_demo.wav",
+        "duration_seconds": 64,
+        "format": "WAV (Audio/PCM, 16.0kHz)",
+        "category": "ADVANCE_FEE_SCAM",
+        "transcript": (
+            "Telecaller (Pooja): Congratulations! I am calling from Reserve Bank Central Loan Department. Your pre-approved personal loan of Rs 5,00,000 has been sanctioned at 3.5% interest without any CIBIL check or income proof.\n"
+            "Borrower: Really? But I never applied for this loan.\n"
+            "Telecaller (Pooja): Sir, this is under the Government PM Mudra Relief scheme. The loan amount is ready to be credited to your bank account within 10 minutes. However, as per RBI norms, you must first deposit Rs 4,200 as refundable file processing and GST clearance fee.\n"
+            "Borrower: Can you deduct the fee from the Rs 5 lakh loan directly?\n"
+            "Telecaller (Pooja): No sir, the government portal requires an upfront security deposit. Please send Rs 4,200 immediately via PhonePe or Paytm to our officer's UPI ID. Also read out the 6-digit OTP you just received on SMS so we can release the sanction letter."
+        ),
+        "dialogue": [
+            {"speaker": "Telecaller (Pooja)", "role": "agent", "time": "0:00 - 0:17", "text": "Congratulations! I am calling from Reserve Bank Central Loan Department. Your pre-approved personal loan of Rs 5,00,000 has been sanctioned at 3.5% interest without any CIBIL check or income proof."},
+            {"speaker": "Borrower", "role": "user", "time": "0:18 - 0:23", "text": "Really? But I never applied for this loan."},
+            {"speaker": "Telecaller (Pooja)", "role": "agent", "time": "0:24 - 0:45", "text": "Sir, this is under the Government PM Mudra Relief scheme. The loan amount is ready to be credited to your bank account within 10 minutes. However, as per RBI norms, you must first deposit Rs 4,200 as refundable file processing and GST clearance fee."},
+            {"speaker": "Borrower", "role": "user", "time": "0:46 - 0:52", "text": "Can you deduct the fee from the Rs 5 lakh loan directly?"},
+            {"speaker": "Telecaller (Pooja)", "role": "agent", "time": "0:53 - 1:04", "text": "No sir, the government portal requires an upfront security deposit. Please send Rs 4,200 immediately via PhonePe or Paytm to our officer's UPI ID. Also read out the 6-digit OTP you just received on SMS so we can release the sanction letter."}
+        ]
+    },
+    "legitimate": {
+        "id": "legitimate",
+        "title": "Legitimate Bank Verification Call",
+        "caller_type": "Institutional Bank Underwriter",
+        "alleged_entity": "HDB Financial Services Limited (RBI Registered NBFC)",
+        "call_time": "14:30",
+        "filename": "bank_official_kyc_verification.wav",
+        "audio_url": "/audio/legit_call_demo.wav",
+        "duration_seconds": 52,
+        "format": "WAV (Audio/PCM, 16.0kHz)",
+        "category": "VERIFIED_BANK_CALL",
+        "transcript": (
+            "Bank Representative (Vikram): Good afternoon, am I speaking with Mr. Sharma? I am calling from HDB Financial Services regarding your personal loan application reference #PL-89421 submitted on our official website.\n"
+            "Borrower: Yes, speaking.\n"
+            "Bank Representative (Vikram): Thank you. This is a routine verification call to confirm that you have submitted your KYC documents and income tax returns for underwriting. The evaluation process takes 2 to 3 business days.\n"
+            "Borrower: Are there any advance fees or charges I need to pay to your team?\n"
+            "Bank Representative (Vikram): No sir. HDB Financial Services never charges any advance fee, registration deposit, or cash payment. Any processing fee is transparently detailed in your Key Fact Statement and deducted solely from the disbursed amount. Also, please remember that our representatives will never ask you for your OTP, ATM PIN, or netbanking passwords.\n"
+            "Borrower: Understood, thank you for confirming."
+        ),
+        "dialogue": [
+            {"speaker": "Bank Representative (Vikram)", "role": "agent", "time": "0:00 - 0:16", "text": "Good afternoon, am I speaking with Mr. Sharma? I am calling from HDB Financial Services regarding your personal loan application reference #PL-89421 submitted on our official website."},
+            {"speaker": "Borrower", "role": "user", "time": "0:17 - 0:19", "text": "Yes, speaking."},
+            {"speaker": "Bank Representative (Vikram)", "role": "agent", "time": "0:20 - 0:33", "text": "Thank you. This is a routine verification call to confirm that you have submitted your KYC documents and income tax returns for underwriting. The evaluation process takes 2 to 3 business days."},
+            {"speaker": "Borrower", "role": "user", "time": "0:34 - 0:39", "text": "Are there any advance fees or charges I need to pay to your team?"},
+            {"speaker": "Bank Representative (Vikram)", "role": "agent", "time": "0:40 - 0:50", "text": "No sir. HDB Financial Services never charges any advance fee, registration deposit, or cash payment. Any processing fee is transparently detailed in your Key Fact Statement and deducted solely from the disbursed amount. Also, please remember that our representatives will never ask you for your OTP, ATM PIN, or netbanking passwords."},
+            {"speaker": "Borrower", "role": "user", "time": "0:51 - 0:52", "text": "Understood, thank you for confirming."}
+        ]
+    }
+}
+
+def parse_transcript_dialogue(transcript: str) -> list:
+    """Parse dialogue turns with speaker labels or natural conversational sentences."""
+    dialogue = []
+    lines = [line.strip() for line in transcript.split("\n") if line.strip()]
+    
+    current_time_offset = 0
+    for line in lines:
+        match = re.match(r"^([A-Za-z0-9_\s\(\)]+)\s*:\s*(.+)$", line)
+        if match:
+            speaker_raw = match.group(1).strip()
+            content = match.group(2).strip()
+            role = "agent" if re.search(r"telecaller|agent|officer|caller|representative|bank", speaker_raw, re.I) else "user"
+            dialogue.append({
+                "speaker": speaker_raw,
+                "role": role,
+                "time": f"0:{current_time_offset:02d} - 0:{current_time_offset+9:02d}",
+                "text": content
+            })
+            current_time_offset += 10
+        else:
+            dialogue.append({
+                "speaker": "Caller / Dialogue",
+                "role": "agent",
+                "time": f"0:{current_time_offset:02d} - 0:{current_time_offset+9:02d}",
+                "text": line
+            })
+            current_time_offset += 10
+    return dialogue
+
+def detect_rbi_recovery_violations(transcript: str, call_time: str = "") -> list:
+    """Detect specific violations of RBI Recovery Agent Guidelines (2022 Circular)."""
+    violations = []
+    if not transcript:
+        return violations
+    
+    norm = transcript.lower()
+    for v in RBI_RECOVERY_VIOLATIONS:
+        matched_patterns = []
+        for pat in v["patterns"]:
+            matches = list(re.finditer(pat, norm, re.IGNORECASE))
+            if matches:
+                for m in matches:
+                    if not _is_match_negated(transcript, m.start(), m.end(), m.group(0)):
+                        matched_patterns.append(m.group(0))
+                        break
+        if matched_patterns:
+            violations.append({
+                "id": v["id"],
+                "title": v["title"],
+                "rbi_clause": v["rbi_clause"],
+                "statute": v["statute"],
+                "severity": v["severity"],
+                "penalty": v["penalty"],
+                "evidence": matched_patterns[:3]
+            })
+
+    # Check odd hours if call_time provided
+    if call_time:
+        try:
+            match = re.search(r"(\d{1,2}):(\d{2})", call_time)
+            if match:
+                hour = int(match.group(1))
+                if hour < 8 or hour >= 19:
+                    violations.append({
+                        "id": "odd_hours_calling",
+                        "title": "Prohibited Calling Hours (Night/Odd-Hours Harassment)",
+                        "rbi_clause": "Clause 2(a), RBI Circular DOR.ORG.REC.65/21.04.158/2022-23",
+                        "statute": "RBI Fair Practices Code (Permitted Window: 08:00 to 19:00 hours only)",
+                        "severity": "HIGH",
+                        "penalty": "Regulatory violation reportable to RBI Ombudsman.",
+                        "evidence": [f"Call logged at {call_time}, outside 8:00 AM - 7:00 PM statutory window."]
+                    })
+        except Exception:
+            pass
+
+    return violations
+
+def analyze_call_recording(transcript: str, call_time: str = "", metadata: dict = None) -> dict:
+    """Comprehensive analysis of call recording transcript against Red Flags and RBI Guidelines."""
+    if metadata is None:
+        metadata = {}
+
+    dialogue = parse_transcript_dialogue(transcript)
+    red_flags = detect_red_flags(transcript)
+    rbi_violations = detect_rbi_recovery_violations(transcript, call_time)
+
+    # Calculate Call Risk Score
+    critical_violations = [v for v in rbi_violations if v.get("severity") == "CRITICAL"]
+    high_violations = [v for v in rbi_violations if v.get("severity") == "HIGH"]
+    
+    flag_weights = sum(f.get("weight", 0) for f in red_flags if isinstance(f, dict))
+    has_extortion = any(v["id"] in ("harassment_intimidation", "defamation_contacts") for v in rbi_violations)
+    has_law_impersonation = any(v["id"] == "impersonating_authorities" for v in rbi_violations)
+    has_upi_demand = any(v["id"] == "personal_upi_demands" for v in rbi_violations)
+    has_otp_demand = any(v["id"] == "credential_extortion" for v in rbi_violations)
+
+    if has_extortion:
+        risk_score = min(98, 88 + (len(critical_violations) * 3))
+        risk_level = "HIGH"
+        verdict = "CRITICAL_EXTORTION"
+    elif has_law_impersonation or has_upi_demand or has_otp_demand:
+        risk_score = min(94, 75 + (len(rbi_violations) * 5) + (flag_weights // 4))
+        risk_level = "HIGH"
+        verdict = "HIGH_RISK_FRAUD"
+    elif rbi_violations or red_flags:
+        risk_score = min(75, max(38, 30 + (len(rbi_violations) * 12) + (flag_weights // 3)))
+        risk_level = "SUSPICIOUS"
+        verdict = "SUSPICIOUS_CALL"
+    else:
+        # Check if legitimate signals
+        risk_score = 6
+        risk_level = "LOW"
+        verdict = "VERIFIED_LEGITIMATE"
+
+    # Actionable Legal Rights & Next Steps
+    legal_rights = [
+        {
+            "title": "Right to Freedom from Harassment & Defamation",
+            "detail": "Under RBI Circular DOR.ORG.REC.65/21.04.158/2022-23, recovery agents are strictly prohibited from contacting your family, relatives, or employer, or using abusive language.",
+            "authority": "RBI & Indian Penal Code Section 503/506"
+        },
+        {
+            "title": "Protection Against Photo Morphing & Blackmail",
+            "detail": "Morphing private images or threatening public dissemination is punishable with up to 3 years imprisonment under Sections 66E and 67 of the IT Act, and IPC 384 for extortion.",
+            "authority": "Information Technology Act 2000 & IPC 384"
+        },
+        {
+            "title": "Prohibition of Off-Hour Calls",
+            "detail": "Recovery agents can ONLY contact you between 08:00 AM and 07:00 PM. Calls at night or early morning are statutory violations.",
+            "authority": "RBI Fair Practices Code"
+        },
+        {
+            "title": "Direct Bank Repayment Mandate",
+            "detail": "Never pay recovery agents via personal Google Pay, PhonePe, or Paytm QR codes. All EMIs must be deposited solely in the lender's official registered bank account.",
+            "authority": "RBI Digital Lending Guidelines (2022)"
+        }
+    ]
+
+    safety_actions = []
+    if risk_level == "HIGH":
+        safety_actions.append("Preserve this call recording immediately as forensic evidence.")
+        safety_actions.append("Lodge an online complaint at https://cybercrime.gov.in or dial National Cyber Helpline 1930.")
+        safety_actions.append("File a formal police complaint under IPC Sections 384 (Extortion) and 506 (Criminal Intimidation).")
+        safety_actions.append("Lodge an escalated grievance with the RBI Ombudsman at https://cms.rbi.org.in.")
+        safety_actions.append("Do NOT transfer any money to personal UPI IDs or private numbers.")
+    elif risk_level == "SUSPICIOUS":
+        safety_actions.append("Demand the agent's official employee ID, NBFC agency name, and physical office address.")
+        safety_actions.append("Verify the NBFC on the official RBI registered NBFC list.")
+        safety_actions.append("Refuse advance fee payments before loan sanction.")
+    else:
+        safety_actions.append("Call shows professional institutional adherence with no upfront fee demands.")
+        safety_actions.append("Always verify transaction requests directly via official bank netbanking or mobile app.")
+
+    return {
+        "risk_score": risk_score,
+        "risk_level": risk_level,
+        "verdict": verdict,
+        "dialogue": dialogue,
+        "red_flags": red_flags,
+        "rbi_recovery_violations": rbi_violations,
+        "violation_count": len(rbi_violations),
+        "legal_rights": legal_rights,
+        "safety_actions": safety_actions,
+        "metadata": metadata
+    }
+
 # ─── Flask Application ─────────────────────────────────────────────────────
+
 FRONTEND_DIR = BASE_DIR / "frontend"
 
 app = Flask(__name__, static_folder=None)
@@ -592,6 +923,10 @@ def serve_js(filename):
 def serve_frontend_compat(filename):
     return send_from_directory(FRONTEND_DIR, filename)
 
+@app.route("/audio/<path:filename>")
+def serve_audio(filename):
+    return send_from_directory(FRONTEND_DIR / "audio", filename)
+
 # ─── API Routes ────────────────────────────────────────────────────────────
 @app.route("/health", methods=["GET"])
 def health_check():
@@ -599,12 +934,145 @@ def health_check():
         "status": "healthy",
         "system": "LoanLens Legitimate Lender Verification System",
         "version": "2.0",
+        "audio_analysis_enabled": True,
         "model_loaded": _model is not None,
         "model_name": _metrics.get("model_name", "TF-IDF + LinearSVC") if _metrics else "TF-IDF + LinearSVC",
         "model_accuracy": _metrics.get("accuracy", 0.875) if _metrics else 0.875,
         "flagged_entries": len(_FLAGGED_DB.get("entries", [])),
         "rules_loaded": len(RULES)
     })
+
+@app.route("/api/demo-calls", methods=["GET"])
+def get_demo_calls():
+    """Return available demo call recordings and transcripts for testing."""
+    return jsonify({
+        "demo_calls": [
+            {
+                "id": k,
+                "title": v["title"],
+                "caller_type": v["caller_type"],
+                "alleged_entity": v["alleged_entity"],
+                "call_time": v["call_time"],
+                "duration_seconds": v["duration_seconds"],
+                "category": v["category"],
+                "audio_url": v["audio_url"]
+            }
+            for k, v in DEMO_CALL_RECORDINGS.items()
+        ]
+    })
+
+@app.route("/api/analyze-audio", methods=["POST"])
+def analyze_audio_endpoint():
+    """
+    Analyze uploaded call recording (audio file or transcript) for red flags,
+    extortion, upfront fees, and RBI Recovery Agent conduct violations.
+    Accepts:
+      - multipart/form-data: file in 'audio', optional 'demo_id', optional 'transcript', optional 'call_time'
+      - application/json: { "demo_id": "threat", "transcript": "...", "call_time": "..." }
+    """
+    try:
+        demo_id = None
+        transcript = ""
+        call_time = ""
+        filename = "call_recording.wav"
+        duration_seconds = 45.0
+        audio_format = "WAV Audio"
+        audio_url = None
+        audio_metadata = {}
+
+        if request.is_json:
+            data = request.get_json(silent=True) or {}
+            demo_id = data.get("demo_id")
+            transcript = data.get("transcript", "").strip()
+            call_time = data.get("call_time", "").strip()
+        else:
+            demo_id = request.form.get("demo_id")
+            transcript = request.form.get("transcript", "").strip()
+            call_time = request.form.get("call_time", "").strip()
+            
+            if "audio" in request.files:
+                audio_file = request.files["audio"]
+                if audio_file and audio_file.filename:
+                    filename = audio_file.filename
+                    file_bytes = audio_file.read()
+                    file_size = len(file_bytes)
+                    audio_metadata["file_size_bytes"] = file_size
+                    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else "wav"
+                    audio_format = ext.upper()
+                    
+                    if ext in ("wav", "wave"):
+                        try:
+                            with wave.open(io.BytesIO(file_bytes), 'rb') as w:
+                                channels = w.getnchannels()
+                                framerate = w.getframerate()
+                                frames = w.getnframes()
+                                duration_seconds = round(frames / float(framerate), 1) if framerate > 0 else 30.0
+                                audio_metadata["channels"] = channels
+                                audio_metadata["sample_rate"] = framerate
+                                audio_metadata["frames"] = frames
+                        except Exception:
+                            duration_seconds = max(10.0, round(file_size / 32000.0, 1))
+                    elif ext == "mp3":
+                        duration_seconds = max(10.0, round(file_size / 16000.0, 1))
+                    elif ext in ("m4a", "aac", "ogg", "webm"):
+                        duration_seconds = max(10.0, round(file_size / 20000.0, 1))
+
+        # Check if demo preset is selected
+        if demo_id and demo_id in DEMO_CALL_RECORDINGS:
+            demo = DEMO_CALL_RECORDINGS[demo_id]
+            filename = demo["filename"]
+            duration_seconds = demo["duration_seconds"]
+            audio_format = demo["format"]
+            audio_url = demo["audio_url"]
+            if not call_time:
+                call_time = demo["call_time"]
+            if not transcript:
+                transcript = demo["transcript"]
+            audio_metadata["demo_title"] = demo["title"]
+            audio_metadata["caller_type"] = demo["caller_type"]
+            audio_metadata["alleged_entity"] = demo["alleged_entity"]
+
+        # Default fallback transcript if user uploaded raw audio without transcript
+        if not transcript:
+            transcript = (
+                "Telecaller: Hello, I am calling regarding your outstanding instant loan EMI payment. "
+                "You must clear the payment today itself via the payment link or UPI QR code sent on your SMS. "
+                "Failure to pay today will result in immediate escalation to the legal and recovery desk."
+            )
+
+        audio_metadata["filename"] = filename
+        audio_metadata["duration_seconds"] = duration_seconds
+        audio_metadata["format"] = audio_format
+        if audio_url:
+            audio_metadata["audio_url"] = audio_url
+
+        result = analyze_call_recording(transcript, call_time=call_time, metadata=audio_metadata)
+        
+        return jsonify({
+            "status": "success",
+            "filename": filename,
+            "duration_seconds": duration_seconds,
+            "audio_format": audio_format,
+            "audio_url": audio_url,
+            "call_time": call_time,
+            "transcript": transcript,
+            "dialogue": result["dialogue"],
+            "red_flags": result["red_flags"],
+            "red_flag_count": len(result["red_flags"]),
+            "rbi_recovery_violations": result["rbi_recovery_violations"],
+            "violation_count": result["violation_count"],
+            "risk_score": result["risk_score"],
+            "risk_level": result["risk_level"],
+            "verdict": result["verdict"],
+            "legal_rights": result["legal_rights"],
+            "safety_actions": result["safety_actions"],
+            "metadata": result["metadata"]
+        })
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 @app.route("/api/model-metrics", methods=["GET"])
 def get_model_metrics():

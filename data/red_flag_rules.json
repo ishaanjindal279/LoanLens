@@ -195,6 +195,53 @@
       ],
       "explanation": "A digital lending app only needs basic identity and bank verification. Demanding access to contacts, photos, or call logs is a prime indicator of an illegal predatory app.",
       "recommendation": "Deny contact, media, and call log permissions. If the app refuses to work without them, uninstall immediately."
+    },
+    {
+      "id": "recovery_agent_extortion",
+      "label": "Call Extortion & Defamation Threats",
+      "weight": 35,
+      "patterns": [
+        "call.*(?:all)?.*(?:contacts|family|relatives|parents|father|mother|boss|office|friends)",
+        "send.*(?:photos|video|morphed).*(?:contacts|whatsapp|relatives|social media)",
+        "shame.*(?:you|family|relatives|society|neighborhood)",
+        "ruin.*(?:reputation|career|family|life)",
+        "send.*(?:boys|goons|men|recovery team|agents).*(?:home|house|flat|address|office|village)",
+        "gherao|dharna|tamasha.*(?:home|house|office)",
+        "beat.*up|break.*legs|see.*you.*personally",
+        "post.*(?:photo|picture|fraud|chor|defaulter).*(?:facebook|instagram|whatsapp group|status)"
+      ],
+      "explanation": "RBI's circular on Recovery Agents (DOR.ORG.REC.65/21.04.158/2022-23) strictly prohibits any threats of violence, intimidation, or public shaming/defamation. Contacting borrowers' family or friends is a punishable criminal violation.",
+      "recommendation": "Preserve this call recording as evidence. Immediately lodge an FIR with local police and submit an extortion complaint at cybercrime.gov.in."
+    },
+    {
+      "id": "fake_law_enforcement",
+      "label": "Law Enforcement & Court Impersonation",
+      "weight": 30,
+      "patterns": [
+        "calling\\s+from\\s+(?:the\\s+)?(?:police|crime branch|cbi|ed|cyber cell|high court|supreme court|rbi vigilance)",
+        "police.*(?:fir|arrest warrant|non-bailable|nbw|custody|lockup)",
+        "court.*(?:order|warrant|summons|action|case filed)",
+        "police.*team.*(?:on the way|coming to your house|dispatched)",
+        "surrender.*(?:police station|court)",
+        "section.*420|cheating case.*police"
+      ],
+      "explanation": "Scammers and illegal recovery agents routinely impersonate police officers, CBI agents, or court bailiffs over the phone. Civil loan defaults are not criminal offenses and police cannot arrest without due judicial process.",
+      "recommendation": "Do not panic. Demand the caller's official designation, police station name, and official landline. Verify directly with your local police station."
+    },
+    {
+      "id": "telecaller_upfront_fee",
+      "label": "Phone Demand for Instant UPI / Advance Payment",
+      "weight": 25,
+      "patterns": [
+        "(?:pay|transfer|send).*(?:via|on|through).*(?:gpay|google pay|phonepe|paytm|upi|qr code)",
+        "(?:send|transfer).*(?:money|amount|fee).*(?:now|immediately|on call|while on phone)",
+        "share.*(?:screenshot|utr|reference number).*(?:on whatsapp|immediately)",
+        "processing.*fee.*(?:paytm|phonepe|gpay|upi)",
+        "gst.*amount.*transfer.*immediately"
+      ],
+      "explanation": "Genuine banks and regulated NBFCs NEVER ask borrowers to transfer processing fees or loan clearance charges to personal UPI IDs or Google Pay/PhonePe numbers over a phone call.",
+      "recommendation": "Never send money to individual UPI IDs or private phone numbers under telecaller pressure."
     }
   ]
 }
+
