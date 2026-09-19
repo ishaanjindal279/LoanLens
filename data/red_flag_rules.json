@@ -28,7 +28,14 @@
         "(?:fee|payment|charge|amount).*before.*(?:receive|get|loan|disburs)",
         "advance.*(?:payment|fee|deposit|money)",
         "pay.*(?:\\u20b9|rs\\.?|inr)\\s*\\d+.*(?:before|prior|upfront|to release)",
-        "transfer.*amount.*(?:first|before|advance|deposit)"
+        "transfer.*amount.*(?:first|before|advance|deposit)",
+        "(?:processing fee|advance payment|file charge|security deposit).*(?:pehle|transfer karo|bhejo|jama karo)",
+        "(?:\\u092a\\u094d\\u0930\\u094b\\u0938\\u0947\\u0938\\u093f\\u0902\\u0917 \\u092b\\u0940\\u0938|\\u0905\\u0917\\u094d\\u0930\\u093f\\u092e \\u0936\\u0941\\u0932\\u094d\\u0915|\\u0930\\u091c\\u093f\\u0938\\u094d\\u091f\\u094d\\u0930\\u0947\\u0938\\u093c\\u0928 \\u092b\\u0940\\u0938).*(?:\\u092a\\u0939\\u0932\\u0947|\\u091c\\u092e\\u093e|\\u092d\\u0947\\u091c\\u094b|\\u0926\\u094b)",
+        "(?:\\u0bae\\u0bc1\\u0ba9\\u0bcd\\u0baa\\u0ba3\\u0bae\\u0bcd|\\u0b95\\u0b9f\\u0bcd\\u0b9f\\u0ba3\\u0bae\\u0bcd).*(?:\\u0b9a\\u0bc6\\u0bb2\\u0bc1\\u0ba4\\u0bcd\\u0ba4\\u0bc1|\\u0b95\\u0bca\\u0b9f\\u0bc1)",
+        "(?:\\u0c2a\\u0c4d\\u0c30\\u0c3e\\u0c38\\u0c46\\u0c38\\u0c3f\\u0c02\\u0c17\\u0c4d \\u0c2b\\u0c40\\u0c1c\\u0c41|\\u0c2e\\u0c41\\u0c02\\u0c26\\u0c41\\u0c17\\u0c3e \\u0c1a\\u0c46\\u0c32\\u0c4d\\u0c32\\u0c3f\\u0c02\\u0c1a\\u0c02\\u0c21\\u0c3f)",
+        "(?:\\u0906\\u0917\\u093e\\u090a \\u092b\\u0940|\\u092a\\u094d\\u0930\\u094b\\u0938\\u0947\\u0938\\u093f\\u0902\\u0917 \\u092b\\u0940).*(?:\\u092d\\u0930\\u093e|\\u0926\\u094d\\u092f\\u093e)",
+        "(?:\\u0985\\u0997\\u09cd\\u09b0\\u09bf\\u09ae \\u09ab\\u09bf|\\u09aa\\u09cd\\u09b0\\u09b8\\u09c7\\u09b8\\u09bf\\u0982 \\u09ab\\u09bf).*(?:\\u099c\\u09ae\\u09be \\u09a6\\u09bf\\u09a8)",
+        "(?:\\u0cae\\u0cc1\\u0c82\\u0c97\\u0ca1 \\u0cb6\\u0cc1\\u0cb2\\u0ccd\\u0c95|\\u0cb9\\u0ca3 \\u0caa\\u0cbe\\u0cb5\\u0ca4\\u0cbf\\u0cb8\\u0cbf)"
       ],
       "explanation": "Legitimate lenders never ask for processing fees, security deposits, or file charges BEFORE disbursing the loan. Fees are always deducted from the sanctioned loan amount.",
       "recommendation": "Do not pay any upfront fee under any circumstances. Report such demands at cybercrime.gov.in"
@@ -46,7 +53,9 @@
         "no.*(?:credit check|cibil|documents?|income proof|salary slip)",
         "everyone.*(?:eligible|approved)",
         "no.*rejection",
-        "zero.*cibil.*required"
+        "zero.*cibil.*required",
+        "(?:bina cibil|100% guarantee|turant loan|10 minute me loan)",
+        "(?:\\u092c\\u093f\\u0928\\u093e \\u0938\\u093f\\u092c\\u093f\\u0932|\\u0917\\u093e\\u0930\\u0902\\u091f\\u0940\\u0921 \\u0932\\u094b\\u0928|\\u0924\\u0941\\u0930\\u0902\\u0924 \\u0932\\u094b\\u0928)"
       ],
       "explanation": "RBI-registered lenders are legally required to evaluate creditworthiness and perform KYC. No genuine lender offers 100% guaranteed approval without credit assessment.",
       "recommendation": "Be extremely skeptical of guaranteed approval claims. Real lenders always review your credit profile."
@@ -61,7 +70,14 @@
         "(?:ask|request|demand).*(?:for)?\\s*(?:otp|pin|password)",
         "(?:enter|fill|type|submit).*(?:otp|pin|password|verification code).*(?:link|form|sms|url|page|below)",
         "(?:otp|pin|cvv).*(?:required|needed|mandatory|must be provided).*(?:loan|disburs|approval|claim|process|release)",
-        "(?:call|contact|message).*(?:to provide|with).*(?:otp|pin)"
+        "(?:call|contact|message).*(?:to provide|with).*(?:otp|pin)",
+        "(?:otp|pin|password|mpin).*(?:batao|share karo|bhejo|de do|bata do)",
+        "(?:\\u0913\\u091f\\u0940\\u092a\\u0940|\\u092a\\u093f\\u0928|\\u092a\\u093e\\u0938\\u0935\\u0930\\u094d\\u0921).*(?:\\u092c\\u0924\\u093e\\u0913|\\u0936\\u0947\\u092f\\u0930|\\u0926\\u094b|\\u092d\\u0947\\u091c\\u094b)",
+        "(?:\\u0bae\\u0bc1\\u0bb1\\u0bc8\\u0b95\\u0bcd\\u0b95\\u0bc1\\u0bb1\\u0bbf|\\u0b93\\u0b9f\\u0bbf\\u0baa\\u0bbf).*(?:\\u0b9a\\u0bca\\u0bb2\\u0bcd\\u0bb2\\u0bc1|\\u0b85\\u0ba9\\u0bc1\\u0baa\\u0bcd\\u0baa\\u0bc1)",
+        "(?:\\u0c13\\u0c1f\\u0c40\\u0c2a\\u0c40|\\u0c2a\\u0c3f\\u0c28\\u0c4d).*(?:\\u0c1a\\u0c46\\u0c2a\\u0c4d\\u0c2a\\u0c02\\u0c21\\u0c3f|\\u0c07\\u0c35\\u0c4d\\u0c35\\u0c02\\u0c21\\u0c3f)",
+        "(?:\\u0913\\u091f\\u0940\\u092a\\u0940|\\u092a\\u093f\\u0928).*(?:\\u0938\\u093e\\u0902\\u0917\\u093e|\\u0926\\u094d\\u092f\\u093e)",
+        "(?:\\u0993\\u099f\\u09bf\\u09aa\\u09bf|\\u09aa\\u09bf\\u09a8).*(?:\\u09a6\\u09bf\\u09a8|\\u09ac\\u09b2\\u09c1\\u09a8)",
+        "(?:\\u0c92\\u0c9f\\u0cbf\\u0caa\\u0cbf|\\u0caa\\u0cbf\\u0ca8\\u0ccd).*(?:\\u0cb9\\u0cc7\\u0cb3\\u0cbf)"
       ],
       "explanation": "Legitimate financial institutions and loan agents will NEVER ask for your OTP, PIN, CVV, or passwords. Sharing these allows scammers to drain your accounts.",
       "recommendation": "Never share your OTP or PIN with anyone, even someone claiming to be a bank official or recovery agent."
@@ -208,7 +224,18 @@
         "send.*(?:boys|goons|men|recovery team|agents).*(?:home|house|flat|address|office|village)",
         "gherao|dharna|tamasha.*(?:home|house|office)",
         "beat.*up|break.*legs|see.*you.*personally",
-        "post.*(?:photo|picture|fraud|chor|defaulter).*(?:facebook|instagram|whatsapp group|status)"
+        "post.*(?:photo|picture|fraud|chor|defaulter).*(?:facebook|instagram|whatsapp group|status)",
+        "(?:ladke|gunde|agents?).*(?:bhej dunga|bhejenge|bhej rahe|aayenge)",
+        "ghar.*(?:aake|pe).*(?:tamasha|gherao|dharna|hungama)",
+        "(?:contacts|relatives|family|rishtedaaron|doston).*(?:ko photo|ko call|ko batayenge)",
+        "(?:morphed|gandi).*(?:photo|video|picture).*(?:viral|whatsapp|facebook)",
+        "badnaam.*karenge|ijjat.*kharab|tamasha.*society",
+        "(?:\\u0918\\u0930 \\u092a\\u0930 \\u0932\\u0921\\u093c\\u0915\\u0947|\\u0917\\u0941\\u0902\\u0921\\u0947|\\u092b\\u094b\\u091f\\u094b \\u0935\\u093e\\u092f\\u0930\\u0932|\\u092c\\u0926\\u0928\\u093e\\u092e \\u0915\\u0930\\u0947\\u0902\\u0917\\u0947)",
+        "(?:\\u0bae\\u0bbf\\u0bb0\\u0b9f\\u0bcd\\u0b9f\\u0bb2\\u0bcd|\\u0baa\\u0bcb\\u0b9f\\u0bcd\\u0b9f\\u0bcb \\u0bb5\\u0bc8\\u0bb0\\u0bb2\\u0bcd|\\u0b95\\u0bc1\\u0b9f\\u0bc1\\u0bae\\u0bcd\\u0baa\\u0ba4\\u0bcd\\u0ba4\\u0bc1\\u0b95\\u0bcd\\u0b95\\u0bc1 \\u0baa\\u0bcb\\u0ba9\\u0bcd)",
+        "(?:\\u0c2b\\u0c4b\\u0c1f\\u0c4b\\u0c32\\u0c41 \\u0c35\\u0c48\\u0c30\\u0c32\\u0c4d|\\u0c2c\\u0c02\\u0c27\\u0c41\\u0c35\\u0c41\\u0c32\\u0c15\\u0c41 \\u0c15\\u0c3e\\u0c32\\u0c4d|\\u0c07\\u0c02\\u0c1f\\u0c3f\\u0c15\\u0c3f \\u0c35\\u0c38\\u0c4d\\u0c24\\u0c3e\\u0c02)",
+        "(?:\\u0918\\u0930\\u0940 \\u0917\\u0941\\u0902\\u0921 \\u092a\\u093e\\u0920\\u0935\\u0942|\\u092b\\u094b\\u091f\\u094b \\u0935\\u094d\\u0939\\u093e\\u092f\\u0930\\u0932 \\u0915\\u0930\\u0942|\\u0928\\u093e\\u0924\\u0947\\u0935\\u093e\\u0908\\u0915\\u093e\\u0902\\u0928\\u093e \\u092b\\u094b\\u0928)",
+        "(?:\\u099b\\u09ac\\u09bf \\u09ad\\u09be\\u0987\\u09b0\\u09be\\u09b2 \\u0995\\u09b0\\u09ac|\\u09ac\\u09be\\u09a1\\u09bc\\u09bf\\u09a4\\u09c7 \\u09b2\\u09cb\\u0995 \\u09aa\\u09be\\u09a0\\u09be\\u09ac)",
+        "(?:\\u0cab\\u0ccb\\u0c9f\\u0ccb \\u0cb5\\u0cc8\\u0cb0\\u0cb2\\u0ccd|\\u0cae\\u0ca8\\u0cc6\\u0c97\\u0cc6 \\u0cac\\u0cb0\\u0cc1\\u0ca4\\u0ccd\\u0ca4\\u0cc7\\u0cb5\\u0cc6)"
       ],
       "explanation": "RBI's circular on Recovery Agents (DOR.ORG.REC.65/21.04.158/2022-23) strictly prohibits any threats of violence, intimidation, or public shaming/defamation. Contacting borrowers' family or friends is a punishable criminal violation.",
       "recommendation": "Preserve this call recording as evidence. Immediately lodge an FIR with local police and submit an extortion complaint at cybercrime.gov.in."
@@ -223,7 +250,12 @@
         "court.*(?:order|warrant|summons|action|case filed)",
         "police.*team.*(?:on the way|coming to your house|dispatched)",
         "surrender.*(?:police station|court)",
-        "section.*420|cheating case.*police"
+        "section.*420|cheating case.*police",
+        "(?:police station se bol raha|crime branch se|cbi team|court ka warrant|420 ka case)",
+        "(?:\\u092a\\u0941\\u0932\\u093f\\u0938 \\u0938\\u094d\\u091f\\u0947\\u0936\\u0928 \\u0938\\u0947|\\u0915\\u094d\\u0930\\u093e\\u0907\\u092e \\u092c\\u094d\\u0930\\u093e\\u0902\\u091a|\\u0917\\u0948\\u0930-\\u091c\\u092e\\u093e\\u0928\\u0924\\u0940 \\u0935\\u093e\\u0930\\u0902\\u091f|\\u0927\\u093e\\u0930\\u093e 420)",
+        "(?:\\u0b95\\u0bbe\\u0bb5\\u0bb2\\u0bcd \\u0ba8\\u0bbf\\u0bb2\\u0bc8\\u0baf\\u0bae\\u0bcd|\\u0bb5\\u0bb4\\u0b95\\u0bcd\\u0b95\\u0bc1 \\u0baa\\u0ba4\\u0bbf\\u0bb5\\u0bc1)",
+        "(?:\\u0c2a\\u0c4b\\u0c32\\u0c40\\u0c38\\u0c4d \\u0c38\\u0c4d\\u0c1f\\u0c47\\u0c37\\u0c28\\u0c4d|\\u0c35\\u0c3e\\u0c30\\u0c46\\u0c02\\u0c1f\\u0c4d \\u0c1c\\u0c3e\\u0c30\\u0c40)",
+        "(?:\\u092a\\u094b\\u0932\\u0940\\u0938 \\u0920\\u093e\\u0923\\u094d\\u092f\\u093e\\u0924\\u0942\\u0928|\\u0935\\u0949\\u0930\\u0902\\u091f \\u091c\\u093e\\u0930\\u0940)"
       ],
       "explanation": "Scammers and illegal recovery agents routinely impersonate police officers, CBI agents, or court bailiffs over the phone. Civil loan defaults are not criminal offenses and police cannot arrest without due judicial process.",
       "recommendation": "Do not panic. Demand the caller's official designation, police station name, and official landline. Verify directly with your local police station."
@@ -237,7 +269,11 @@
         "(?:send|transfer).*(?:money|amount|fee).*(?:now|immediately|on call|while on phone)",
         "share.*(?:screenshot|utr|reference number).*(?:on whatsapp|immediately)",
         "processing.*fee.*(?:paytm|phonepe|gpay|upi)",
-        "gst.*amount.*transfer.*immediately"
+        "gst.*amount.*transfer.*immediately",
+        "(?:gpay|phonepe|paytm|upi).*(?:pe bhejo|pe transfer karo|daalo|number pe send karo)",
+        "(?:\\u0917\\u0942\\u0917\\u0932 \\u092a\\u0947|\\u092b\\u094b\\u0928\\u092a\\u0947|\\u092a\\u0947\\u091f\\u0940\\u090f\\u092e|\\u092f\\u0942\\u092a\\u0940\\u0906\\u0908).*(?:\\u092a\\u0930 \\u092d\\u0947\\u091c\\u094b|\\u092a\\u0930 \\u091f\\u094d\\u0930\\u093e\\u0902\\u0938\\u092b\\u0930)",
+        "(?:\\u0b95\\u0bc2\\u0b95\\u0bc1\\u0bb3\\u0bcd \\u0baa\\u0bc7|\\u0baa\\u0bcb\\u0ba9\\u0bcd\\u0baa\\u0bc7|\\u0baf\\u0bc2\\u0baa\\u0bbf\\u0b90).*(?:\\u0b85\\u0ba9\\u0bc1\\u0baa\\u0bcd\\u0baa\\u0bc1)",
+        "(?:\\u0c17\\u0c42\\u0c17\\u0c41\\u0c32\\u0c4d \\u0c2a\\u0c47|\\u0c2b\\u0c4b\\u0c28\\u0c4d\\u200c\\u0c2a\\u0c47|\\u0c2f\\u0c42\\u0c2a\\u0c40\\u0c10).*(?:\\u0c2a\\u0c02\\u0c2a\\u0c02\\u0c21\\u0c3f)"
       ],
       "explanation": "Genuine banks and regulated NBFCs NEVER ask borrowers to transfer processing fees or loan clearance charges to personal UPI IDs or Google Pay/PhonePe numbers over a phone call.",
       "recommendation": "Never send money to individual UPI IDs or private phone numbers under telecaller pressure."

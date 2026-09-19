@@ -858,6 +858,57 @@ const api = {
         'Report extortion demands to cybercrime.gov.in or helpline 1930.'
       ]
     };
+  },
+
+  async getAudioLanguages() {
+    try {
+      const r = await fetch(`${API_BASE}/api/audio-languages`);
+      if (r.ok) return await r.json();
+    } catch (e) {
+      console.warn("Using fallback audio languages list:", e.message);
+    }
+    return {
+      status: 'success',
+      languages: [
+        { code: "en", name: "English (India / Global)", bcp47: "en-IN" },
+        { code: "hi", name: "Hindi (हिन्दी / Hinglish)", bcp47: "hi-IN" },
+        { code: "ta", name: "Tamil (தமிழ்)", bcp47: "ta-IN" },
+        { code: "te", name: "Telugu (తెలుగు)", bcp47: "te-IN" },
+        { code: "mr", name: "Marathi (मराठी)", bcp47: "mr-IN" },
+        { code: "bn", name: "Bengali (বাংলা)", bcp47: "bn-IN" },
+        { code: "kn", name: "Kannada (ಕನ್ನಡ)", bcp47: "kn-IN" },
+        { code: "ml", name: "Malayalam (മലയാളം)", bcp47: "ml-IN" },
+        { code: "gu", name: "Gujarati (ગુજરાતી)", bcp47: "gu-IN" },
+        { code: "pa", name: "Punjabi (ਪੰਜਾਬੀ)", bcp47: "pa-IN" },
+        { code: "es", name: "Spanish (Español)", bcp47: "es-ES" }
+      ]
+    };
+  },
+
+  async transcribeAudio(payload, isFormData = false, apiKey = '') {
+    try {
+      const headers = {};
+      if (apiKey) {
+        headers['X-API-Key'] = apiKey;
+        headers['X-Groq-API-Key'] = apiKey;
+      }
+      const opts = {
+        method: 'POST',
+        headers: headers,
+        body: isFormData ? payload : JSON.stringify(payload)
+      };
+      if (!isFormData) {
+        headers['Content-Type'] = 'application/json';
+      }
+      const r = await fetch(`${API_BASE}/api/transcribe-audio`, opts);
+      if (r.ok) return await r.json();
+    } catch (e) {
+      console.warn("Transcribe audio fallback:", e.message);
+    }
+    return {
+      status: 'error',
+      message: 'Failed to transcribe audio via server. Please use microphone dictation or paste dialogue.'
+    };
   }
 };
 

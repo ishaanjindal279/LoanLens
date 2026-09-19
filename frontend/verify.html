@@ -490,7 +490,13 @@
               </div>
               <div style="display:flex; flex-wrap:wrap; gap:8px;">
                 <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('threat')" style="border-color:rgba(239,68,68,0.4); background:rgba(239,68,68,0.05); color:#991B1B;">
-                  ⚠️ Extortion Recovery Threat (Photos &amp; Goons)
+                  ⚠️ English Recovery Extortion (Photos &amp; Goons)
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('threat_hindi')" style="border-color:rgba(239,68,68,0.4); background:rgba(239,68,68,0.05); color:#991B1B;">
+                  🚨 Hindi / Hinglish Extortion (Morphed Photos &amp; Gunde)
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('threat_tamil')" style="border-color:rgba(239,68,68,0.4); background:rgba(239,68,68,0.05); color:#991B1B;">
+                  ⚠️ Tamil Recovery Threat (வீட்டுக்கு ஆள் &amp; மிரட்டல்)
                 </button>
                 <button type="button" class="btn btn-secondary btn-sm" onclick="loadDemoAudio('advance_fee')" style="border-color:rgba(245,158,11,0.4); background:rgba(245,158,11,0.05); color:#92400E;">
                   🚨 Pre-Approved Scam (UPI Advance Fee &amp; OTP)
@@ -499,6 +505,55 @@
                   ✅ Legitimate Bank KYC Verification Call
                 </button>
               </div>
+            </div>
+
+            <!-- Multi-Language & Speech Transcription Toolbar -->
+            <div style="margin-bottom:16px; padding:12px 16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:var(--radius-md); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;">
+              <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <label for="audio-language-select" style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin:0;">
+                  🌐 Language / बोली:
+                </label>
+                <select id="audio-language-select" class="input" style="width:auto; padding:4px 10px; height:34px; font-size:0.82rem; font-weight:600;" onchange="onLanguageChange()">
+                  <option value="en-IN" selected>English (India / Global)</option>
+                  <option value="hi-IN">Hindi (हिन्दी / Hinglish)</option>
+                  <option value="ta-IN">Tamil (தமிழ்)</option>
+                  <option value="te-IN">Telugu (తెలుగు)</option>
+                  <option value="mr-IN">Marathi (मराठी)</option>
+                  <option value="bn-IN">Bengali (বাংলা)</option>
+                  <option value="kn-IN">Kannada (ಕನ್ನಡ)</option>
+                  <option value="ml-IN">Malayalam (മലയാളം)</option>
+                  <option value="gu-IN">Gujarati (ગુજરાતી)</option>
+                  <option value="pa-IN">Punjabi (ਪੰਜਾਬੀ)</option>
+                  <option value="es-ES">Spanish (Español)</option>
+                </select>
+                <span class="badge badge-neutral" id="lang-badge" style="font-size:0.7rem;">10+ Indic Languages Supported</span>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-transcribe-speech" onclick="transcribeCurrentAudio()" style="font-size:0.78rem; font-weight:600; padding:6px 12px; background:#FFF;">
+                  ✨ Transcribe Audio
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-stt-settings" onclick="toggleSttSettings()" style="font-size:0.78rem; padding:6px 10px; background:#FFF;" title="Configure Optional Cloud Whisper STT API Key">
+                  ⚙️ STT Settings
+                </button>
+              </div>
+            </div>
+
+            <!-- Optional STT Engine API Key Drawer -->
+            <div id="stt-settings-card" class="hidden" style="margin-bottom:16px; padding:14px 16px; background:#F0FDFA; border:1px solid #CCFBF1; border-radius:var(--radius-md);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div style="font-size:0.84rem; font-weight:700; color:#0F766E;">Optional Cloud STT Whisper API Key (Groq / OpenAI)</div>
+                <button type="button" onclick="toggleSttSettings()" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:#0F766E;">&times;</button>
+              </div>
+              <p style="font-size:0.76rem; color:#334155; margin-bottom:10px; line-height:1.45;">
+                <strong>Zero-key default:</strong> Built-in microphone dictation and forensic demo calls work with <strong>no API key required</strong> across all 11 languages! If you wish to transcribe custom uploaded audio files via Cloud Whisper, enter your <strong>Groq API key</strong> (Free &amp; instant) or <strong>OpenAI API key</strong> below. Keys are stored safely in your local browser only.
+              </p>
+              <div style="display:flex; gap:8px;">
+                <input type="password" id="stt-api-key-input" class="input" placeholder="gsk_... (Groq Whisper free) or sk-... (OpenAI)" style="font-size:0.8rem; height:34px;">
+                <button type="button" class="btn btn-primary btn-sm" onclick="saveSttApiKey()" style="padding:4px 14px; font-size:0.78rem;">Save Key</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearSttApiKey()" style="padding:4px 10px; font-size:0.78rem;">Clear</button>
+              </div>
+              <div id="stt-key-status" style="font-size:0.72rem; color:#0D9488; margin-top:6px;"></div>
             </div>
 
             <!-- Drag & Drop Audio Upload Box -->
@@ -683,6 +738,7 @@ Customer Helpline: 1800-123-4567 | www.hdbfs.com`;
   const DEMO_AUDIO_CALLS = {
     threat: {
       id: 'threat',
+      language: 'en-IN',
       filename: 'recovery_agent_extortion_call.wav',
       audio_url: '/audio/threat_call_demo.wav',
       call_time: '21:45',
@@ -692,8 +748,33 @@ Telecaller (Rahul): No excuses! I have your entire phone contact list and galler
 Borrower: This is illegal, RBI does not allow this harassment.
 Telecaller (Rahul): Don't teach me RBI rules! Police FIR is also being registered under Section 420. Crime Branch team is on the way. Either transfer on UPI now or face police arrest and public humiliation!`
     },
+    threat_hindi: {
+      id: 'threat_hindi',
+      language: 'hi-IN',
+      filename: 'threat_hindi_demo.wav',
+      audio_url: '/audio/threat_hindi_demo.wav',
+      call_time: '22:15',
+      transcript: `Telecaller (Vikas): Sun be! RupyaFast recovery cell se bol raha hu. Tera loan ka 9,500 overdue hai. Agar agle 1 ghante mein paise nahi aaye toh tere ghar par ladke bhejunga, pura mohalle mein tamasha khada karunga!
+Borrower: Bhai sahab, kal salary aane wali hai, ek din ka time de dijiye please.
+Telecaller (Vikas): Koi time nahi milega! Teri puri phone contacts list aur gallery hamare server par hai. Teri morphed photo bana li hai defaulter banner ke sath. Sare rishtedaron ko aur tere boss ko WhatsApp group mein bhej raha hu. Abhi ke abhi is UPI ID par Google Pay se Rs 12,000 transfer kar, nahi toh police thaane se arrest warrant nikalwayenge!
+Borrower: Yeh illegal harassment hai, RBI ka circular hai 7 baje ke baad call nahi kar sakte.
+Telecaller (Vikas): RBI gaya tel lene! Inspector Sahab mere sath baithe hai Crime Branch se. Section 420 mein seedha jail bhejunga!`
+    },
+    threat_tamil: {
+      id: 'threat_tamil',
+      language: 'ta-IN',
+      filename: 'threat_tamil_demo.wav',
+      audio_url: '/audio/threat_tamil_demo.wav',
+      call_time: '21:30',
+      transcript: `Telecaller (Karthik): யோவ்! InstantPanam recovery lenthu pesuren. Un loan EMI 7,000 innum kattala. Innum 1 hour la panam varala na veetukku aal anupuven, kaala odipen, un veetula vanthu asinga paduthuven!
+Borrower: Sir, naalaiku salary vanthudum, oru naal time thanga please.
+Telecaller (Karthik): Time laam thara mudiyathu! Un phone contacts ellathukum phone pannuven. Un appa amma ku morphed photo anupuven, un photo va WhatsApp group la leak pannuven! Ippove intha UPI ID ku GPay pannunga 8,500 rupees, illana police station lenthu Crime Branch inspector arrest warrant poduvanga!
+Borrower: Idhu thappu sir, RBI rules padi night 7 manikku mela phone panna koodathu.
+Telecaller (Karthik): Enakku RBI rules solli tharatha! Cyber cell la FIR pottu jail ku anupuven!`
+    },
     advance_fee: {
       id: 'advance_fee',
+      language: 'en-IN',
       filename: 'pre_approved_scam_call.wav',
       audio_url: '/audio/advance_fee_demo.wav',
       call_time: '11:15',
@@ -705,6 +786,7 @@ Telecaller (Pooja): No sir, the government portal requires an upfront security d
     },
     legitimate: {
       id: 'legitimate',
+      language: 'en-IN',
       filename: 'bank_official_kyc_verification.wav',
       audio_url: '/audio/legit_call_demo.wav',
       call_time: '14:30',
@@ -720,8 +802,116 @@ Borrower: Understood, thank you for confirming.`
   let selectedAudioFile = null;
   let selectedDemoId = null;
   let mediaRecorder = null;
+  let speechRecognizer = null;
+  let liveSpeechFragments = [];
   let audioChunks = [];
   let isRecording = false;
+
+  // ── STT Engine Settings & API Key Helpers ─────────────────────────
+  function toggleSttSettings() {
+    const card = document.getElementById('stt-settings-card');
+    if (card) card.classList.toggle('hidden');
+    initSttSettings();
+  }
+
+  function initSttSettings() {
+    const key = localStorage.getItem('loanlens_stt_api_key') || '';
+    const input = document.getElementById('stt-api-key-input');
+    const status = document.getElementById('stt-key-status');
+    if (input && key) input.value = key;
+    if (status) {
+      if (key) {
+        status.textContent = '✓ Cloud Whisper API key is active. Transcriptions will use Cloud Whisper.';
+        status.style.color = '#0F766E';
+      } else {
+        status.textContent = 'Zero-key mode active: Using Web Speech API for microphone & demo forensic models.';
+        status.style.color = '#64748B';
+      }
+    }
+  }
+
+  function saveSttApiKey() {
+    const input = document.getElementById('stt-api-key-input');
+    const status = document.getElementById('stt-key-status');
+    const val = input ? input.value.trim() : '';
+    if (val) {
+      localStorage.setItem('loanlens_stt_api_key', val);
+      if (status) {
+        status.textContent = '✓ API Key saved securely in your browser.';
+        status.style.color = '#0F766E';
+      }
+    } else {
+      clearSttApiKey();
+    }
+  }
+
+  function clearSttApiKey() {
+    localStorage.removeItem('loanlens_stt_api_key');
+    const input = document.getElementById('stt-api-key-input');
+    const status = document.getElementById('stt-key-status');
+    if (input) input.value = '';
+    if (status) {
+      status.textContent = 'API key removed. Running in zero-key local dictation mode.';
+      status.style.color = '#64748B';
+    }
+  }
+
+  function onLanguageChange() {
+    const select = document.getElementById('audio-language-select');
+    const badge = document.getElementById('lang-badge');
+    const val = select ? select.value : 'en-IN';
+    const text = select ? select.options[select.selectedIndex].text : val;
+    if (badge) badge.textContent = `Target: ${text}`;
+  }
+
+  async function transcribeCurrentAudio() {
+    const transcriptInput = document.getElementById('audio-transcript-input');
+    const langSelect = document.getElementById('audio-language-select');
+    const selectedLang = langSelect ? langSelect.value : 'en-IN';
+    const apiKey = (document.getElementById('stt-api-key-input')?.value || localStorage.getItem('loanlens_stt_api_key') || '').trim();
+    const btn = document.getElementById('btn-transcribe-speech');
+
+    if (!selectedAudioFile && !selectedDemoId && (!transcriptInput || !transcriptInput.value.trim())) {
+      alert('Please upload an audio file or click a test demo recording first.');
+      return;
+    }
+
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '⏳ Transcribing Speech...';
+    }
+
+    try {
+      let data;
+      if (selectedAudioFile) {
+        const fd = new FormData();
+        fd.append('audio', selectedAudioFile);
+        fd.append('language', selectedLang);
+        if (apiKey) fd.append('api_key', apiKey);
+        data = await LoanLensAPI.transcribeAudio(fd, true, apiKey);
+      } else if (selectedDemoId) {
+        data = await LoanLensAPI.transcribeAudio({ demo_id: selectedDemoId, language: selectedLang, api_key: apiKey }, false, apiKey);
+      }
+
+      if (data && data.transcript) {
+        if (transcriptInput) {
+          transcriptInput.value = data.transcript;
+          transcriptInput.style.borderColor = '#0D9488';
+          setTimeout(() => { transcriptInput.style.borderColor = ''; }, 1200);
+        }
+      } else if (data && data.message) {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error('Transcription error:', err);
+      alert('Transcription notice: ' + err.message);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '✨ Transcribe Audio';
+      }
+    }
+  }
 
   function loadDemoAudio(type) {
     const demo = DEMO_AUDIO_CALLS[type];
@@ -732,16 +922,22 @@ Borrower: Understood, thank you for confirming.`
 
     const transcriptInput = document.getElementById('audio-transcript-input');
     const timeInput = document.getElementById('call-time-input');
+    const langSelect = document.getElementById('audio-language-select');
     const playerCard = document.getElementById('audio-player-card');
     const playerElem = document.getElementById('audio-player-elem');
     const filenameElem = document.getElementById('audio-player-filename');
     const metaElem = document.getElementById('audio-player-meta');
     const dropzone = document.getElementById('audio-dropzone');
 
+    if (demo.language && langSelect) {
+      langSelect.value = demo.language;
+      onLanguageChange();
+    }
+
     if (transcriptInput) transcriptInput.value = demo.transcript;
     if (timeInput) timeInput.value = demo.call_time;
     if (filenameElem) filenameElem.textContent = demo.filename;
-    if (metaElem) metaElem.textContent = 'Voice Call • Sample Forensic Recording';
+    if (metaElem) metaElem.textContent = `Voice Call • Sample Forensic Recording (${demo.language || 'Multilingual'})`;
 
     if (playerElem) {
       playerElem.src = demo.audio_url;
@@ -754,7 +950,7 @@ Borrower: Understood, thank you for confirming.`
     analyzeAudioRecording();
   }
 
-  function handleAudioFileSelect(files) {
+  async function handleAudioFileSelect(files) {
     if (!files || !files.length) return;
     const file = files[0];
     selectedAudioFile = file;
@@ -779,8 +975,10 @@ Borrower: Understood, thank you for confirming.`
     if (playerCard) playerCard.classList.remove('hidden');
     if (dropzone) dropzone.style.display = 'none';
 
+    // Auto-transcribe or diarize audio into dialogue box
     if (transcriptInput && !transcriptInput.value.trim()) {
-      transcriptInput.placeholder = "Audio loaded! Review or paste dialogue lines (e.g. 'Agent: ...', 'Borrower: ...'), or click 'Run AI Call & RBI Compliance Analysis' to evaluate speech.";
+      transcriptInput.placeholder = "Transcribing audio into dialogue box below... Please wait...";
+      await transcribeCurrentAudio();
     }
   }
 
@@ -806,11 +1004,15 @@ Borrower: Understood, thank you for confirming.`
     const icon = document.getElementById('mic-icon');
     const label = document.getElementById('mic-label');
     const status = document.getElementById('mic-status');
+    const transcriptInput = document.getElementById('audio-transcript-input');
+    const langSelect = document.getElementById('audio-language-select');
+    const selectedLang = langSelect ? langSelect.value : 'en-IN';
 
     if (!isRecording) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         audioChunks = [];
+        liveSpeechFragments = [];
         mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.ondataavailable = e => {
           if (e.data.size > 0) audioChunks.push(e.data);
@@ -818,13 +1020,66 @@ Borrower: Understood, thank you for confirming.`
         mediaRecorder.onstop = () => {
           const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
           const audioFile = new File([audioBlob], 'live_recorded_call.webm', { type: 'audio/webm' });
-          handleAudioFileSelect([audioFile]);
+          selectedAudioFile = audioFile;
+          selectedDemoId = null;
+
+          const playerCard = document.getElementById('audio-player-card');
+          const playerElem = document.getElementById('audio-player-elem');
+          const filenameElem = document.getElementById('audio-player-filename');
+          const metaElem = document.getElementById('audio-player-meta');
+          const dropzone = document.getElementById('audio-dropzone');
+
+          if (filenameElem) filenameElem.textContent = 'live_recorded_call.webm';
+          if (metaElem) metaElem.textContent = `Microphone Recording • ${(audioBlob.size / 1024).toFixed(1)} KB`;
+          if (playerElem) {
+            playerElem.src = URL.createObjectURL(audioBlob);
+            playerElem.load();
+          }
+          if (playerCard) playerCard.classList.remove('hidden');
+          if (dropzone) dropzone.style.display = 'none';
         };
         mediaRecorder.start();
+
+        // Native Browser Web Speech API for zero-key multilingual transcription
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRec) {
+          try {
+            speechRecognizer = new SpeechRec();
+            speechRecognizer.continuous = true;
+            speechRecognizer.interimResults = true;
+            speechRecognizer.lang = selectedLang;
+
+            speechRecognizer.onresult = (event) => {
+              let finalChunk = '';
+              let interimChunk = '';
+              for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                  finalChunk += event.results[i][0].transcript + ' ';
+                } else {
+                  interimChunk += event.results[i][0].transcript;
+                }
+              }
+              if (finalChunk.trim()) {
+                liveSpeechFragments.push(finalChunk.trim());
+              }
+              if (transcriptInput) {
+                const combined = liveSpeechFragments.join('\n') + (interimChunk ? '\n[Live]: ' + interimChunk : '');
+                transcriptInput.value = combined;
+              }
+            };
+            speechRecognizer.onerror = (e) => {
+              console.warn('Speech recognition warning:', e.error);
+            };
+            speechRecognizer.start();
+          } catch (srErr) {
+            console.warn('Web Speech recognizer initialization warning:', srErr);
+          }
+        }
+
         isRecording = true;
         if (label) label.textContent = 'Stop Recording';
         if (icon) icon.textContent = '⏹️';
-        if (status) status.textContent = 'Recording live audio... Speak or play into microphone';
+        if (status) status.textContent = `Listening & transcribing in ${selectedLang}...`;
         if (btn) btn.style.background = '#FEE2E2';
       } catch (err) {
         alert('Microphone access was denied or is unavailable: ' + err.message);
@@ -834,10 +1089,14 @@ Borrower: Understood, thank you for confirming.`
         mediaRecorder.stop();
         mediaRecorder.stream.getTracks().forEach(t => t.stop());
       }
+      if (speechRecognizer) {
+        try { speechRecognizer.stop(); } catch (e) {}
+        speechRecognizer = null;
+      }
       isRecording = false;
       if (label) label.textContent = 'Record via Microphone';
       if (icon) icon.textContent = '🎙️';
-      if (status) status.textContent = 'Recording saved & loaded!';
+      if (status) status.textContent = 'Recording transcribed & ready for analysis!';
       if (btn) btn.style.background = '';
     }
   }
@@ -849,9 +1108,11 @@ Borrower: Understood, thank you for confirming.`
     const resultDiv = document.getElementById('audio-result');
     const transcriptInput = document.getElementById('audio-transcript-input');
     const callTimeInput = document.getElementById('call-time-input');
+    const langSelect = document.getElementById('audio-language-select');
 
     const transcript = transcriptInput ? transcriptInput.value.trim() : '';
     const callTime = callTimeInput ? callTimeInput.value : '';
+    const selectedLang = langSelect ? langSelect.value : 'en-IN';
 
     if (!selectedAudioFile && !selectedDemoId && !transcript) {
       alert('Please select a demo call, upload an audio file, or enter a transcript to analyze.');
@@ -869,6 +1130,7 @@ Borrower: Understood, thank you for confirming.`
         fd.append('audio', selectedAudioFile);
         if (transcript) fd.append('transcript', transcript);
         if (callTime) fd.append('call_time', callTime);
+        fd.append('language', selectedLang);
         const res = await fetch('/api/analyze-audio', {
           method: 'POST',
           body: fd
@@ -878,7 +1140,8 @@ Borrower: Understood, thank you for confirming.`
         const payload = {
           demo_id: selectedDemoId,
           transcript: transcript,
-          call_time: callTime
+          call_time: callTime,
+          language: selectedLang
         };
         const res = await fetch('/api/analyze-audio', {
           method: 'POST',
@@ -1023,8 +1286,9 @@ Borrower: Understood, thank you for confirming.`
       <div class="result-card" style="border-top:4px solid ${headerBorder}; background:#FFFFFF; padding:24px; margin-top:24px; box-shadow:0 12px 35px rgba(20, 83, 45, 0.05); border-radius:var(--radius-lg);">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; border-bottom:1px solid #F1F5F9; padding-bottom:16px;">
           <div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
               ${verdictBadge}
+              <span class="badge badge-neutral" style="font-size:0.72rem; font-weight:700;">🌐 ${data.language ? data.language.toUpperCase() : 'MULTILINGUAL'}</span>
               <span style="font-size:0.8rem; color:var(--text-secondary);">${data.filename || 'Call Audio'} (${data.duration_seconds || 45}s)</span>
             </div>
             <h2 style="font-size:1.35rem; font-weight:800; color:#0F172A; margin:0;">
@@ -1731,6 +1995,7 @@ Verified via LoanLens (https://loanlens.vercel.app)`;
 
   // ── Tab URL Routing & Navigation Interception ───────────────────
   initTabFromUrl();
+  initSttSettings();
   window.addEventListener('popstate', initTabFromUrl);
 
   document.addEventListener('click', (e) => {
