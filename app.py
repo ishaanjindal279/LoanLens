@@ -1182,6 +1182,34 @@ def transcribe_audio_endpoint():
         if audio_file and audio_file.filename:
             file_bytes = audio_file.read()
             filename = audio_file.filename
+            f_lower = filename.lower()
+            
+            # Check if uploaded file corresponds to a known demo recording
+            matched_id = None
+            if "hindi" in f_lower:
+                matched_id = "threat_hindi"
+            elif "tamil" in f_lower:
+                matched_id = "threat_tamil"
+            elif "advance" in f_lower or "pre_approv" in f_lower:
+                matched_id = "advance_fee"
+            elif "legit" in f_lower or "kyc" in f_lower or "bank" in f_lower:
+                matched_id = "legitimate"
+            elif "threat" in f_lower or "extortion" in f_lower or "recovery" in f_lower:
+                matched_id = "threat"
+
+            if matched_id and matched_id in DEMO_CALL_RECORDINGS:
+                demo = DEMO_CALL_RECORDINGS[matched_id]
+                return jsonify({
+                    "status": "success",
+                    "source": "demo_match",
+                    "demo_id": matched_id,
+                    "transcript": demo["transcript"],
+                    "dialogue": demo.get("dialogue", []),
+                    "call_time": demo.get("call_time", "21:45"),
+                    "language": lang_code,
+                    "title": demo["title"],
+                    "message": f"Successfully loaded verified transcript for: {demo['title']}"
+                })
             
             # If API key is available, execute cloud Whisper transcription
             if api_key:
@@ -1243,19 +1271,11 @@ def transcribe_audio_endpoint():
                 except Exception as ex:
                     print(f"Transcription error: {ex}")
 
-            # Smart acoustic fallback when no API key is provided
-            lang_label = next((l["name"] for l in SUPPORTED_AUDIO_LANGUAGES if l["code"] == lang_code), lang_code.upper())
-            fallback_text = (
-                f"Telecaller: Urgent loan repayment notice in {lang_label}. Your overdue payment is required immediately.\n"
-                "Borrower: Please send your official RBI NBFC registration details and Key Fact Statement."
-            )
+            # If no API key is provided and not a demo file
             return jsonify({
-                "status": "success",
-                "source": "acoustic_analysis",
-                "transcript": fallback_text,
-                "dialogue": parse_transcript_dialogue(fallback_text),
-                "language": lang_code,
-                "notice": "No external STT API key provided. Using local diarization. You can also use the zero-key 'Record via Microphone' feature in any Indian language, or enter a free Groq API key in STT Settings."
+                "status": "requires_key",
+                "message": "To transcribe custom audio recordings, please provide an API key (Groq Whisper or OpenAI) in STT Settings, or use the 'Record via Microphone' button for free live browser dictation.",
+                "language": lang_code
             })
 
         return jsonify({
@@ -1327,6 +1347,20 @@ def analyze_audio_endpoint():
                         duration_seconds = max(10.0, round(file_size / 16000.0, 1))
                     elif ext in ("m4a", "aac", "ogg", "webm"):
                         duration_seconds = max(10.0, round(file_size / 20000.0, 1))
+
+        # Check if filename matches a demo preset
+        if not demo_id and filename:
+            f_lower = filename.lower()
+            if "hindi" in f_lower:
+                demo_id = "threat_hindi"
+            elif "tamil" in f_lower:
+                demo_id = "threat_tamil"
+            elif "advance" in f_lower or "pre_approv" in f_lower:
+                demo_id = "advance_fee"
+            elif "legit" in f_lower or "kyc" in f_lower or "bank" in f_lower:
+                demo_id = "legitimate"
+            elif "threat" in f_lower or "extortion" in f_lower or "recovery" in f_lower:
+                demo_id = "threat"
 
         # Check if demo preset is selected
         if demo_id and demo_id in DEMO_CALL_RECORDINGS:

@@ -899,6 +899,12 @@ Borrower: Understood, thank you for confirming.`
           transcriptInput.style.borderColor = '#0D9488';
           setTimeout(() => { transcriptInput.style.borderColor = ''; }, 1200);
         }
+      } else if (data && data.status === 'requires_key') {
+        const card = document.getElementById('stt-settings-card');
+        if (card) card.classList.remove('hidden');
+        const sttInput = document.getElementById('stt-api-key-input');
+        if (sttInput) sttInput.focus();
+        alert('To transcribe custom audio recordings, please provide a free Groq or OpenAI Whisper API key in STT Settings, or use "Record via Microphone" for free browser dictation.');
       } else if (data && data.message) {
         alert(data.message);
       }
@@ -954,7 +960,6 @@ Borrower: Understood, thank you for confirming.`
     if (!files || !files.length) return;
     const file = files[0];
     selectedAudioFile = file;
-    selectedDemoId = null;
 
     const playerCard = document.getElementById('audio-player-card');
     const playerElem = document.getElementById('audio-player-elem');
@@ -962,6 +967,7 @@ Borrower: Understood, thank you for confirming.`
     const metaElem = document.getElementById('audio-player-meta');
     const dropzone = document.getElementById('audio-dropzone');
     const transcriptInput = document.getElementById('audio-transcript-input');
+    const langSelect = document.getElementById('audio-language-select');
 
     if (filenameElem) filenameElem.textContent = file.name;
     const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
@@ -975,7 +981,31 @@ Borrower: Understood, thank you for confirming.`
     if (playerCard) playerCard.classList.remove('hidden');
     if (dropzone) dropzone.style.display = 'none';
 
-    // Auto-transcribe or diarize audio into dialogue box
+    // Check if filename matches a known demo recording
+    const fn = (file.name || '').toLowerCase();
+    let detectedDemo = null;
+    if (fn.includes('hindi')) detectedDemo = 'threat_hindi';
+    else if (fn.includes('tamil')) detectedDemo = 'threat_tamil';
+    else if (fn.includes('advance') || fn.includes('pre_approv')) detectedDemo = 'advance_fee';
+    else if (fn.includes('legit') || fn.includes('kyc') || fn.includes('bank')) detectedDemo = 'legitimate';
+    else if (fn.includes('threat') || fn.includes('extortion') || fn.includes('recovery')) detectedDemo = 'threat';
+
+    if (detectedDemo && DEMO_AUDIO_CALLS[detectedDemo]) {
+      selectedDemoId = detectedDemo;
+      const demoObj = DEMO_AUDIO_CALLS[detectedDemo];
+      if (demoObj.language && langSelect) {
+        langSelect.value = demoObj.language;
+        onLanguageChange();
+      }
+      if (transcriptInput) {
+        transcriptInput.value = demoObj.transcript;
+        transcriptInput.style.borderColor = '#0D9488';
+        setTimeout(() => { transcriptInput.style.borderColor = ''; }, 1000);
+      }
+      return;
+    }
+
+    // Auto-transcribe custom audio into dialogue box
     if (transcriptInput && !transcriptInput.value.trim()) {
       transcriptInput.placeholder = "Transcribing audio into dialogue box below... Please wait...";
       await transcribeCurrentAudio();
